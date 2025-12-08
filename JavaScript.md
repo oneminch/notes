@@ -1490,6 +1490,13 @@ function sum(a, b, ...nums) {}
     - `Promise.all([...promises])` - fulfilled only if _all_ the promises in the array are fulfilled; rejected otherwise.
     - `Promise.any([...promises])` - fulfilled as soon as _any_ one of the promises in the array is fulfilled; rejected if all of them are rejected.
 
+> [!important]
+> The `Promise` constructor returns a promise object. The promise object will become _resolved_ when either of the functions `resolveFn` or `rejectFn` are invoked.
+> 
+> ```ts
+> new Promise((resolveFn, rejectFn) => { /* ... */ })
+> ```
+
 ### Async/Await
 
 - Inserting `async` keyword before a function definition makes it asynchronous.

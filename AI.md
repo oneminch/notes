@@ -5,6 +5,7 @@ alias: ML
 > [!example]- Tools
 > - Langflow
 > - LangGraph
+> - OpenRouter
 > - LM Studio
 > - AI SDK / Workers AI / Mastra
 > - Hugging Face
