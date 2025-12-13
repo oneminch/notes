@@ -1,3 +1,3 @@
-- Linters are tools that run a set of diagnostic checks on your source code, often called rules. 
+- Linters are tools that run a set of diagnostic checks on your source code, often called rules.
 - Each rule is typically tailored to one specific check, such as unused variables or preferring a cleaner syntax pattern over an equivalent but messier one.
 - ESLint is a popular linter used in the [[JavaScript]] ecosystem.

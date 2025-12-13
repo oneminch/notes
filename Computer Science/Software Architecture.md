@@ -1,6 +1,7 @@
 ## System Design
 
 > [!example] Frontend System Design
+>
 > - [Frontend System Design (Step-by-Step Guide)](https://grokkingthesystemdesign.com/guides/frontend-system-design/)
 > - [Front End System Design Playbook (GreatFrontEnd)](https://www.greatfrontend.com/front-end-system-design-playbook/introduction)
 
@@ -30,10 +31,10 @@
 - This pattern divides the application into multiple layers or tiers.
 - Each tier is responsible for a specific functionality or task.
     - Commonly used layers include presentation, application, and data layers.
-- It's ideal for 
-    - new applications that need to be built quickly, 
-    - enterprise or business applications, 
-    - teams with inexperienced developers, and 
+- It's ideal for
+    - new applications that need to be built quickly,
+    - enterprise or business applications,
+    - teams with inexperienced developers, and
     - applications requiring strict maintainability and testability standards.
 - Examples:
     - A distributed system that has a separate presentation layer for the user interface, an application layer for the business logic, and a data layer for storing data, with each layer running on a separate server or cluster of servers.
@@ -72,7 +73,7 @@
     - Building RESTful APIs for web and mobile applications
     - Automating [[CI & CD|CI/CD]] pipelines
     - Integrating with third-party services and APIs
-- **Advantages**: 
+- **Advantages**:
     - Automation
     - Scalability
     - Productivity
@@ -88,6 +89,7 @@
     - Complexity in managing and coordinating multiple functions and services
 
 ---
+
 ## Further
 
 ### Books 📚

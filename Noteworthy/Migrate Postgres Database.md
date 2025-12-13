@@ -32,5 +32,3 @@ pg_restore -d <db-connection-string> -v --no-owner --no-acl data_dump.bak
 - `-v` enables verbose mode.
 - `--no-owner` skips setting the ownership of objects as in the original database.
 - `--no-acl` skips restoring access privileges for objects as in the original database.
-
-

@@ -3,43 +3,44 @@
 
 ```js
 let worker = {
-  slow(min, max) {
-    return min + max;
-  }
+	slow(min, max) {
+		return min + max;
+	},
 };
 
 function anotherSlow(x) {
-  return x**x;
+	return x ** x;
 }
 
 // simple hasing function
 function hash() {
-  return [].join.call(arguments);
+	return [].join.call(arguments);
 }
 
 function cachingDecorator(func, hash) {
-  let cache = new Map();
-  return function() {
-    let key = hash(arguments); // (*)
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
+	let cache = new Map();
+	return function () {
+		let key = hash(arguments); // (*)
+		if (cache.has(key)) {
+			return cache.get(key);
+		}
 
-    let result = func.call(this, ...arguments); // (**)
+		let result = func.call(this, ...arguments); // (**)
 
-    cache.set(key, result);
-    return result;
-  };
+		cache.set(key, result);
+		return result;
+	};
 }
 
 worker.slow = cachingDecorator(worker.slow, hash);
 
-console.log(worker.slow(3, 5)); 				// works
-console.log("Cached: " + worker.slow(3, 5)); 	// same (cached)
+console.log(worker.slow(3, 5)); // works
+console.log("Cached: " + worker.slow(3, 5)); // same (cached)
 
-anotherSlow = cachingDecorator(anotherSlow, hash)
+anotherSlow = cachingDecorator(anotherSlow, hash);
 
-console.log(anotherSlow(5)); 				// works
-console.log("Cached: " + anotherSlow(5)); 	// same (cached)
+console.log(anotherSlow(5)); // works
+console.log("Cached: " + anotherSlow(5)); // same (cached)
 ```
+
 - **Credit**: [JavaScript.Info](https://javascript.info/call-apply-decorators)

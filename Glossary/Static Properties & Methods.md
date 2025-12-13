@@ -1,4 +1,4 @@
-- In the context of [[Object-Oriented Programming]], static properties and methods are part of the class itself rather than instances of the class. 
+- In the context of [[Object-Oriented Programming]], static properties and methods are part of the class itself rather than instances of the class.
 - They provide a way to define behavior and data that is shared across all instances.
 
 - **Static Methods**

@@ -3,16 +3,17 @@ alias: Authentication
 ---
 
 - **Authentication** (AuthN)
-    - Verifies *identity* - WHO a user is.
+    - Verifies _identity_ - WHO a user is.
     - On authentication failure, response code is 401 (Unauthorized)
 - **Authorization** (AuthZ)
-    - Determines *permission* - WHAT a user can access.
+    - Determines _permission_ - WHAT a user can access.
     - On authorization failure, response code is 403 (Forbidden)
 
 ## Strategies
 
 > [!quote]- REST API Authentication Methods (ByteByteGo)
 > ![REST API Authentication Methods](assets/images/auth.methods.png)
+>
 > - Source: [ByteByteGo](https://blog.bytebytego.com/p/ep91-rest-api-authentication-methods)
 
 ### Basic Auth
@@ -20,9 +21,9 @@ alias: Authentication
 - Involves sending a username and password with each request, encoded using Base64.
 - Stateless since the server doesn't maintain any session information.
 - **Flow**
-    - Browser tries to access some protected URL. 
+    - Browser tries to access some protected URL.
     - If the server doesn't find the `Authorization` header in the request, it responds with a `401 Unauthorized` status and the header `WWW-Authenticate` with value set to `Basic` and an optional `realm` attribute.
-    - Browser shows login popup. 
+    - Browser shows login popup.
     - When user signs in, it sends back the request to the server with the `Authorization` header set to `Basic` along with login credentials (`username:password`) encoded using Base64.
         - `Authorization: Basic <base64_encoded_credentials>`
     - Server verifies credentials, and responds with success.
@@ -30,24 +31,25 @@ alias: Authentication
 ```js
 // Basic Auth Middleware
 const basicAuth = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    
-    if (!authHeader) {
-        res.setHeader('WWW-Authenticate', 'Basic');
-        return res.status(401).send('Authentication required.');
-    }
+	const authHeader = req.headers["authorization"];
 
-    const [username, password] = decodeCredentials(authHeader).split(':');
+	if (!authHeader) {
+		res.setHeader("WWW-Authenticate", "Basic");
+		return res.status(401).send("Authentication required.");
+	}
 
-    if (username === 'admin' && password === 'p4ssw0rd') {
-        next();
-    }
+	const [username, password] = decodeCredentials(authHeader).split(":");
 
-    res.status(401).send('Invalid credentials.');
-}
+	if (username === "admin" && password === "p4ssw0rd") {
+		next();
+	}
+
+	res.status(401).send("Invalid credentials.");
+};
 ```
 
 > [!important] Security Risks
+>
 > - Credentials are only Base64 encoded, not encrypted, so they are vulnerable to interception if not sent over HTTPS.
 > - There's no built-in mechanism to log out users or expire credentials.
 > - In addition to that, there is no support for MFA or more advanced features.
@@ -67,7 +69,7 @@ const basicAuth = (req, res, next) => {
     - For subsequent requests, the client automatically includes the session ID cookie.
         - The server uses this session ID to retrieve the session data and authenticate the user.
         - The server checks if the session ID is valid and corresponds to an active session.
-            - If valid, it retrieves the corresponding session data from the session store using the session ID. 
+            - If valid, it retrieves the corresponding session data from the session store using the session ID.
                 - When using the `express-session` middleware, session data is loaded into `req.session` object.
                 - Now the server knows who the user is and can respond accordingly.
             - If invalid, it may return a `401 Unauthorized` response.
@@ -75,11 +77,11 @@ const basicAuth = (req, res, next) => {
         - The session cookie is typically deleted from the client's browser.
 
 ```js
-const session = require('express-session'); 
+const session = require('express-session');
 
-const app = express(); 
+const app = express();
 
-app.use(session({ 
+app.use(session({
     secret: 'secret-key',
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 24 hours
@@ -105,7 +107,7 @@ app.get('/login', (req, res) {
 
 app.post('/login', (req, res) {
     const { username, password } = req.body;
-    
+
     if (username === 'admin' && password === 'p4ssw0rd') {
         req.session.userId = username;
         return res.redirect('/dashboard');
@@ -125,6 +127,7 @@ app.post('/logout', (req, res) => {
 ```
 
 > [!note] Disadvantages of Session Based Auth
+>
 > - Use a persistent and distributed session store in production.
 >     - Maintaining sessions on the server can become challenging as the number of users grows.
 > - Since cookies are automatically sent with requests, it is susceptible to [[Security#Cross-Site Request Forgery (CSRF)|CSRF]] attacks.
@@ -144,68 +147,67 @@ app.post('/logout', (req, res) => {
     - The server validates the token and processes the request based on the claims within the token.
 
 ```js
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+app.post("/login", (req, res) => {
+	const { username, password } = req.body;
 
-    if (username === 'user' && password === 'password') {
-        const token = jwt.sign(
-            { username }, 
-            'my_secret_key', 
-            { expiresIn: '1h' }
-        );
-        
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 3600000
-        });
+	if (username === "user" && password === "password") {
+		const token = jwt.sign({ username }, "my_secret_key", {
+			expiresIn: "1h",
+		});
 
-        return res.json({ message: 'Login Successful' });
-    }
+		res.cookie("token", token, {
+			httpOnly: true,
+			secure: true,
+			maxAge: 3600000,
+		});
 
-    res.status(401).send('Invalid credentials');
+		return res.json({ message: "Login Successful" });
+	}
+
+	res.status(401).send("Invalid credentials");
 });
 
-app.get('/protected', (req, res) => {
-    const token = req.cookies.token;
+app.get("/protected", (req, res) => {
+	const token = req.cookies.token;
 
-    if (!token) {
-        return res.status(403).send('Token is required');
-    }
+	if (!token) {
+		return res.status(403).send("Token is required");
+	}
 
-    jwt.verify(token, 'my_secret_key', (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Invalid token');
-        }
+	jwt.verify(token, "my_secret_key", (err, decoded) => {
+		if (err) {
+			return res.status(401).send("Invalid token");
+		}
 
-        res.json({ message: 'Protected Data', user: decoded });
-        // OR (if inside a middleware)
-        // req.body.username = decoded.username;
-        // next();
-    });
+		res.json({ message: "Protected Data", user: decoded });
+		// OR (if inside a middleware)
+		// req.body.username = decoded.username;
+		// next();
+	});
 });
 
-app.post('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.json({ message: 'Logout Successful' });
+app.post("/logout", (req, res) => {
+	res.clearCookie("token");
+	res.json({ message: "Logout Successful" });
 });
 ```
 
 > [!note] JWT Components
+>
 > - **Header** - token metadata, such as signing algorithm.
 > - **Payload** - claims, such as user info and token expiration.
 > - **Signature** - to ensure integrity.
 
 > [!quote] The downside of JWTs for authentication
 > Once a JWT is signed, there is no way to invalidate the JWT or update the information contained within it. Provided the signature is valid and the expiry timestamp has not passed, the JWT will be considered valid by any process leveraging it for authorization decisions.
-> 
+>
 > If a user requests to log out of all devices, there is no practical way to honor this request through local validation before the natural expiry of all currently issued JWTs. In theory, JWTs can also be invalidated by revoking the secret key used to sign the JWT but that would invalidate all JWTs that used that key and would require handling to evict any cached validation keys, making secret key revocation an unsustainable option for something as simple as a user log out.
-> 
+>
 > Similarly, in the case where the JWT contains role-based authorization information (such as “admin” vs “member”), if the user is downgraded to a lower role that reduces the scope of what they are allowed to access, this change in authorization permissions would not be reflected until their existing JWTs expired.
-> 
+>
 > **Source**: [JWTs vs. sessions: which authentication approach is right for you?](https://stytch.com/blog/jwts-vs-sessions-which-is-right-for-you/)
 
-- **Bearer authentication** involves security tokens called bearer tokens, which is a cryptic strings, usually generated by the server after a login request. 
+- **Bearer authentication** involves security tokens called bearer tokens, which is a cryptic strings, usually generated by the server after a login request.
     - The client sends this token in the `Authorization` header when making requests.
     - This form of authentication should only be done over HTTPS.
 
@@ -217,11 +219,11 @@ Authorization: Bearer <bearer_token>
 
 - Open standard protocol that allows users to grant third-party apps limited access to their resources without sharing passwords.
 - **Key Concepts**
-	- **Resource Owner**: The user who owns the data
-	- **Client**: The application requesting access
-	- **Authorization Server**: Issues access tokens (e.g., Google, GitHub)
-	- **Resource Server**: Hosts the protected resources (e.g., Google Drive API)
-    - e.g. OAuth is the underlying mechanism that securely powers a service asking for permission to access a Google account to retrieve calendar events.
+    - **Resource Owner**: The user who owns the data
+    - **Client**: The application requesting access
+    - **Authorization Server**: Issues access tokens (e.g., Google, GitHub)
+    - **Resource Server**: Hosts the protected resources (e.g., Google Drive API)
+        - e.g. OAuth is the underlying mechanism that securely powers a service asking for permission to access a Google account to retrieve calendar events.
 - Primarily about authorization (granting access to resources), not authentication.
 - Uses access tokens to grant permissions.
     - The authorized app receives a token that allows it to interact with user data without the need for a password.
@@ -240,7 +242,7 @@ Authorization: Bearer <bearer_token>
 
 > [!example]
 > When users select "Sign in with Google" as an authentication option, they are redirected to Google’s login page. After entering their credentials and granting permission, Google sends back an ID token that the website can use to authenticate the user and retrieve their profile information.
-> 
+>
 > Organizations often use OpenID Connect for SSO across multiple applications. Employees can log in once using their corporate identity provider (like Azure Active Directory) and gain access to various internal applications without needing to log in again. This streamlines the user experience and enhances security by centralizing authentication.
 
 ### API Key Authentication
@@ -250,17 +252,17 @@ Authorization: Bearer <bearer_token>
 - Enables API providers to track usage patterns and monitor for abuse or unauthorized access.
 
 ```js
-const API_KEY = 'your_api_key_here';
+const API_KEY = "your_api_key_here";
 
 // API Key Middleware
 const apiKeyMiddleware = (req, res, next) => {
-    const apiKey = req.headers['x-api-key'];
-    
-    if (!apiKey || apiKey !== API_KEY) {
-        return res.status(403).json({ message: 'Forbidden: Invalid API key' });
-    }
-    
-    next();
+	const apiKey = req.headers["x-api-key"];
+
+	if (!apiKey || apiKey !== API_KEY) {
+		return res.status(403).json({ message: "Forbidden: Invalid API key" });
+	}
+
+	next();
 };
 ```
 
@@ -282,20 +284,20 @@ const users = [
 const authorize = (roles) => (
     (req, res, next) => {
         const token = req.cookies.token;
-        
+
         if (!token) {
             return res.status(403).json({ message: 'No token provided' });
         }
-        
+
         jwt.verify(token, 'your_secret_key', (err, decoded) => {
             if (err) {
                 return res.status(401).json({ message: 'Unauthorized' });
             }
-            
+
             if (!roles.includes(decoded.role)) {
                 return res.status(403).json({ message: 'Forbidden' });
             }
-            
+
             req.user = decoded;
             next();
         });
@@ -305,21 +307,21 @@ const authorize = (roles) => (
 
 ```js
 // Server
-app.post('/login', authMiddleware);
+app.post("/login", authMiddleware);
 
-app.get('/admin', authorize(['admin']), (req, res) => {
-    res.json({ message: 'Welcome to the Admin area!' });
+app.get("/admin", authorize(["admin"]), (req, res) => {
+	res.json({ message: "Welcome to the Admin area!" });
 });
 
-app.get('/user', authorize(['user', 'admin']), (req, res) => {
-    res.json({ message: 'Welcome to the User area!' });
+app.get("/user", authorize(["user", "admin"]), (req, res) => {
+	res.json({ message: "Welcome to the User area!" });
 });
 ```
 
 ## Best Practices
 
 - Never store passwords in plain text.
-    - Store passwords securely using hashing algorithms such as bcrypt, Argon2, or scrypt. 
+    - Store passwords securely using hashing algorithms such as bcrypt, Argon2, or scrypt.
     - Always use salting to protect against rainbow table attacks.
 - Implement proper password policies (complexity, expiration, etc.).
     - Users should be encouraged to change their passwords periodically and especially after any suspected data breaches.
@@ -335,13 +337,14 @@ app.get('/user', authorize(['user', 'admin']), (req, res) => {
 
 - Not enforcing password complexity can lead to easy exploitation through brute force or dictionary attacks
 - Not implementing secure session management practices, such as not expiring sessions or using insecure cookies, can lead to session hijacking
-- Not securing the account recovery process can allow attackers to bypass authentication. 
+- Not securing the account recovery process can allow attackers to bypass authentication.
     - Recovery processes should include additional verification steps.
 - Relying on password-based authentication without implementing additional security measures like MFA.
 - Implementing overly complex authentication processes can frustrate users impacting UX.
 - Not logging authentication attempts and monitoring for suspicious activity can prevent timely detection of breaches or unauthorized access.
 
 ---
+
 ## Further
 
 ### Reads 📄

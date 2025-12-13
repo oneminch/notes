@@ -1,8 +1,8 @@
 - The World Wide Web Consortium (W3C) is an international body that maintains Web-related rules and frameworks.
-- It consists of over 350 member-organizations that jointly develop Web standards, run outreach programs, and maintain an open forum for talking about the Web. 
+- It consists of over 350 member-organizations that jointly develop Web standards, run outreach programs, and maintain an open forum for talking about the Web.
 - The W3C coordinates companies in the industry to make sure they implement the same W3C standards.
-- Each standard passes through four stages of maturity: 
+- Each standard passes through four stages of maturity:
     - **Working Draft (WD)**,
     - **Candidate Recommendation (CR)**,
-    - **Proposed Recommendation (PR)**, and 
+    - **Proposed Recommendation (PR)**, and
     - **W3C Recommendation (REC)**.

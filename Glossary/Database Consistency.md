@@ -5,11 +5,11 @@
     - The database remains in a correct and coherent state after transactions.
 
 - **Types of Consistency**:
-    - *Strong Consistency*
+    - _Strong Consistency_
         - Ensures all nodes in a distributed system have the same data at any given time
         - Provides immediate accuracy but may result in higher latency
         - Typically used in ACID-compliant relational databases
-    - *Eventual Consistency*
+    - _Eventual Consistency_
         - Allows for temporary inconsistencies across nodes, but guarantees data will converge to a consistent state over time
         - Offers lower latency and higher availability
         - Common in NoSQL and distributed databases
@@ -26,4 +26,3 @@
         - Ensures strong consistency and data integrity, typically used in relational databases.
     - BASE (Basically Available, Soft state, Eventual consistency)
         - Prioritizes availability and partition tolerance over strong consistency, often used in NoSQL systems
-

@@ -1,3 +1,3 @@
-- A homogeneous data structure is one containing only similar types of data. 
-    - e.g. An array containing only integers. 
+- A homogeneous data structure is one containing only similar types of data.
+    - e.g. An array containing only integers.
 - In some programming languages, arrays are strictly homogeneous. They can't have mixed data types.

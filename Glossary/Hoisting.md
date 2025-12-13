@@ -5,7 +5,7 @@
 fn();
 
 function fn() {
-  /* code */
+	/* code */
 }
 ```
 
@@ -22,4 +22,4 @@ console.log(bar); // prints 6
 ```
 
 - With `let` and `const`, the order in which code is _executed_ is what matters, not the order in which it is written in the source.
-- Function *expressions* and class *expressions* are not hoisted.
+- Function _expressions_ and class _expressions_ are not hoisted.

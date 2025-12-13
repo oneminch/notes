@@ -2,17 +2,17 @@
 
 ```js
 const pollData = () => {
-    fetch('https://api.example.com/data')
-        .then(response => response.json())
-        .then(data => {
-            console.log('New data:', data);
-        })
-        .catch(error => console.error('Error:', error))
-        .finally(() => {
-            // Schedule next poll (every 5 seconds)
-            setTimeout(pollData, 5000);
-        });
-}
+	fetch("https://api.example.com/data")
+		.then((response) => response.json())
+		.then((data) => {
+			console.log("New data:", data);
+		})
+		.catch((error) => console.error("Error:", error))
+		.finally(() => {
+			// Schedule next poll (every 5 seconds)
+			setTimeout(pollData, 5000);
+		});
+};
 
 pollData();
 ```

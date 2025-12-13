@@ -18,23 +18,23 @@
 ```html
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <meta charset="utf-8" />
-        <title>My test page</title>
-    </head>
-    <body>
-        <p>This is the body of the page</p>
-    </body>
+	<head>
+		<meta charset="utf-8" />
+		<title>My test page</title>
+	</head>
+	<body>
+		<p>This is the body of the page</p>
+	</body>
 </html>
 ```
-  
+
 - `<head>` - contains non-content related information
 - `<meta charset="utf-8">` - specifies character set for the document, in this case to UTF-8.
 - `<body>` - contains all the content on the page.
 
 > [!note]
 > Primary language of the document can be set here using the `lang` attribute on the root element, but can also be used to set the language for subsections of a page.
-> 
+>
 > ```html
 > <span lang="es">Cómo estás</span>
 > ```
@@ -54,7 +54,7 @@
 <meta name="author" content="oneminch" />
 <meta name="description" content="This website is a personal blog." />
 ```
-  
+
 - Due to abuse by spammers which caused biased search results, many features of `<meta>` are no longer used.
 
 ```html
@@ -116,9 +116,9 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <figure>
-    <img src="../path/to/image" alt="...alternative text..." />
+	<img src="../path/to/image" alt="...alternative text..." />
 
-    <figcaption>caption for image</figcaption>
+	<figcaption>caption for image</figcaption>
 </figure>
 ```
 
@@ -134,14 +134,14 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <ol>
-    <li>list item 1</li>
-    <li>list item 2</li>
-    <li>
-        <ul>
-            <li>nested list item 1</li>
-            <li>nested list item 2</li>
-        </ul>
-    </li>
+	<li>list item 1</li>
+	<li>list item 2</li>
+	<li>
+		<ul>
+			<li>nested list item 1</li>
+			<li>nested list item 2</li>
+		</ul>
+	</li>
 </ol>
 ```
 
@@ -162,8 +162,8 @@ postpones the execution of the script til HTML is parsed -->
 
 <!-- index.html -->
 <p>
-    Send a message to
-    <a href="index.html#email-address">our email address</a>
+	Send a message to
+	<a href="index.html#email-address">our email address</a>
 </p>
 ```
 
@@ -171,8 +171,8 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <dl>
-    <dt>Coffee</dt>
-    <dd>The fuel that keeps the world running.</dd>
+	<dt>Coffee</dt>
+	<dd>The fuel that keeps the world running.</dd>
 </dl>
 ```
 
@@ -182,7 +182,7 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <blockquote cite="quote-source-url">
-    <p>This is a block quote</p>
+	<p>This is a block quote</p>
 </blockquote>
 ```
 
@@ -191,11 +191,15 @@ postpones the execution of the script til HTML is parsed -->
 ```html
 <p>This is <q cite="quote-source-url">an inline quote</q></p>
 ```
-  
+
 - The `cite` attribute is not useful in terms of [[Accessibility]]. An alternative way is to use the `<cite>` element:
 
 ```html
-<p>According to <a href="quote-source-url"><cite>the MDN page on HTML</cite> </a>:</p><blockquote cite="quote-source-url">quote text...</blockquote>
+<p>
+	According to
+	<a href="quote-source-url"><cite>the MDN page on HTML</cite> </a>:
+</p>
+<blockquote cite="quote-source-url">quote text...</blockquote>
 ```
 
 ### Abbreviations
@@ -212,6 +216,7 @@ postpones the execution of the script til HTML is parsed -->
 ```html
 <time datetime="2016-01-20T19:30"> 7.30pm, 20 January 2016 </time>
 ```
+
 - No matter how the information between the tags is presented, using the attribute provides a machine-readable way of providing time information.
 
 ### Breaks
@@ -228,30 +233,32 @@ postpones the execution of the script til HTML is parsed -->
 ```html
 <!-- Different sized images -->
 <img
-    srcset="./path/to/image-480w.jpg 480w, ./path/to/image-800w.jpg 800w"
-    sizes="(max-width: 600px) 480px, 800px"
-    src="./path/to/image-800w.jpg"
-    alt="..." />
+	srcset="./path/to/image-480w.jpg 480w, ./path/to/image-800w.jpg 800w"
+	sizes="(max-width: 600px) 480px, 800px"
+	src="./path/to/image-800w.jpg"
+	alt="..."
+/>
 
 <!-- Same size images, different resolutions -->
 <!-- Image width is set using CSS -->
 <img
-    srcset="
-        ./path/to/image-320w.jpg 1x,
-        ./path/to/image-480w.jpg 1.5x,
-        ./path/to/image-640w.jpg 2x
-    "
-    src="./path/to/image-640w.jpg"
-    alt="..." />
+	srcset="
+		./path/to/image-320w.jpg 1x,
+		./path/to/image-480w.jpg 1.5x,
+		./path/to/image-640w.jpg 2x
+	"
+	src="./path/to/image-640w.jpg"
+	alt="..."
+/>
 ```
 
 - Using `<picture>` solves the _art direction_ problem.
 
 ```html
 <picture>
-    <source media="(max-width: 799px)" srcset="zoomed-img-480w.jpg" />
-    <source media="(min-width: 800px)" srcset="wide-img-800w.jpg" />
-    <img src="wide-img-800w.jpg" alt="..." />
+	<source media="(max-width: 799px)" srcset="zoomed-img-480w.jpg" />
+	<source media="(min-width: 800px)" srcset="wide-img-800w.jpg" />
+	<img src="wide-img-800w.jpg" alt="..." />
 </picture>
 ```
 
@@ -262,9 +269,9 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <picture>
-    <source type="image/svg+xml" srcset="img.svg" />
-    <source type="image/webp" srcset="img.webp" />
-    <img src="img.png" alt="..." />
+	<source type="image/svg+xml" srcset="img.svg" />
+	<source type="image/webp" srcset="img.webp" />
+	<img src="img.png" alt="..." />
 </picture>
 ```
 
@@ -292,7 +299,7 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <video src="../path/to/video" controls>
-    <!-- Fallback text or content -->
+	<!-- Fallback text or content -->
 </video>
 ```
 
@@ -303,9 +310,9 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <video controls>
-    <source src="../path/to/video.webm" type="video/webm" />
-    <source src="../path/to/video.mp4" type="video/mp4" />
-    <!-- Fallback text or content -->
+	<source src="../path/to/video.webm" type="video/webm" />
+	<source src="../path/to/video.mp4" type="video/mp4" />
+	<!-- Fallback text or content -->
 </video>
 ```
 
@@ -321,11 +328,7 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <!-- Example -->
-<track
-    kind="subtitles"
-    src="subtitles_es.vtt"
-    srclang="es"
-    label="Spanish" />
+<track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish" />
 ```
 
 - The `<track>` element is placed inside `<video>` after `<source>` elements.
@@ -333,7 +336,7 @@ postpones the execution of the script til HTML is parsed -->
 - `label` is used to help readers look for a language.
 - Since search engines make use of text a lot, text tracks help with [[Search Engine Optimization]]; They also allow search engines to link directly to a point in the video.
 
-### `<audio>` 
+### `<audio>`
 
 - works just like `<video>` and supports same features.
 - `width`, `height` and `poster` aren't supported on this element as it has no visual component.
@@ -344,7 +347,7 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <iframe src="..." allowfullscreen sandbox>
-    <!-- Fallback content -->
+	<!-- Fallback content -->
 </iframe>
 ```
 
@@ -356,7 +359,7 @@ postpones the execution of the script til HTML is parsed -->
 
 ### `<embed>` and `<object>`
 
-- are used as general purpose embedding tools. 
+- are used as general purpose embedding tools.
 - Although, these are no longer used that often and pose [[Accessibility]] issues.
 
 ## Tables
@@ -382,43 +385,43 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <table>
-    <caption>
-        caption that describes the table
-  	</caption>
+	<caption>
+		caption that describes the table
+	</caption>
 
-  	<colgroup>
-  		<col />
-  		<col style="background-color: lightsalmon" />
-  		<col />
-  		<col style="background-color: lavender" />
-  	</colgroup>
+	<colgroup>
+		<col />
+		<col style="background-color: lightsalmon" />
+		<col />
+		<col style="background-color: lavender" />
+	</colgroup>
 
-  	<thead>
-  		<tr>
-  			<th scope="colgroup" colspan="2">Data 1</th>
-  			<th scope="colgroup" colspan="2">Data 2</th>
-  		</tr>
-  	</thead>
+	<thead>
+		<tr>
+			<th scope="colgroup" colspan="2">Data 1</th>
+			<th scope="colgroup" colspan="2">Data 2</th>
+		</tr>
+	</thead>
 
-  	<tbody>
-  		<tr>
-  			<th scope="rowgroup" rowspan="2">Item</th>
-  			<td>Item 1</td>
-  			<th scope="rowgroup" rowspan="2">Item</th>
-  			<td>Item 3</td>
-  		</tr>
-  		<tr>
-  			<td>Item 2</td>
-  			<td>Item 4</td>
-  		</tr>
-  	</tbody>
+	<tbody>
+		<tr>
+			<th scope="rowgroup" rowspan="2">Item</th>
+			<td>Item 1</td>
+			<th scope="rowgroup" rowspan="2">Item</th>
+			<td>Item 3</td>
+		</tr>
+		<tr>
+			<td>Item 2</td>
+			<td>Item 4</td>
+		</tr>
+	</tbody>
 
-  	<tfoot>
-  		<tr>
-  			<td colspan="2">Item 5</td>
-  			<td colspan="2">Item 6</td>
-  		</tr>
-  	</tfoot>
+	<tfoot>
+		<tr>
+			<td colspan="2">Item 5</td>
+			<td colspan="2">Item 6</td>
+		</tr>
+	</tfoot>
 </table>
 <!-- plus some CSS -->
 ```
@@ -445,15 +448,15 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <form>
-    <fieldset>
-        <legend>Legend</legend>
-        <!-- Form Controls -->
-    </fieldset>
+	<fieldset>
+		<legend>Legend</legend>
+		<!-- Form Controls -->
+	</fieldset>
 </form>
 ```
 
 - `<input>` fields share common functionalities thru attributes: `disabled`, `placeholder`, `size`, `readonly`, `spellcheck`.
-    - `<input type="radio" />` can be grouped together by giving each one the same vale for the `name` attribute. 
+    - `<input type="radio" />` can be grouped together by giving each one the same vale for the `name` attribute.
 - `<select>`
     - If the `value` attribute is omitted, the content of the `<option>` element is used.
     - The `multiple` provides multiple choice from a list.
@@ -461,14 +464,14 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <select multiple>
-    <optgroup label="Gasoline">
-        <option value="Audi" selected>Audi</option>
-        <option value="BMW">BMW</option>
-    </optgroup>
-    <optgroup label="Electric">
-        <option value="Rivian">Rivian</option>
-        <option value="Tesla">Tesla</option>
-    </optgroup>
+	<optgroup label="Gasoline">
+		<option value="Audi" selected>Audi</option>
+		<option value="BMW">BMW</option>
+	</optgroup>
+	<optgroup label="Electric">
+		<option value="Rivian">Rivian</option>
+		<option value="Tesla">Tesla</option>
+	</optgroup>
 </select>
 ```
 
@@ -476,10 +479,10 @@ postpones the execution of the script til HTML is parsed -->
 
 ```html
 <datalist id="datalist">
-    <option>Audi</option>
-    <option>BMW</option>
-    <option>Rivian</option>
-    <option>Tesla</option>
+	<option>Audi</option>
+	<option>BMW</option>
+	<option>Rivian</option>
+	<option>Tesla</option>
 </datalist>
 
 <input type="text" list="datalist" />
@@ -491,7 +494,7 @@ postpones the execution of the script til HTML is parsed -->
 
 > [!note]
 > Every `<button>` element inside a form is a submit button, unless `type='button'` is used on the element. e.g. show/hide password button.
-> 
+>
 > If the submit button has a `formmethod` or `formaction` attributes those values override the `method` and `action` values on the `<form>` element.
 
 - The `name` attribute identifies the data entered in a form control. e.g. `query=html`
@@ -503,11 +506,11 @@ postpones the execution of the script til HTML is parsed -->
     - `enter` -> new line
     - `done` -> collapse keyboard
     - `next` -> go to the next input field
-- Sending files is considered a special case; unlike other form data which is text, file data is binary, and [[HTTP]] is a text protocol. 
+- Sending files is considered a special case; unlike other form data which is text, file data is binary, and [[HTTP]] is a text protocol.
     - The following attributes must be set on the `<form>`:
         - `method` -> `POST`
         - `enctype` -> `multipart/form-data`
-- The `autocomplete` attribute can be used to improve user experience and accessibility. 
+- The `autocomplete` attribute can be used to improve user experience and accessibility.
     - It allows the user agent to predict the value based on previously entered or saved values.
 
 ### Security
@@ -526,7 +529,7 @@ postpones the execution of the script til HTML is parsed -->
 > [!note]
 > Client-side validation should only be used to improve user experience or provide feedback.
 
-- Form controls provide built-in client-side validation using HTML attributes. 
+- Form controls provide built-in client-side validation using HTML attributes.
     - e.g. `type`=< `email` | `tel` | `url` >, `min`, `max`.
     - The `pattern` attribute can be used to enforce constraints using RegEx.
         - A `title` attribute can be used in combination with `pattern` to add a custom error message / feedback.
@@ -539,11 +542,11 @@ postpones the execution of the script til HTML is parsed -->
 const email = document.getElementById("mail");
 
 email.addEventListener("input", (event) => {
-    if (email.validity.typeMismatch) {
-        email.setCustomValidity("I am expecting an email address!");
-    } else {
-        email.setCustomValidity("");
-    }
+	if (email.validity.typeMismatch) {
+		email.setCustomValidity("I am expecting an email address!");
+	} else {
+		email.setCustomValidity("");
+	}
 });
 ```
 
@@ -568,7 +571,7 @@ email.addEventListener("input", (event) => {
 
 ```html
 <body dir="rtl">
-    <!-- Content -->
+	<!-- Content -->
 </body>
 ```
 
@@ -576,18 +579,18 @@ email.addEventListener("input", (event) => {
 - Headings should be used in the correct order.
 - Aim to use no more than three headings per page, unless it is necessary.
 - Why add alternative text (`alt`) to your images?
-    - screen readers #a11y 
+    - screen readers #a11y
     - [[Search Engine Optimization]]
     - File or path name might be spelled wrong
     - Support for text-only browsers
     - Images may be turned off to reduce data usage
     - Should be empty for decorative images (if `<img>` is ever used).
-- Use [[CSS]] background images for decorative images as these images will have no semantic meaning and are not accessible to screen readers. #a11y 
+- Use [[CSS]] background images for decorative images as these images will have no semantic meaning and are not accessible to screen readers. #a11y
 - For images that provide significant info, provide the same info in the main text to be readable by anyone; don't write redundant `alt` text.
     - `alt` text should also be different from caption text. In the absence of an image, both texts are displayed which becomes redundant.
 - Use [[CSS]] to alter image size.
-- Include `aria-label` attribute for screen readers to read out loud information that's important. #a11y 
-- Add a `<caption>` to tables to aid all readers but particularly visually-impaired users. #a11y 
+- Include `aria-label` attribute for screen readers to read out loud information that's important. #a11y
+- Add a `<caption>` to tables to aid all readers but particularly visually-impaired users. #a11y
 - It's considered best practice to set the `for` attribute on a `<label>`.
 - Always include the meta tag below in the `head` of HTML documents:
 
@@ -606,7 +609,7 @@ email.addEventListener("input", (event) => {
 - It's a good idea to use keywords in link text to describe what the link points to and to define the context; Good for [[Accessibility]], readability and [[Search Engine Optimization]].
 - Don't be redundant: don't use the [[URL]] as part of the link text and don't use phrases like "links to" or "click here" in the link text.
 - Link text should be kept short.
-- For image links, provide accessible text: inside `<a>` or inside the image's `alt`. #a11y 
+- For image links, provide accessible text: inside `<a>` or inside the image's `alt`. #a11y
 - Reduce the number of instances where the same link text is used for different links. e.g. "click here"
 - Leave clear signposts in link text when linking to non-HTML resources. e.g.
 
@@ -614,7 +617,7 @@ email.addEventListener("input", (event) => {
 <a href="link-to-video-stream"> Watch video (opens in new tab) </a>
 
 <a href="link-to-download-item" download="default-save-filename">
-    Download report (PDF, 5MB)
+	Download report (PDF, 5MB)
 </a>
 ```
 
@@ -631,14 +634,14 @@ email.addEventListener("input", (event) => {
 ---
 
 > [!question]- Interview Emphasis Points
+>
 > > Concepts / sections to focus on when reading
+>
 > - Semantic HTML
 > - [[Accessibility|A11y]] (ARIA)
 > - DOM traversal & manipulation
 > - Form validation & submission
 
 ---
-
-
 
 [^1]: [Troubleshooting and cross-browser support - MDN](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Adding_vector_graphics_to_the_Web#troubleshooting_and_cross-browser_support)

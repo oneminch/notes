@@ -1,5 +1,5 @@
 - Stands for "Client URL"
-- A command-line tool used for transferring data and making requests across various protocols, HTTP, HTTPS, FTP, and more. 
+- A command-line tool used for transferring data and making requests across various protocols, HTTP, HTTPS, FTP, and more.
 - Widely used for testing APIs, downloading files, and automating tasks in scripts.
 
 - By default, curl uses the GET method, which is suitable for fetching data.
@@ -9,7 +9,7 @@
 - Make a GET request to a URL:
 
 ```bash
-# Retrieves the HTML content of the URL and displays it in the terminal. 
+# Retrieves the HTML content of the URL and displays it in the terminal.
 curl http://example.com
 ```
 
@@ -28,9 +28,9 @@ curl -d "name=John&phone=123456789" http://example.com/api
 
 - Include custom headers in a request using `-H`:
 
-  ```bash
-  curl -H "Authorization: Bearer token" http://example.com/api
-  ```
+    ```bash
+    curl -H "Authorization: Bearer token" http://example.com/api
+    ```
 
 - Specify a custom HTTP method (`-X`, `--request`)
 

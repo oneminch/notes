@@ -31,7 +31,7 @@ ssh-keygen -t rsa -b 4096 -C "some-comment"
 - Copy public key to the server
 
 ```bash
-# Default - Most recently modified file in ~/.ssh/ matching /id_*.pub/ 
+# Default - Most recently modified file in ~/.ssh/ matching /id_*.pub/
 # (but excluding file ending with '-cert.pub')
 ssh-copy-id username@remote_host
 
@@ -73,11 +73,13 @@ scp demo@remote-host:/path/to/remote/file /path/to/local/directory
 
 > [!example] Using SSH to Connect to an EC2 Instance
 > Once, private key is downloaded and stored (e.g., `my-key.pem`), run:
+>
 > ```bash
 > chmod 400 ~/.ssh/my-key.pem
 > ```
-> 
+>
 > Then, run:
+>
 > ```bash
 > ssh -i ~/.ssh/my-key.pem ec2-user@instance-public-dns
 > ```

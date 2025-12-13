@@ -1,4 +1,4 @@
-- A web server is computer software and/or hardware that accepts requests via [[HTTP]]/HTTPS, and stores/delivers content. 
+- A web server is computer software and/or hardware that accepts requests via [[HTTP]]/HTTPS, and stores/delivers content.
 - It can be used to host websites which can be single websites and multiple websites using virtualization.
 - It can also be used to host data for web applications.
 

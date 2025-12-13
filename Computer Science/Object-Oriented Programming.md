@@ -2,7 +2,7 @@
 alias: OOP
 ---
 
-- **Object-Oriented Programming** 
+- **Object-Oriented Programming**
     - A programming paradigm for designing programs using classes and objects.
     - Makes development and maintenance of programs easier
     - Provides data hiding unlike in a procedure-oriented programming.
@@ -14,15 +14,15 @@ alias: OOP
     - All **objects** have:
         - ==Identity== - Separates one object from another
         - ==Attributes== - Properties
-        - ==Behaviors== - Methods 
+        - ==Behaviors== - Methods
 
 - **Class**
     - Blueprint/template for creating objects.
     - Define object data types and methods.
     - Don't consume any space.
     - Components of a class:
-        - ==Name  / Type== - what it is
-        - ==Attributes / Properties / Data== - what describes it 
+        - ==Name / Type== - what it is
+        - ==Attributes / Properties / Data== - what describes it
         - ==Behaviors / Operations / Methods== - what it can do
     - Classes allow us to create our own data types.
 
@@ -32,13 +32,13 @@ class Point:
         self.x = x
         self.y = y
         self.z = 0
-    
+
     def update_z(self, value):
         self.z = value
-    
+
     def increment_y(self, num):
         self.y += num
-      
+
     def display(self):
         print(f"({self.x}, {self.y}, {self.z})")
 
@@ -78,10 +78,10 @@ point_3.update_z(10)
 
 - Allows us to present the same interface for varying underlying forms.
 - **Compile Time Polymorphism (Early Binding)**
-    - *Static polymorphism* uses method overloading.
+    - _Static polymorphism_ uses method overloading.
 - **Run Time Polymorphism (Late Binding)**
-    - *Dynamic polymorphism* uses method overriding.
-    - *Dynamic Method Dispatch*
+    - _Dynamic polymorphism_ uses method overriding.
+    - _Dynamic Method Dispatch_
 
 ```java
 class Computer {
@@ -100,7 +100,7 @@ public class Main {
     public static void main(String[] args) {
         Computer pc = new Computer();
         pc.boot();           // Computer Booting...
-        
+
         pc = new Laptop();   // Valid reassignment ✅
         pc.boot();           // Laptop Booting...
     }
@@ -108,13 +108,13 @@ public class Main {
 ```
 
 > [!note]
-> For a Java object to be considered polymorphic, it has to pass more than one **IS-A** test. 
-> 
+> For a Java object to be considered polymorphic, it has to pass more than one **IS-A** test.
+>
 > All Java objects pass the IS-A test for their own type and for the class Object. Hence, they are polymorphic.
 
 #### Method Overloading
 
-- Method overloading can be implemented in two different ways that involve implementing two or more methods with the same name. 
+- Method overloading can be implemented in two different ways that involve implementing two or more methods with the same name.
 - Occurs within a class.
 - One difference is in **the numbers of arguments** the methods take.
 
@@ -123,7 +123,7 @@ public class Calculator {
     public int add(int a, int b) {
         return a + b;
     }
-    
+
     public int add(int a, int b, int c) {
         return a + b + c;
     }
@@ -137,7 +137,7 @@ public class Calculator {
     public int add(int a, int b) {
         return a + b;
     }
-    
+
     public double add(double a, double b) {
         return a + b;
     }
@@ -151,11 +151,11 @@ public class Calculator {
     public int add(int a, int b) {
         return a + b;
     }
-    
+
     public int add(int a, int b, int c) {
         return a + b + c;
     }
-    
+
     public double add(double a, double b) {
         return a + b;
     }
@@ -207,7 +207,7 @@ public class Vehicle {
     public String accelerate(long mph) {
         return "Vehicle Accelerating at: " + mph + " MPH.";
     }
-    
+
     public String stop() {
         return "Vehicle Stopped.";
     }
@@ -227,17 +227,18 @@ public class ATV extends Vehicle {
     - Changing the return type of a method is also possible provided that the overridden return type is a subtype of the original type.
 
 > [!note]
-> Since the compiler can’t determine what method to call at compile time (as both the base class and the subclasses define the same methods), the compiler needs to check the type of object to know what method should be called. 
-> 
+> Since the compiler can’t determine what method to call at compile time (as both the base class and the subclasses define the same methods), the compiler needs to check the type of object to know what method should be called.
+>
 > This check happens at runtime, and because of that method overriding is a typical example of **dynamic binding**.
 
 > [!important]
+>
 > - In Java, the access modifier of the overriding method cannot be more restrictive than the overridden method.
 >     - The access modifier of the overriding method in the subclass must provide at least as much access as the overridden method in the superclass.
 >     - e.g., if the superclass has a `protected` method, the overriding method in the subclass can be declared as either `protected` or `public`, but not `private` or default (package-private).
 
-- It is possible to overload a method that has been inherited or overridden in Java. 
-    - When a subclass inherits a method from its superclass, it can overload that method by defining another method with the same name but a different parameter list (different number, types, or order of parameters). 
+- It is possible to overload a method that has been inherited or overridden in Java.
+    - When a subclass inherits a method from its superclass, it can overload that method by defining another method with the same name but a different parameter list (different number, types, or order of parameters).
 
 ```java
 class SuperClass {
@@ -263,8 +264,8 @@ class SubClass extends SuperClass {
 ##### Method Hiding
 
 - A static method cannot be overridden.
-- If a subclass implements the same static method as its parent, this is known as ==*method hiding*==. 
-    - It replaces the parent method in the calls defined in the child class. 
+- If a subclass implements the same static method as its parent, this is known as ==_method hiding_==.
+    - It replaces the parent method in the calls defined in the child class.
     - Unlike method overriding, it is resolved at compile time based on reference type (not object type).
 
 ```java
@@ -283,9 +284,9 @@ class Child extends Parent {
 public class Main {
     public static void main(String[] args) {
         Parent p = new Child();
-        
+
         p.hi();     // Calls Parent's static method
-        
+
         Child.hi(); // Calls Child's static method
     }
 }
@@ -294,7 +295,7 @@ public class Main {
 ### Inheritance
 
 - A mechanism in which an object acquires all the properties and behaviors of a parent object.
-- Existing attributes and methods get *inherited*.
+- Existing attributes and methods get _inherited_.
 - The existing class is usually known as a superclass or parent class or base class.
 - The newly-created class is usually known as a subclass or child class or derived class.
 - When we extend a class, we form an "IS-A" relationship.
@@ -327,7 +328,7 @@ class Battery {
     public Battery() {
         this.size = 100;
     }
-    
+
     public Battery(int size) {
         this.size = size;
     }
@@ -375,7 +376,7 @@ rivian.battery.describeSize();
 ### Encapsulation
 
 - Can be expressed in two ways:
-    - Ability to *encapsulate* state (attributes) and behavior (methods) into a single unit - an object.
+    - Ability to _encapsulate_ state (attributes) and behavior (methods) into a single unit - an object.
     - Ability of an object to hide parts of its internal workings from external code.
         - e.g. using access modifiers
 - **Benefits**
@@ -384,14 +385,14 @@ rivian.battery.describeSize();
 
 ## Composition
 
-- OOP also involves **composition**, which defines a "HAS-A" relationship by storing an object as a variable inside another object. 
+- OOP also involves **composition**, which defines a "HAS-A" relationship by storing an object as a variable inside another object.
     - e.g. an object of type `Car` can be assigned as a variable in an object of type `Person` to establish that `Person` has a `Car`.
 
 ## OOD
 
 ### UML Diagrams
 
-- UML (Unified Modeling Language) diagrams are visual representations used in [[Object-Oriented Programming|OOP]] to design and document software systems. 
+- UML (Unified Modeling Language) diagrams are visual representations used in [[Object-Oriented Programming|OOP]] to design and document software systems.
 - They help developers and stakeholders understand the structure, behavior, and relationships within a system.
 
 > [!example]- UML Diagrams Cheat Sheet
@@ -402,8 +403,8 @@ rivian.battery.describeSize();
 > ![UML](assets/images/ood.uml-diagrams-example.png)
 > **Source**: Lucid Software
 
-
 ---
+
 ## Further
 
 ### Reads 📄

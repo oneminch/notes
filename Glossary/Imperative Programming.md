@@ -1,2 +1,2 @@
-- In Imperative Programming, applications are written in a way that describes *how* we want to achieve the desired results step by step. 
+- In Imperative Programming, applications are written in a way that describes _how_ we want to achieve the desired results step by step.
 - Examples: C, C++

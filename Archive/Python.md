@@ -1,6 +1,7 @@
 ---
 alias: Py
 ---
+
 ## Introduction
 
 - Python is a cross-platform programming language.
@@ -28,8 +29,7 @@ alias: Py
 - String concatenation can be performed using `+`: e.g. `"hello " + ",world!"`
 - **Formatted strings**: `f'My name is {name}'`
     - Similar to [[JavaScript]] ES6 string literals.
-- Strings can be repeated using the `*` operator
-      - `print("*" * 5)` -> `*****`
+- Strings can be repeated using the `*` operator - `print("*" * 5)` -> `*****`
 - Multi-line strings are enclosed in triple quotes: `''' string '''` or `""" string """`
 
 ```python
@@ -46,15 +46,18 @@ print("""
 - Working with floats can sometimes lead to values with an arbitrary number of decimal places. This happens in all programming languages and it's due to the way computers represent numbers internally.
 
 **Arithmetic Operators**
+
 - `+`, `-`, `*`, `%`
 - `/` - true division
 - `//` - floor division; mathematical division that rounds down to nearest integer.
 - `**` - power or exponentiation
 
 **Operator Precedence:**
+
 - Parenthesis -> Exponentiation -> ( Multiplication | Division ) -> ( Addition | Subtraction )
 
 **Infinity**
+
 - Negative infinity - `float('-inf')` | `-math.inf`
 - Positive infinity - `float('inf')` | `math.inf`
 
@@ -160,7 +163,7 @@ lst3 = list("hello")
 
     ```python
     coordinates = [1, 2, 3]
-    
+
     x, y, z = coordinates
     ```
 
@@ -198,7 +201,7 @@ lst3 = list("hello")
 - A bit more complicated when the list elements are not homogeneous and all values are not in lowercase.
     - The two functions above take the `reverse=True|False` argument.
 
-**List comprehensions** 
+**List comprehensions**
 
 - allow the creation a new list based on an existing list but with a shorter syntax.
     - `newlist = [expression for item in iterable if condition == True]`
@@ -274,7 +277,7 @@ person_2 = {}
     - Similar to Objects in [[JavaScript]] in many ways.
 
 > [!NOTE]
-> 
+>
 > Any type of value can be used as a dictionary key as long as it appears only once (duplicates aren't allowed) and it must be of a type that is immutable.
 
 **Looping thru Dictionaries:**
@@ -342,7 +345,7 @@ def greet(fname, lname="Smith"):
 - Function calls must not precede their definition.
 
 > [!note]
-> In Python, functions are *[[First-Class Functions|first-class citizens]]*.
+> In Python, functions are _[[First-Class Functions|first-class citizens]]_.
 
 - [[Keyword arguments]] improve code readability:
 
@@ -472,13 +475,13 @@ class Point:
         self.y = y
         self.z = 0
         self.list.append((self.x, self.y, self.z))
-    
+
     def update_z(self, value):
         self.z = value
-    
+
     def increment_y(self, num):
         self.y += num
-      
+
     def display(self):
         print(f"({self.x}, {self.y}, {self.z})")
 
@@ -501,7 +504,7 @@ point_3.update_z(10)
 
 - Classes have two kinds of variables:
     - **Instance variables** or **object variables** that are accessible thru dot notation like below are called _attributes_.
-    - **Class variables** belong to a class object created by Python and to the objects instantiated from the class. 
+    - **Class variables** belong to a class object created by Python and to the objects instantiated from the class.
         - This means they can be access directly from a class object (e.g. `Point.list`) and from an object created with the class (e.g. `point_1.list`).
         - They allow us to inherently share data between different instances of a class without using global variables.
 
@@ -522,7 +525,7 @@ class Person:
         return self.name
 
 
-print(Person("John"))    
+print(Person("John"))
 # Prints "John" instead of <__main__.Person object at 0xabcdef>
 ```
 
@@ -607,7 +610,7 @@ print(contents)
 
 > [!note]
 > `readlines()` method of the file object stores each line from a file into a list.
-> 
+>
 > `read()` interprets all text in a file as a _string_.
 
 #### Line by line
@@ -617,6 +620,7 @@ with open('path/to/file.txt') as f:
     for line in f:
         print(line)
 ```
+
 - Each line has an invisible newline character at its end. `print()` adds its own newline character each time it's called. So, each print statement renders a blank line after each line which can be removed by applying `rstrip()` on each line.
 
 ### Writing to a file
@@ -687,7 +691,7 @@ def get_name():
 
     if len(name) < 5:
         raise ValueError("Missing Name.")
-    
+
     return name
 
 
@@ -762,7 +766,7 @@ if __name__ == '__main__':
 - **Classes**
     - Class names should be written in CamelCase with no underscores.
     - Instance and module names should be written in lowercase with underscores between
-    words.
+      words.
     - Every class should have a docstring immediately following the class definition that briefly describes what the class does.
     - Each module should also have a docstring describing what the classes in a module can be used for.
     - Blank lines can be used to organize code.
@@ -771,6 +775,7 @@ if __name__ == '__main__':
     - If your program imports a standard library module and a module you wrote, the import statement for the standard library module comes first. The import statement for the module you wrote should follow after a blank line.
 
 ---
+
 ## Further
 
 ### Reads 📄

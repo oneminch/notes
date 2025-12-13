@@ -14,21 +14,24 @@ alias: RWD
 
 ```css
 @media media-type and (media-feature-rule) {
-    /* CSS rules go here */
+	/* CSS rules go here */
 }
 ```
+
 ```html
 <link
-  rel="stylesheet"
-  href="landscape.css"
-  media="all and (orientation: landscape)" />
+	rel="stylesheet"
+	href="landscape.css"
+	media="all and (orientation: landscape)"
+/>
 <link
-  rel="stylesheet"
-  href="portrait.css"
-  media="all and (orientation: portrait)" />
+	rel="stylesheet"
+	href="portrait.css"
+	media="all and (orientation: portrait)"
+/>
 ```
 
-### Media types 
+### Media types
 
 - can be any of `all`, `print` or `screen`.
     - These are optional; An omitted type implies a default value of `all`.
@@ -42,9 +45,9 @@ alias: RWD
 
 ```css
 @media screen and (max-width: 768px) {
-    body {
-      color: blue;
-    }
+	body {
+		color: blue;
+	}
 }
 ```
 
@@ -54,9 +57,9 @@ alias: RWD
 
 ```css
 @media screen and (min-width: 768px) {
-    .wrapper {
-        margin: 1.5em 3em;
-    }
+	.wrapper {
+		margin: 1.5em 3em;
+	}
 }
 ```
 
@@ -69,6 +72,7 @@ alias: RWD
 - `@media (hover: hover) {}` - indicates some sort of pointing device is being used; touchscreen and keyboard navigation are excluded.
 
 **`pointer`**
+
 - `none`- no pointing device, e.g. voice or keyboard navigation
 - `fine` - mouse or trackpad
 - `coarse` - finger on a touchscreen
@@ -80,24 +84,23 @@ alias: RWD
 ```css
 /* and logic */
 @media screen and (min-width: 600px) and (orientation: landscape) {
-body {
-    color: blue;
-}
+	body {
+		color: blue;
+	}
 }
 
 /* or logic */
-@media screen and (min-width: 600px),
-screen and (orientation: landscape) {
-    body {
-        color: blue;
-    }
+@media screen and (min-width: 600px), screen and (orientation: landscape) {
+	body {
+		color: blue;
+	}
 }
 
 /* not logic */
 @media not all and (orientation: landscape) {
-    body {
-        color: blue;
-    }
+	body {
+		color: blue;
+	}
 }
 ```
 
@@ -106,20 +109,22 @@ screen and (orientation: landscape) {
 ## Flexible grids
 
 - Layout methods such as Multi-column, Flexbox, and Grid can be used along with Media Queries to achieve responsive design.
+
 ## Responsive images
 
 ```css
 /* simplest approach to responsive images */
 img {
-    max-width: 100%;
+	max-width: 100%;
 }
 ```
 
 - More about responsive images in [[HTML#images-and-multimedia]].
+
 ## Responsive typography
 
 > ...describes changing font sizes within media queries to reflect lesser or greater amounts of screen real estate.
-  
+
 > [!note]
 > Text size should _never_ be set using viewport units (`vw`) alone due to issues with zooming. However, interesting results can be achieved when used together with other relative units (`em` & `rem`) and `calc()`; even more control can be achieved using `clamp()`.
 
@@ -128,7 +133,7 @@ img {
 ```html
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 ```
-  
+
 > ...tells mobile browsers that they should set the width of the viewport to the device width, and scale the document to 100% of its intended size.
 
 ## Internationalization
@@ -139,10 +144,10 @@ img {
 
 ```css
 p {
-    text-align: right; /* ⛔ */
-    text-align: end; /* ✅ */
+	text-align: right; /* ⛔ */
+	text-align: end; /* ✅ */
 }
 ```
-  
+
 - Identify the language of a page using the `lang` attribute on the root (`<html>`) element. The attribute can go on any element to identify the content's language.
 - Identify the language of a linked document using the `hreflang` attribute on the anchor (`<a>`) and link (`<link>`) elements.

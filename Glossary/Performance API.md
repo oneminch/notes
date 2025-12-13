@@ -5,17 +5,17 @@
     - `Date.now()` returns time elapsed relative to ==the Unix epoch== and it is dependent on the system clock. It is also less precise.
 
 ```js
-const list = new Array(10000).fill(1)
-const searchNum = 10
+const list = new Array(10000).fill(1);
+const searchNum = 10;
 
-let t0 = performance.now()
+let t0 = performance.now();
 for (let num of list) {
-    if (num === searchNum) {
-        console.log("Found!")
-        break;
-    }
+	if (num === searchNum) {
+		console.log("Found!");
+		break;
+	}
 }
-let t1 = performance.now()
+let t1 = performance.now();
 
-console.log(`Searching took ${(t1-t0)} ms to run.`)
+console.log(`Searching took ${t1 - t0} ms to run.`);
 ```

@@ -17,8 +17,8 @@
 ```java
 // HelloWorld.java
 public class HelloWorld {
-    /* Entry Point of a Java Program */
-    public static void main(String[] args) { /* ... */ }
+	/* Entry Point of a Java Program */
+	public static void main(String[] args) { /* ... */ }
 }
 ```
 
@@ -57,6 +57,7 @@ boolean isTrue = true;
 ```
 
 > [!note]
+>
 > - Numeric ranges of a certain type are from $-2^{(n - 1)}$ to $-2^{(n - 1)} - 1$, where `n` is the number of bits.
 > - To increase readability, numbers can be separated with `_`; trailing zeros can be shortened using exponentiation. e.g. `1_000_000`
 
@@ -88,7 +89,7 @@ boolean isTrue = true;
 #### Wrapper Objects
 
 - Special classes that "wrap" around primitive data types.
-- Provide an object representation of those primitive types. 
+- Provide an object representation of those primitive types.
 - Are [[immutable]].
 - Allow primitive data types to be treated as objects, enabling them to be used in contexts where objects are required, such as in collections, generics, and method parameters.
 - Purposes:
@@ -107,10 +108,10 @@ boolean isTrue = true;
     - `Long` for `long`
     - `Float` for `float`
     - `Double` for `double`
-- Java also provides automatic boxing and unboxing mechanisms to simplify the conversion between primitive types and their corresponding wrapper class objects. 
+- Java also provides automatic boxing and unboxing mechanisms to simplify the conversion between primitive types and their corresponding wrapper class objects.
 
 > [!note]
-> **Boxing** is the conversion of a primitive value to its wrapper class object, while unboxing is the conversion of a wrapper class object to its primitive value. Java does *autoboxing* in which it automatically performs boxing implicitly.
+> **Boxing** is the conversion of a primitive value to its wrapper class object, while unboxing is the conversion of a wrapper class object to its primitive value. Java does _autoboxing_ in which it automatically performs boxing implicitly.
 
 ```java
 // Boxing (Explicit)
@@ -118,7 +119,7 @@ Integer intObj = Integer.valueOf(42);
 // OR Integer intObj = 42; (autoboxing)
 
 // Unboxing (Explicit)
-int primitiveInt = intObj.intValue(); 
+int primitiveInt = intObj.intValue();
 // OR int primitiveInt = intObj; (autounboxing)
 
 /* --------------------- */
@@ -133,7 +134,7 @@ intList.add(10);                  // Autoboxing
 intList.add(Integer.valueOf(20)); // Explicit Boxing
 
 for (Integer num : intList) {
-    System.out.println(num);   // Autounboxing
+	System.out.println(num);   // Autounboxing
 }
 
 /* --------------------- */
@@ -165,9 +166,9 @@ int[] nums = null;
 nums.Length;  // NullPointerException
 
 if(arr != null) {
-    System.out.println(arr.length);
+	System.out.println(arr.length);
 } else {
-    /* ... */
+	/* ... */
 }
 ```
 
@@ -183,7 +184,7 @@ String firstName = new String("John");
 String lastName = "Doe";
 ```
 
-- When Strings are created they are placed in a special location within the heap called the *String Pool*.
+- When Strings are created they are placed in a special location within the heap called the _String Pool_.
     - Two string variables that are created using String literals and contain the same value have the same reference, i.e. there are no duplicate values stored in the heap.
 
 ```java
@@ -248,7 +249,6 @@ System.out.print(jane.name);  // Jane Doe
 - **Primitive Type Casting**
     - Type casting can be lossy.
         - e.g. A float casted to an integer will lose its decimal points.
-    
     - **Widening Casting** (automatic) - convert a smaller type to a larger size type.
         - `byte` -> `short` -> `char` -> `int` -> `long` -> `float` -> `double`
     - **Narrowing Casting** (manual) - convert a larger type to a smaller size type.
@@ -260,11 +260,11 @@ int b = 14;
 
 // Implicit (Conversion)
 a = b; // ⛔
-b = a; // ✅ 
+b = a; // ✅
 
 // Explicit (Casting)
 a = (byte)b;
-``` 
+```
 
 - **Type Promotion**
 
@@ -285,89 +285,90 @@ int c = a * b; // 200 (Outside byte range)
 
 ```java
 class Vehicle {
-    void drive() {
-        System.out.println("Driving a vehicle...");
-    }
+	void drive() {
+		System.out.println("Driving a vehicle...");
+	}
 }
 
 class Car extends Vehicle {
-    void accelerate() {
-        System.out.println("Speeding up a car...");
-    }
+	void accelerate() {
+		System.out.println("Speeding up a car...");
+	}
 }
 ```
 
 ```java
 public class Main {
-    public static void main(String[] args) {
-        Car car = new Car();     // Object of subclass
-        Vehicle vehicle = car;   // Upcasting - Treating Car as Vehicle
-        // vehicle.drive();      // ✅, drive() present in Vehicle
-        // vehicle.accelerate(); // ⛔, accelerate() specific to Car
-    
-        goForARide(vehicle);
-        goForARide(car);
-    
-        /*
-        Output:
-            Driving a vehicle...
-            Driving a vehicle...
-        */
-    }
+	public static void main(String[] args) {
+		Car car = new Car();     // Object of subclass
+		Vehicle vehicle = car;   // Upcasting - Treating Car as Vehicle
+		// vehicle.drive();      // ✅, drive() present in Vehicle
+		// vehicle.accelerate(); // ⛔, accelerate() specific to Car
 
-    public static void goForARide(Vehicle v) {
-        v.drive();
-    }
+		goForARide(vehicle);
+		goForARide(car);
+
+		/*
+		Output:
+			Driving a vehicle...
+			Driving a vehicle...
+		*/
+	}
+
+	public static void goForARide(Vehicle v) {
+		v.drive();
+	}
 }
 ```
 
 > [!important]
-> - The *type* of variable determines which methods can be called. 
+>
+> - The _type_ of variable determines which methods can be called.
 >     - e.g. `drive()` can be called on any `Vehicle`.
-> 
-> - The specific type of the object a variable is referring to determines which specific implementation of a method will be used when it's called. 
+> - The specific type of the object a variable is referring to determines which specific implementation of a method will be used when it's called.
 >     - e.g. If `drive()` has been overridden from the subclass `Car`, `Car`'s implementation of `drive()` will be used at run time.
 
 - **Downcasting** - Casting an object of a superclass type to its child or subclass type.
     - An explicit operation that requires an explicit cast.
         - Can lead to runtime exceptions if not performed correctly.
-    - Should be performed with caution, as it can lead to a `ClassCastException` if the object being downcast is not an instance of the target subclass type. 
+    - Should be performed with caution, as it can lead to a `ClassCastException` if the object being downcast is not an instance of the target subclass type.
         - It is recommended to use the `instanceof` operator to check the object's type before downcasting.
 
 ```java
 public class Main {
-    public static void main(String[] args) {
-        Vehicle vehicle = new Car();  // Upcasting
-        Car car = (Car) vehicle;      // Downcasting
-        // car.drive();               // ✅, drive() present in Vehicle
-        // car.accelerate();          // ✅, accelerate() specific to Car
-    
-        goForARide(vehicle);
-        goForARide(car);
+	public static void main(String[] args) {
+		Vehicle vehicle = new Car();  // Upcasting
+		Car car = (Car) vehicle;      // Downcasting
+		// car.drive();               // ✅, drive() present in Vehicle
+		// car.accelerate();          // ✅, accelerate() specific to Car
 
-        /*
-        Output:
-            Driving a vehicle...
-            Speeding up a car...
-            Driving a vehicle...
-            Speeding up a car...
-        */
-    }
-    
-    public static void goForARide(Vehicle v) {
-        v.drive();
+		goForARide(vehicle);
+		goForARide(car);
 
-        if (v instanceof Car) {
-            Car c = (Car) v;
-            c.accelerate();
-        }
-    }
+		/*
+		Output:
+			Driving a vehicle...
+			Speeding up a car...
+			Driving a vehicle...
+			Speeding up a car...
+		*/
+	}
+
+	public static void goForARide(Vehicle v) {
+		v.drive();
+
+		if (v instanceof Car) {
+			Car c = (Car) v;
+			c.accelerate();
+		}
+	}
 }
 ```
 
 ---
 
 > [!note]
+>
 > - Primitives are predefined in Java, while non-primitives are not (except for `String`).
 >     - They are created by the developer.
 > - Non-primitives have methods for performing certain operations, while primitives don't.
@@ -383,11 +384,11 @@ public class Main {
 
 ```java
 void test() {
-    {
-        int num = 0;
-    }
+	{
+		int num = 0;
+	}
 
-    num++; // Compiler Error, num is out of scope    
+	num++; // Compiler Error, num is out of scope
 }
 ```
 
@@ -395,11 +396,11 @@ void test() {
 
 ```java
 if (condition) {
-    /* Code Block */
+	/* Code Block */
 } else if (anotherCondition) {
-    /* Code Block */
+	/* Code Block */
 } else {
-    /* Code Block */
+	/* Code Block */
 }
 ```
 
@@ -408,32 +409,32 @@ if (condition) {
 **Switch Statements**
 
 - Variables used in a `switch` statement can only be convertible integers (byte, short, int, char), strings and enums.
-- `switch` statements support _fall-through_ logic.
+- `switch` statements support *fall-through* logic.
     - Whatever case is met first, all other cases below it will execute unless `break` is used to exit a particular case.
 
 ```java
 switch (condition) {
-    case caseOne:
-        // Code Block
-        break;
-    case caseTwo:
-        // Code Block
-        break;
-    default:
-        // Code Block
+	case caseOne:
+		// Code Block
+		break;
+	case caseTwo:
+		// Code Block
+		break;
+	default:
+		// Code Block
 
 switch (condition) {
-    case caseOne: {
-        // Code Block
-        break;
-    }
-    case caseTwo: {
-        // Code Block
-        break;
-    }
-    default: {
-        // Code Block
-    }
+	case caseOne: {
+		// Code Block
+		break;
+	}
+	case caseTwo: {
+		// Code Block
+		break;
+	}
+	default: {
+		// Code Block
+	}
 }
 ```
 
@@ -462,26 +463,26 @@ while (condition) { /* Code */ }
 **Do While**
 
 ```java
-do { 
-    /* Code */
+do {
+	/* Code */
 } while (condition);
 ```
 
-- Java provides a way to branch in an arbitrary and unstructured manner. 
+- Java provides a way to branch in an arbitrary and unstructured manner.
     - Labels are used to identify a block of code.
     - In addition to exiting a loop or terminating a `switch` statement, `break` is used as a form of goto to navigate to specific sections of code.
 
 ```java
 first:
-    for (int i = 0; i < 3; i++) {
-        second:
-            for (int j = 0; j < 3; j++) {
-                if (i == 1 && j == 1) {
-                    break first;
-                }
-                System.out.println(i + " " + j);
-            }
-    }
+	for (int i = 0; i < 3; i++) {
+		second:
+			for (int j = 0; j < 3; j++) {
+				if (i == 1 && j == 1) {
+					break first;
+				}
+				System.out.println(i + " " + j);
+			}
+	}
 ```
 
 ### Exceptions
@@ -499,13 +500,13 @@ int a = 0;
 int b = 0;
 
 try {
-    b = 10/0;
+	b = 10/0;
 } catch(ArithmeticException e) {
-    System.out.print("Can't Divide By Zero!");
+	System.out.print("Can't Divide By Zero!");
 } catch(AnotherSpecificException e) {
-    System.out.print("A Specific Exception Occured!");
+	System.out.print("A Specific Exception Occured!");
 } catch(Exception e) {
-    System.out.print("Something went wrong!");
+	System.out.print("Something went wrong!");
 }
 ```
 
@@ -524,38 +525,38 @@ try {
 /* Try-Catch-Finally */
 Scanner s = null;
 try {
-    s = new Scanner(new File("file.txt"));
-    while (s.hasNext()) {
-        System.out.print(s.nextLine());
-    }
-} catch (FileNotFoundException e) { /* Catch Block Code */ } 
+	s = new Scanner(new File("file.txt"));
+	while (s.hasNext()) {
+		System.out.print(s.nextLine());
+	}
+} catch (FileNotFoundException e) { /* Catch Block Code */ }
 finally {
-    if (scanner != null) {
-        scanner.close();
-    }
+	if (scanner != null) {
+		scanner.close();
+	}
 }
 
 /* Try-with-Resources */
 try (Scanner s = new Scanner(new File("file.txt"))) {
-    while (s.hasNext()) {
-        System.out.print(s.nextLine());
-    }
+	while (s.hasNext()) {
+		System.out.print(s.nextLine());
+	}
 } catch (FileNotFoundException fnfe) { /* Catch Block Code */ }
 ```
 
-> [!note] 
+> [!note]
 > `throw` is used to invoke an exception explicitly.
 
 ```java
 int a = 0;
 try {
-    a = 0/10;
-    
-    if (a == 0) {
-        throw new ArithmeticException("Quotient is Zero!");
-    }
+	a = 0/10;
+
+	if (a == 0) {
+		throw new ArithmeticException("Quotient is Zero!");
+	}
 } catch (ArithmeticException e) {
-    System.out.print(e);
+	System.out.print(e);
 }
 ```
 
@@ -570,8 +571,8 @@ try {
 #### Checked Exceptions
 
 - Checked by the compiler at compile-time.
-- Handling these exceptions using `try-catch` blocks or *ducking* them (by declaring them in the method signature using the `throws` clause) is required.
-    - If not handled, the compiler cannot proceed with the compilation of code, resulting in a *compilation error*.
+- Handling these exceptions using `try-catch` blocks or _ducking_ them (by declaring them in the method signature using the `throws` clause) is required.
+    - If not handled, the compiler cannot proceed with the compilation of code, resulting in a _compilation error_.
 - Not derived from the `RuntimeException` class.
 - Examples: `IOException`, `SQLException`, `ClassNotFoundException`, etc.
 
@@ -581,21 +582,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class CheckedExceptions {
-    public static void main(String[] args) {
-        try {
-            readFile("file.txt");
-        } catch (FileNotFoundException e) {
-            System.out.println("File Not Found: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO Error: " + e.getMessage());
-        }
-    }
+	public static void main(String[] args) {
+		try {
+			readFile("file.txt");
+		} catch (FileNotFoundException e) {
+			System.out.println("File Not Found: " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("IO Error: " + e.getMessage());
+		}
+	}
 
-    public static void readFile(String fileName) throws FileNotFoundException, IOException {
-        FileInputStream fis = new FileInputStream(fileName);
-        // Do File Reading & Processing
-        fis.close();
-    }
+	public static void readFile(String fileName) throws FileNotFoundException, IOException {
+		FileInputStream fis = new FileInputStream(fileName);
+		// Do File Reading & Processing
+		fis.close();
+	}
 }
 ```
 
@@ -608,30 +609,30 @@ public class CheckedExceptions {
 
 ```java
 public class UncheckedExceptions {
-    public static void main(String[] args) {
-        int[] numbers = {1, 2, 3};
-        
-        try {
-            int result = divideByZero(10, 0);
-            System.out.println("Result: " + result);
-            
-            // ArrayIndexOutOfBoundsException
-            int value = numbers[3]; 
-        } catch (ArithmeticException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
+	public static void main(String[] args) {
+		int[] numbers = {1, 2, 3};
 
-    public static int divideByZero(int a, int b) {
-        // ArithmeticException
-        return a / b; 
-    }
+		try {
+			int result = divideByZero(10, 0);
+			System.out.println("Result: " + result);
+
+			// ArrayIndexOutOfBoundsException
+			int value = numbers[3];
+		} catch (ArithmeticException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+	}
+
+	public static int divideByZero(int a, int b) {
+		// ArithmeticException
+		return a / b;
+	}
 }
 ```
 
 #### Custom Exceptions
 
-- Useful for 
+- Useful for
     - adding specific attributes or methods to the exception.
     - grouping and differentiating application-specific errors.
     - providing more context about the error than standard exceptions offer.
@@ -641,47 +642,47 @@ public class UncheckedExceptions {
 
 ```java
 class MyException extends Exception {
-    public MyException() {
-        super();
-    }
-    
-    public MyException(String message) {
-        super(message);
-    }
-    
-    public MyException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	public MyException() {
+		super();
+	}
+
+	public MyException(String message) {
+		super(message);
+	}
+
+	public MyException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
 ```
 
 #### `throws`
 
-- Used to *duck* exceptions.
-- Appended to the method signature to declare that a method can throw one or more exceptions. 
+- Used to _duck_ exceptions.
+- Appended to the method signature to declare that a method can throw one or more exceptions.
 - Specifies the type of exceptions that a method might throw during its execution.
 - The responsibility of exception handling is passed onto the calling method.
-    - The method that calls a method which `throws` an exception must either 
-        - handle the exception using a `try-catch` block, or 
+    - The method that calls a method which `throws` an exception must either
+        - handle the exception using a `try-catch` block, or
         - declare that it `throws` the exception as well.
 
 ```java
 public static void readFile(String fileName) throws FileNotFoundException {
-    FileReader reader = new FileReader(fileName);
+	FileReader reader = new FileReader(fileName);
 }
 
 public static void main(String[] args) {
-    try {
-        readFile("file.txt");
-    } catch (FileNotFoundException e) {
-        System.out.println("Exception caught: " + e.getMessage());
-    }
+	try {
+		readFile("file.txt");
+	} catch (FileNotFoundException e) {
+		System.out.println("Exception caught: " + e.getMessage());
+	}
 }
 ```
 
 #### `Error`
 
-- Represents a serious problem that the application should not try to handle, such as `OutOfMemoryError` or `StackOverflowError`. 
+- Represents a serious problem that the application should not try to handle, such as `OutOfMemoryError` or `StackOverflowError`.
 - Typically not handled by the application but rather by the JVM.
 
 ### Debugging
@@ -694,24 +695,24 @@ public static void main(String[] args) {
 
 ```java
 class People {
-    public static void main(String[] args) {
-        Person p = new Person("John", -1);
-    }
+	public static void main(String[] args) {
+		Person p = new Person("John", -1);
+	}
 }
 
 class Person {
-    String name;
-    int age;
-    
-    public Person(String name, int age) {
-        assert (age >= 0) : "Invalid Age";
-        this.name = name;
-        this.age = age;
-    }
+	String name;
+	int age;
+
+	public Person(String name, int age) {
+		assert (age >= 0) : "Invalid Age";
+		this.name = name;
+		this.age = age;
+	}
 }
 ```
 
-- Modern IDEs come with some debugging features built in. 
+- Modern IDEs come with some debugging features built in.
     - Breakpoints are used to stop program execution at certain points in the execution of the program. We can then continue its execution by stepping through the program.
 
 ## OOP
@@ -723,62 +724,61 @@ class Person {
 ```java
 // Person.java
 class Person {
-    // Instance Variables
-    String firstName;
-    String lastName;
-    boolean isAdult;
+	// Instance Variables
+	String firstName;
+	String lastName;
+	boolean isAdult;
 
-    // Static Variable
-    static String role;
+	// Static Variable
+	static String role;
 
-    // Constructor
-    Person(String fName, String lName, boolean isAdult) {
-        this.firstName = fName;
-        this.lastName = lName;
-        this.isAdult = isAdult;
-    }
+	// Constructor
+	Person(String fName, String lName, boolean isAdult) {
+		this.firstName = fName;
+		this.lastName = lName;
+		this.isAdult = isAdult;
+	}
 
-    // Method
-    public void greet() {
-        System.out.print("Hello, my name is " + this.firstName + ".");
-    }
+	// Method
+	public void greet() {
+		System.out.print("Hello, my name is " + this.firstName + ".");
+	}
 }
 ```
 
 ```java
 // Main.java
 public class Main {
-    public static void main(String[] args) {
-        Person john = new Person("John", "Doe", true);
-        Person.role = "USER";
-    }
+	public static void main(String[] args) {
+		Person john = new Person("John", "Doe", true);
+		Person.role = "USER";
+	}
 }
 ```
 
-- Unlike methods, constructors in Java 
+- Unlike methods, constructors in Java
     - Are invoked implicitly.
     - Must have no explicit return type.
     - Must have the same name as the class name.
     - Can't be `abstract`, `static`, `final`, and synchronized.
-- If a class has *no* constructors defined, the java compiler creates a default one with no arguments.
+- If a class has _no_ constructors defined, the java compiler creates a default one with no arguments.
     - If any kind of constructor is implemented, a default constructor is not provided.
 
 > [!important] Naming Files
+>
 > - There can be only one public class per source code file.
-> 
-> - If there is a public class in a file, the name of the file must match the name of the public class. 
+> - If there is a public class in a file, the name of the file must match the name of the public class.
 >     - For example, a class declared as `public class Person { }` must be in a source code file named Person.java.
-> 
 > - This also applies towards interfaces.
 
 > [!note] Keywords
-> - The `new` keyword is required to dynamically allocate memory for objects at runtime. 
+>
+> - The `new` keyword is required to dynamically allocate memory for objects at runtime.
 >     - It is used to create instances of both regular classes and array objects.
 >     - In Java, all class objects are dynamically allocated.
->  
 > - The `this` keyword is not necessary to access properties and methods within a class as long as there's no ambiguity (e.g. naming conflicts).
 >     - `this` is a **reference variable** that refers to the current object.
->        - The compiler adds `this` by default if not provided in code.
+>         - The compiler adds `this` by default if not provided in code.
 
 - Any class that doesn't have an `extends` clause implicitly inherits `Object`.
 - `Object` provides the following methods:
@@ -800,12 +800,12 @@ public class Main {
         - Wrapper classes like `Integer`, `Long`, `Double`, etc.
         - `java.math.BigInteger` and `java.math.BigDecimal`
         - Unmodifiable collections like `Collections.singletonMap()`
-        - Java 8 Date Time API classes like `LocalDate`, `LocalTime`, etc.    
+        - Java 8 Date Time API classes like `LocalDate`, `LocalTime`, etc.
     - Guidelines for creating immutable classes:
         - The class should be declared as final so it cannot be extended.
-        - All fields should be private and final so they can only be initialized once. 
-        - Setter methods shouldn't be provided to change the object state. 
-        - Only getter methods should be provided that return copies of mutable fields to avoid direct access. 
+        - All fields should be private and final so they can only be initialized once.
+        - Setter methods shouldn't be provided to change the object state.
+        - Only getter methods should be provided that return copies of mutable fields to avoid direct access.
         - A constructor should be used to initialize all the fields.
     - Key benefits of immutable classes:
         - **Predictability** - The state of the object will never change
@@ -823,7 +823,7 @@ public class Main {
     - This provides the highest level of encapsulation and data hiding.
 
 - ==Default Access==
-    - If an access modifier isn't specified, the method's visibility is limited to the package it's defined in. 
+    - If an access modifier isn't specified, the method's visibility is limited to the package it's defined in.
         - This is more restrictive than `public`, but less restrictive than `private` or `protected`.
     - The method will have the default "package-private", "private-protected" or "friendly" access level, which means the method is accessible within the same package (the package where the class is defined), but not from other packages, even if those packages contain subclasses of the class containing the method.
 
@@ -832,16 +832,14 @@ public class Main {
     - This is used to achieve inheritance across packages.
 
 - ==`public`==
-    - Makes members accessible from anywhere, both within the same package and from different packages. 
+    - Makes members accessible from anywhere, both within the same package and from different packages.
     - Public classes, interfaces, and members form the public API of a library or application
 
 > [!note] Noteworthy
-> - Access modifiers cannot be applied to local variables within methods, but they can be applied to classes, interfaces, variables, methods, and constructors. 
-> 
-> - In Java, it's not required to explicitly declare the access modifier of methods. 
-> 
+>
+> - Access modifiers cannot be applied to local variables within methods, but they can be applied to classes, interfaces, variables, methods, and constructors.
+> - In Java, it's not required to explicitly declare the access modifier of methods.
 > - In general, it's considered good practice to explicitly specify the intended access level for methods (and other class members) using the appropriate access modifier keywords.
-> 
 > - The choice of access modifier depends on the level of encapsulation and accessibility required for a particular member. It's generally recommended to use the most restrictive access modifier that meets the requirements, following the principle of least privilege.
 
 ### Non-Access Modifiers
@@ -853,57 +851,57 @@ public class Main {
 
 ```java
 class Person {
-    /* ... */
-    static String role;
+	/* ... */
+	static String role;
 
-    static {
-        role = "USER";
-    }
+	static {
+		role = "USER";
+	}
 
-    public static void printRole() {
-        System.out.print("Role: " + role);
-    }
+	public static void printRole() {
+		System.out.print("Role: " + role);
+	}
 
-    /* ... */
+	/* ... */
 }
 ```
 
 ```java
 class Vehicle {
-    static String brand = findBrand();
+	static String brand = findBrand();
 
-    static {
-        System.out.println("Static Block");
-    }
+	static {
+		System.out.println("Static Block");
+	}
 
-    static String findBrand() {
-        System.out.println("findBrand()");
-        return "Generic";
-    }
-    
-    public static void main(String[] args) {
-        System.out.println("Main method");
-    }
+	static String findBrand() {
+		System.out.println("findBrand()");
+		return "Generic";
+	}
 
-    /*
-    
-    Execution Order:
-    - findBrand()
-    - Static Block
-    - Main method
-    
-    */
+	public static void main(String[] args) {
+		System.out.println("Main method");
+	}
+
+	/*
+
+	Execution Order:
+	- findBrand()
+	- Static Block
+	- Main method
+
+	*/
 }
 ```
 
 - **==`abstract`==**
-    - An abstract method is a method that is declared without an implementation, using the `abstract` keyword. 
+    - An abstract method is a method that is declared without an implementation, using the `abstract` keyword.
     - Abstract classes provide a base class that can be extended by subclasses, allowing for code reuse and the enforcement of a common interface or behavior.
     - If a class has any abstract methods, the class must be declared as abstract.
     - Subclasses of an abstract class must either provide implementations for all abstract methods or be declared as abstract themselves.
     - Abstract classes can have both abstract and non-abstract (concrete) methods. They can also have constructors, instance variables, and static methods.
     - Since Abstract classes are meant to be extended, they cannot be `final`.
-    - Classes that have full implementation for all of their methods, including any abstract methods inherited from superclasses or interfaces are known as *concrete classes*.
+    - Classes that have full implementation for all of their methods, including any abstract methods inherited from superclasses or interfaces are known as _concrete classes_.
         - Concrete classes can be instantiated directly using `new.
 
 > [!important]
@@ -912,36 +910,36 @@ class Vehicle {
 ```java
 // Abstract Class
 abstract class Vehicle {
-    protected String model;
+	protected String model;
 
-    public Vehicle(String model) {
-        this.model = model;
-    }
+	public Vehicle(String model) {
+		this.model = model;
+	}
 
-    public abstract double getFuelEfficiency();
+	public abstract double getFuelEfficiency();
 }
 
 // Concrete Class
 class Car extends Vehicle {
-    private double fuelEfficiency;
+	private double fuelEfficiency;
 
-    public Car(String model, double fuelEfficiency) {
-        super(model);
-        this.fuelEfficiency = fuelEfficiency;
-    }
+	public Car(String model, double fuelEfficiency) {
+		super(model);
+		this.fuelEfficiency = fuelEfficiency;
+	}
 
-    @Override
-    public double getFuelEfficiency() {
-        return fuelEfficiency;
-    }
+	@Override
+	public double getFuelEfficiency() {
+		return fuelEfficiency;
+	}
 }
 
 public class Main {
-    public static void main(String[] args) {
-        Car car = new Car("Camry", 45.6);
+	public static void main(String[] args) {
+		Car car = new Car("Camry", 45.6);
 
-        System.out.println("Car fuel efficiency: " + car.getFuelEfficiency());
-    }
+		System.out.println("Car fuel efficiency: " + car.getFuelEfficiency());
+	}
 }
 
 ```
@@ -952,7 +950,7 @@ public class Main {
     - By default, when instantiating an object of a subclass, both constructors of the subclass and the superclass are called.
         - When an instance of a subclass is created, an instance of parent class is also created implicitly which is referred by `super` reference variable.
         - Either a `super()` or a `this()` call **must** be the first line in a constructor.
-    - `super` is a reference variable which is used to refer immediate parent class object. 
+    - `super` is a reference variable which is used to refer immediate parent class object.
         - It can be used:
             - to refer immediate parent class instance variable. (e.g. `super.firstName`)
             - to invoke immediate parent class method. (e.g. `super.getFirstName()`)
@@ -962,47 +960,47 @@ public class Main {
 
 ```java
 class X {
-    public X () {
-        System.out.print("Called from X");
-    }
-    public X (int n) {
-        System.out.print("Called from X: " + n);
-    }
+	public X () {
+		System.out.print("Called from X");
+	}
+	public X (int n) {
+		System.out.print("Called from X: " + n);
+	}
 }
 
 class Y extends X {
-    public Y () {
-        System.out.print("Called from Y");
-    }
-    public Y (int n) {
-        super(n);
-        System.out.print("Called from Y: " + n);
-    }
+	public Y () {
+		System.out.print("Called from Y");
+	}
+	public Y (int n) {
+		super(n);
+		System.out.print("Called from Y: " + n);
+	}
 }
 ```
 
 ```java
-Y point1 = new Y(); 
+Y point1 = new Y();
 /*
 Called from X
 Called from Y
 */
 
-Y point2 = new Y(5); 
+Y point2 = new Y(5);
 /*
 Called from X: 5
 Called from Y: 5
 */
 ```
 
-> [!important] 
+> [!important]
 > Every class in Java extends `Object`. That means it inherits methods defined on `Object` such as `toString()` (which is called when printing an instance of a class) and `equals()`.
 
 - **==`final`==**
     - can be used with a variable, a method or a class.
-        - Marking a class `final` makes it so that it *can't be inherited or extended*.
-        - Marking a method `final` makes it so that it *can't be overridden*.
-        - Marking a variable `final` makes it constant so that it *can't be reassigned*.
+        - Marking a class `final` makes it so that it _can't be inherited or extended_.
+        - Marking a method `final` makes it so that it _can't be overridden_.
+        - Marking a variable `final` makes it constant so that it _can't be reassigned_.
     - Performing those tasks on `final` variables, methods and classes causes a compile-time error.
     - An uninitialized final variable can only be initialized in a constructor.
     - The position of the `final` keyword does not matter with respect to access modifiers.
@@ -1021,9 +1019,9 @@ final public int finalVar = 42;
 ### Interfaces
 
 - Blueprints or contracts that define a set of abstract methods and constants.
-    - Specifies the behavior of a class without providing the implementation details. 
+    - Specifies the behavior of a class without providing the implementation details.
     - Declared using the `interface` keyword.
-    - Can only contain `abstract` methods, which are methods without any implementation. 
+    - Can only contain `abstract` methods, which are methods without any implementation.
         - Can also have default and static methods (Java 8), and `private` and `private static` methods (Java 9).
         - All the methods in an interface are implicitly public and abstract.
     - Can only have static final variables (constants), and all variables are implicitly `public`, `static`, and `final`.
@@ -1031,31 +1029,31 @@ final public int finalVar = 42;
     - Used to achieve abstraction.
     - Allow a class to implement multiple interfaces, providing a way to achieve [[multiple inheritance]], which is not possible with classes.
     - Promote loose coupling between classes by defining a contract that classes must follow, without specifying the implementation details.
-    - Cannot be instantiated directly. 
-        - They are *implemented* by classes, which provide the actual implementation of the abstract methods.
+    - Cannot be instantiated directly.
+        - They are _implemented_ by classes, which provide the actual implementation of the abstract methods.
     - Using `default`, a method can have a default implementation that is used if it's not overridden.
 
 ```java
 public interface Printable {
-    void print(String message);
+	void print(String message);
 
-    default void printUppercase(String message) {
-        System.out.println(message.toUpperCase())
-    }
+	default void printUppercase(String message) {
+		System.out.println(message.toUpperCase())
+	}
 }
 
 public class Printer implements Printable {
-    @Override
-    public void print(String message) {
-        System.out.println("Printing: " + message);
-    }
+	@Override
+	public void print(String message) {
+		System.out.println("Printing: " + message);
+	}
 }
 
 public class Main {
-    public static void main(String[] args) {
-        Printable printer = new Printer();
-        printer.print("Hello, World!");
-    }
+	public static void main(String[] args) {
+		Printable printer = new Printer();
+		printer.print("Hello, World!");
+	}
 }
 ```
 
@@ -1065,7 +1063,7 @@ public class Main {
 
 ```java
 interface AddCalc {
-    void add();
+	void add();
 }
 
 interface SciCalc extends AddCalc, SubCalc { /*...*/ }
@@ -1077,24 +1075,25 @@ class MyClass implements SciCalc { /*...*/ }
 
 ```java
 interface X {
-    void commonMethod();
+	void commonMethod();
 }
 
 interface Y {
-    void commonMethod();
+	void commonMethod();
 }
 
 class MyClass implements X, Y {
-    @Override
-    public void commonMethod() {
-        System.out.println("Common Method Implemented!");
-    }
+	@Override
+	public void commonMethod() {
+		System.out.println("Common Method Implemented!");
+	}
 }
 ```
 
 - Unlike abstract classes, adding new methods to an interface (using default or static methods) maintains backward compatibility, as existing implementing classes do not need to be modified.
 
-> [!important] 
+> [!important]
+>
 > - By default, a class that doesn't full implement an interface is an abstract class.
 > - A class cannot implement multiple interfaces with the same methods having the same signature but different return types. It results in an error. But, it's possible to implement interfaces with methods of the same name and return type but different parameter list.
 
@@ -1114,9 +1113,9 @@ class MyClass implements X, Y {
 - Both cannot be instantiated.
 - Abstract classes can have both abstract methods (without implementation) and concrete methods (with implementation), while interfaces can only have abstract methods (before Java 8), but since Java 8, they can also have default and static methods.
 - Abstract classes can have instance variables and can have any access modifier, while Interfaces can only have static final variables (constants), which are implicitly `public`, `static`, and `final`.
-- A class can extend only one abstract class, but it can implement multiple interfaces. 
+- A class can extend only one abstract class, but it can implement multiple interfaces.
     - Interfaces support multiple inheritance, while classes do not.
-- Adding new methods to an abstract class can break existing subclasses, because they need to implement the new methods. 
+- Adding new methods to an abstract class can break existing subclasses, because they need to implement the new methods.
     - Adding new methods to an interface (using default or static methods) maintains backward compatibility; Existing implementing classes do not need to be modified.
 - Abstract classes are used when you want to provide some common functionality and state, and allow subclasses to extend and override the behavior. Interfaces are used to define a contract or a set of methods that a class must implement, without any implementation details.
 - Abstract classes can have `final` methods.
@@ -1138,23 +1137,23 @@ new Person("John").greet();
 
 ```java
 class SuperClass {
-    int x = 10;
+	int x = 10;
 }
 
 class FirstSubClass extends SuperClass {
-    void accessSuperClassVar() {
-        System.out.println(x);
-    }
+	void accessSuperClassVar() {
+		System.out.println(x);
+	}
 }
 
 class SecondSubClass extends SuperClass {
-    // Hides variable from SuperClass
-    int x = 20; 
+	// Hides variable from SuperClass
+	int x = 20;
 
-    void printX() {
-        System.out.println(x);        // Prints 20
-        System.out.println(super.x);  // Prints 10
-    }
+	void printX() {
+		System.out.println(x);        // Prints 20
+		System.out.println(super.x);  // Prints 10
+	}
 }
 ```
 
@@ -1162,48 +1161,49 @@ class SecondSubClass extends SuperClass {
 
 ```java
 class Car {
-    protected String make;
+	protected String make;
 
-    public Car(String make) {
-        this.make = make;
-    }
+	public Car(String make) {
+		this.make = make;
+	}
 }
 
 // ⛔
 class Gasoline extends Car {
-    // 'super()' called by default, but there is no 
-    // constructor in Car matching its parameter signature
+	// 'super()' called by default, but there is no
+	// constructor in Car matching its parameter signature
 }
 
 // ✅
 class Gasoline extends Car {
-    public Gasoline(String make) {
-        super(make);
-    }
+	public Gasoline(String make) {
+		super(make);
+	}
 }
 ```
 
 - If a parent class and child class have an instance variable with the same name, the variable does not override the parent's variable. Instead, the subclass object has two separate instance variables - one inherited from the parent class and one defined in the subclass itself. The code accesses the appropriate variable based on the reference type.
 
 > [!important] Multiple Inheritance
-> - Java does not support [[multiple inheritance]] of classes. 
->    - A class in Java cannot extend more than one class directly. 
->    - This is to avoid [[the diamond problem]], where a subclass could inherit conflicting implementations of the same method from multiple parent classes. 
-> - However, Java supports multiple inheritance through interfaces. 
->    - A class can implement multiple interfaces, effectively inheriting the methods declared in those interfaces.
+>
+> - Java does not support [[multiple inheritance]] of classes.
+>     - A class in Java cannot extend more than one class directly.
+>     - This is to avoid [[the diamond problem]], where a subclass could inherit conflicting implementations of the same method from multiple parent classes.
+> - However, Java supports multiple inheritance through interfaces.
+>     - A class can implement multiple interfaces, effectively inheriting the methods declared in those interfaces.
 
 ```java
 interface A {
-    void method1();
+	void method1();
 }
 
 interface B {
-    void method2(); 
+	void method2();
 }
 
 class C implements A, B {
-    // Class C now has methods method1() and method2()
-    // from interfaces A and B respectively
+	// Class C now has methods method1() and method2()
+	// from interfaces A and B respectively
 }
 
 class C extends Z implements A, B { /*...*/ }
@@ -1211,21 +1211,21 @@ class C extends Z implements A, B { /*...*/ }
 
 ### Nested Classes
 
-- A **nested class** or an **inner class** is a class that is a member of another class. 
-- The class that contains the inner class is called the outer class. 
+- A **nested class** or an **inner class** is a class that is a member of another class.
+- The class that contains the inner class is called the outer class.
 - Typically useful for creating helper classes, implementing callbacks, and organizing related code within a larger class structure.
 - There are several types of nested classes in Java:
     - **Non-static Nested Class**
-        - Not declared static. 
-        - Associated with an *instance* of the outer class.
+        - Not declared static.
+        - Associated with an _instance_ of the outer class.
         - Can access all the static and non-static members (variables and methods) of the outer class, including private members.
             - This allows for better encapsulation and organization of related code.
         - To create an instance of an inner class, you need an instance of the outer class first.
     - **Static Nested Class**
-        - Declared with the `static` modifier. 
+        - Declared with the `static` modifier.
         - Are static members of the outer class.
-        - Are not associated with an *instance* of the outer class.
-        - Can only access static members of the outer class, including private static members. 
+        - Are not associated with an _instance_ of the outer class.
+        - Can only access static members of the outer class, including private static members.
     - **Local Class** / **Method-Local Inner Class**
         - Defined within a method of the outer class.
         - Its scope is limited to the method in which it is defined.
@@ -1241,72 +1241,72 @@ class C extends Z implements A, B { /*...*/ }
 
 ```java
 public class OuterClass {
-    private int outerVar = 10;
-    private static int outerStaticVar = 20;
+	private int outerVar = 10;
+	private static int outerStaticVar = 20;
 
-    // Non-static Nested Class
-    class InnerClass {
-        private int innerVar = 5;
+	// Non-static Nested Class
+	class InnerClass {
+		private int innerVar = 5;
 
-        public void accessOuterVar() {
-            System.out.println(outerVar);
-        }
-    }
+		public void accessOuterVar() {
+			System.out.println(outerVar);
+		}
+	}
 
-    // Static Nested Class
-    static class StaticNestedClass {
-        public void accessOuterStaticVar() {
-            System.out.println(outerStaticVar);
-        }
-    }
+	// Static Nested Class
+	static class StaticNestedClass {
+		public void accessOuterStaticVar() {
+			System.out.println(outerStaticVar);
+		}
+	}
 
-    // Local Inner Class
-    public void methodWithInnerClass() {
-        int localVar = 25;
+	// Local Inner Class
+	public void methodWithInnerClass() {
+		int localVar = 25;
 
-        class LocalInnerClass {
-            public void accessLocalVar() {
-                System.out.println(localVar);
-            }
-        }
+		class LocalInnerClass {
+			public void accessLocalVar() {
+				System.out.println(localVar);
+			}
+		}
 
-        LocalInnerClass lc = new LocalInnerClass();
-        lc.accessLocalVar();
-    }
+		LocalInnerClass lc = new LocalInnerClass();
+		lc.accessLocalVar();
+	}
 
-    // Anonymous Inner Class
-    public void useAnonymousInnerClass() {
-        // MyInterface can be an interface, an
-        // abstract class, or a concrete class.
-        MyInterface obj = new MyInterface() {
-            @Override
-            public void doSomething() {
-                System.out.println("Anonymous Inner Class in action!");
-            }
-        };
-        obj.doSomething();
-    }
+	// Anonymous Inner Class
+	public void useAnonymousInnerClass() {
+		// MyInterface can be an interface, an
+		// abstract class, or a concrete class.
+		MyInterface obj = new MyInterface() {
+			@Override
+			public void doSomething() {
+				System.out.println("Anonymous Inner Class in action!");
+			}
+		};
+		obj.doSomething();
+	}
 
-    public static void main(String[] args) {
-        // Accessing the Non-static Nested Class (Inner Class)
-        OuterClass outerObj = new OuterClass();
-        OuterClass.InnerClass innerObj = outerObj.new InnerClass();
-        innerObj.accessOuterVar();
+	public static void main(String[] args) {
+		// Accessing the Non-static Nested Class (Inner Class)
+		OuterClass outerObj = new OuterClass();
+		OuterClass.InnerClass innerObj = outerObj.new InnerClass();
+		innerObj.accessOuterVar();
 
-        // Accessing the Static Nested Class
-        OuterClass.StaticNestedClass nestedObj = new OuterClass.StaticNestedClass();
-        nestedObj.accessOuterStaticVar();
+		// Accessing the Static Nested Class
+		OuterClass.StaticNestedClass nestedObj = new OuterClass.StaticNestedClass();
+		nestedObj.accessOuterStaticVar();
 
-        // Accessing the Method-local Inner Class
-        outerObj.methodWithInnerClass();
+		// Accessing the Method-local Inner Class
+		outerObj.methodWithInnerClass();
 
-        // Accessing the Anonymous Inner Class
-        outerObj.useAnonymousInnerClass();
-    }
+		// Accessing the Anonymous Inner Class
+		outerObj.useAnonymousInnerClass();
+	}
 
-    interface MyInterface {
-        void doSomething();
-    }
+	interface MyInterface {
+		void doSomething();
+	}
 }
 ```
 
@@ -1344,11 +1344,11 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class LogLevelExample {
-    private static final Logger LOGGER = Logger.getLogger(LogLevelExample.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(LogLevelExample.class.getName());
 
-    public static void main(String[] args) {
-        LOGGER.info("INFO: Application Starting Up...");
-    }
+	public static void main(String[] args) {
+		LOGGER.info("INFO: Application Starting Up...");
+	}
 }
 ```
 
@@ -1362,12 +1362,12 @@ public class LogLevelExample {
 ```java
 LocalDateTime currDateTime = LocalDateTime.now();
 
-System.out.println("Current date and time: " + currentDateTime); 
+System.out.println("Current date and time: " + currentDateTime);
 // e.g., 2024-10-01T14:30:15.123
 
 LocalDateTime customDateTime = LocalDateTime.of(2024, Month.JUNE, 1, 14, 30);
 
-System.out.println("Specific date and time: " + specificDateTime); 
+System.out.println("Specific date and time: " + specificDateTime);
 // 2024-10-01T14:30
 ```
 
@@ -1418,23 +1418,23 @@ import java.util.Date;
 // import java.sql.Date; // Duplicate import not allowed ⛔
 
 public class Main {
-    public static void main(String[] args) {
-        Date date = new Date();
+	public static void main(String[] args) {
+		Date date = new Date();
 
-        // Explicit class usage
-        java.sql.Date dateSql = new java.sql.Date();
-    }
+		// Explicit class usage
+		java.sql.Date dateSql = new java.sql.Date();
+	}
 }
 ```
 
 > [!note]
 > Using `*` imports all files in a package, not folders.
-> 
+>
 > ```java
 > import java.lang.*;
 > ```
 
-- `import static` can be used to import static members of a class directly, without having to qualify them with the class name. 
+- `import static` can be used to import static members of a class directly, without having to qualify them with the class name.
 
 ```java
 import static java.lang.Math.PI;
@@ -1442,7 +1442,7 @@ import static java.lang.Math.PI;
 import static java.lang.Math.*;
 
 // Instead of Math.pow(2, 3)
-double power = pow(2, 3); 
+double power = pow(2, 3);
 ```
 
 **`import` vs. `import static`**:
@@ -1481,7 +1481,7 @@ writer.close();
 FileReader reader = new FileReader("input.txt");
 int c;
 while ((c = reader.read()) != -1) {
-    System.out.print((char) c);
+	System.out.print((char) c);
 }
 reader.close();
 ```
@@ -1493,26 +1493,26 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
 try {
-    BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
-    writer.write("Hello, Java.");
-    writer.write("\nKeep Coding!");
+	BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
+	writer.write("Hello, Java.");
+	writer.write("\nKeep Coding!");
 } catch (IOException e) { /*...*/ }
 finally {
-    writer.close();
+	writer.close();
 }
 
 
 try {
-    BufferedReader reader = new BufferedReader(new FileReader("output.txt"));
-    String line;
+	BufferedReader reader = new BufferedReader(new FileReader("output.txt"));
+	String line;
 
-    while((line = reader.readLine()) != null)
-        System.out.println(line)
-    
-    reader.readLine();
+	while((line = reader.readLine()) != null)
+		System.out.println(line)
+
+	reader.readLine();
 } catch (IOException e) { /*...*/ }
 finally {
-    reader.close();
+	reader.close();
 }
 ```
 
@@ -1526,7 +1526,7 @@ finally {
 - The `transient` keyword is used to indicate that a field should not be serialized.
 - When a class implements `Serializable`, all its subclasses are automatically serializable.
 - **Use Cases**
-    - Persist object state to files and databases 
+    - Persist object state to files and databases
         - e.g. saving configurations and user preferences, caching data for performance
     - Easy data transfer over networks or between different systems
         - e.g. sending data between client and server apps
@@ -1539,14 +1539,14 @@ finally {
 import java.io.Serializable;
 
 public class Employee implements Serializable {
-    private String name;
-    private int id;
-    private transient String tempPassword;
+	private String name;
+	private int id;
+	private transient String tempPassword;
 
-    public Employee(String name, int id) {
-        this.name = name;
-        this.id = id;
-    }
+	public Employee(String name, int id) {
+		this.name = name;
+		this.id = id;
+	}
 }
 
 
@@ -1554,33 +1554,34 @@ public class Employee implements Serializable {
 Employee emp = new Employee("John Doe", 1001);
 
 try (FileOutputStream fileOut = new FileOutputStream("employee.ser");
-     ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-    out.writeObject(emp);
-    System.out.println("Employee object serialized");
+	 ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+	out.writeObject(emp);
+	System.out.println("Employee object serialized");
 } catch (IOException e) {
-    e.printStackTrace();
+	e.printStackTrace();
 }
 
 // Deserialization
 try (FileInputStream fileIn = new FileInputStream("employee.ser");
-     ObjectInputStream in = new ObjectInputStream(fileIn)) {
-    Employee empDeserialized = (Employee) in.readObject();
-    System.out.println("Employee deserialized: " + empDeserialized.getName());
+	 ObjectInputStream in = new ObjectInputStream(fileIn)) {
+	Employee empDeserialized = (Employee) in.readObject();
+	System.out.println("Employee deserialized: " + empDeserialized.getName());
 } catch (IOException | ClassNotFoundException e) {
-    e.printStackTrace();
+	e.printStackTrace();
 }
 ```
 
 > [!note]
+>
 > - Static fields are not serialized as they belong to the class, not the object.
 > - If a serializable class has a reference to a non-serializable class, a `NotSerializableException` will be thrown.
-> - Deserialization can be a security risk if accepting untrusted data. 
+> - Deserialization can be a security risk if accepting untrusted data.
 >     - Always validate deserialized objects.
 > - Serialization can be slower and produce larger byte streams compared to custom binary formats.
 
 ### User Input
 
-**BufferedReader** 
+**BufferedReader**
 
 ```java
 import java.io.BufferedReader;
@@ -1629,16 +1630,16 @@ Function<Integer, Integer> cube = x -> x * x * x;
 `Function<Integer, Function<Integer, Integer>> currySum = a -> b -> a + b;`
 ```
 
-- A Consumer (`java.util.function.Consumer`) is a functional interface and it represents an operation that accepts a single input argument and returns no result. 
+- A Consumer (`java.util.function.Consumer`) is a functional interface and it represents an operation that accepts a single input argument and returns no result.
     - Useful to perform an operation on an input value, without the need to return anything.
 
 ```java
 List<String> names = Arrays.asList("John", "Jane", "Bob", "Alice");
 
 Consumer<String> consumer = new Consumer<>() {
-    public void accept(String n) {
-        System.out.println(n)
-    }
+	public void accept(String n) {
+		System.out.println(n)
+	}
 };
 
 names.forEach(consumer);
@@ -1660,11 +1661,11 @@ List<String> names = Arrays.asList("John", "Jane", "Bob", "Alice");
 Stream<String> s = names.stream();
 
 List<String> uppercaseNames = s
-    .filter(name -> name.startsWith("J"))
-    .map(String::toUpperCase)
-    .toList();
+	.filter(name -> name.startsWith("J"))
+	.map(String::toUpperCase)
+	.toList();
 
-System.out.print(uppercaseNames); 
+System.out.print(uppercaseNames);
 // Output: [JOHN, JANE]
 ```
 
@@ -1674,10 +1675,10 @@ System.out.print(uppercaseNames);
 List<String> names = Arrays.asList("John", "Jane", "Bob", "Tim", "Megan", "Sam");
 
 long count = names.parallelStream()
-   .filter(name -> name.length() > 3)
-   .count();
+	 .filter(name -> name.length() > 3)
+	 .count();
 
-System.out.print(count); 
+System.out.print(count);
 // Output: 6
 ```
 
@@ -1696,19 +1697,19 @@ System.out.print(count);
 ## Generics
 
 - Allow us to create classes that can accommodate different types.
-- Don't work with primitive types. 
+- Don't work with primitive types.
 
 ```java
 class Printer<T> {
-    T item;
+	T item;
 
-    public Printer(T item) {
-        this.item = item;
-    }
+	public Printer(T item) {
+		this.item = item;
+	}
 
-    public void print() {
-        System.out.print(item);
-    }
+	public void print() {
+		System.out.print(item);
+	}
 }
 
 Printer<Double> pi = new Printer<>(3.14);
@@ -1719,13 +1720,13 @@ pi.print();
 
 ```java
 public class Utils {
-    public static <T> void printArray(T[] array) {
-        for (T element : array) {
-            System.out.println(element);
-        }
-    }
-    
-    public static <K, V> void printKeyValuePair(K key, V value) { /*...*/ }
+	public static <T> void printArray(T[] array) {
+		for (T element : array) {
+			System.out.println(element);
+		}
+	}
+
+	public static <K, V> void printKeyValuePair(K key, V value) { /*...*/ }
 }
 
 Integer[] intArray = {1, 2, 3, 4, 5};
@@ -1742,11 +1743,11 @@ public class GenericClass <T extends MyClass & MyInterface> {}
 
 ```java
 public static <T extends Number> double sum(List<T> numbers) {
-    double total = 0.0;
-    for (T number : numbers) {
-        total += number.doubleValue();
-    }
-    return total;
+	double total = 0.0;
+	for (T number : numbers) {
+		total += number.doubleValue();
+	}
+	return total;
 }
 
 List<Integer> intList = Arrays.asList(1, 2, 3, 4, 5);
@@ -1763,7 +1764,7 @@ double intSum = sum(intList);
             - e.g. `List<? super Integer>`
         - **Unbounded Wildcards**: `?`
             - Represents an unknown type, with no restrictions.
-            - e.g. `List<?>` 
+            - e.g. `List<?>`
     - Guidelines for using wildcards:
         - Use `? extends Type` for "in" variables (input parameters).
         - Use `? super Type` for "out" variables (output parameters).
@@ -1771,13 +1772,13 @@ double intSum = sum(intList);
 
 ## Collection API
 
-- The Java Collections Framework is a unified architecture for representing and manipulating collections in Java. 
+- The Java Collections Framework is a unified architecture for representing and manipulating collections in Java.
 - It provides a set of interfaces, implementation classes, and algorithms to work with collections of objects.
 
 ### `Collection`
 
 - `Collection` is the root interface of the Java Collections Framework.
-- Work with wrapper class types. 
+- Work with wrapper class types.
     - e.g. `Integer`, `String`
 - Implementations of the `java.util.Collection` interface:
     - `List`
@@ -1829,13 +1830,13 @@ Collections.sort(arr);
 
 ```java
 class Person {
-    String name;
-    int age;
+	String name;
+	int age;
 
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
 }
 
 List<Person> people = new ArrayList<>();
@@ -1848,23 +1849,23 @@ Comparator<Person> personComparator = (i, j) -> (i.age > j.age) ? 1 : -1;
 Collections.sort(people, personComparator);
 ```
 
-- `Comparable` is a functional interface that gives classes the ability to implement their own natural sorting logic. 
+- `Comparable` is a functional interface that gives classes the ability to implement their own natural sorting logic.
     - It defines a single method `compareTo(T o)` which must be implemented in the class.
 
 ```java
 class Person implements Comparable<Person> {
-    private String name;
-    private int age;
+	private String name;
+	private int age;
 
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
 
-    @Override
-    public int compareTo(Person other) {
-        return Integer.compare(this.age, other.age);
-    }
+	@Override
+	public int compareTo(Person other) {
+		return Integer.compare(this.age, other.age);
+	}
 }
 
 List<Person> people = new ArrayList<>();
@@ -1881,7 +1882,7 @@ Collections.sort(people);
 Iterator<Integer> values = arr.iterator();
 
 while (values.hasNext())
-    System.out.println(values.next());
+	System.out.println(values.next());
 ```
 
 ### `Map`
@@ -1902,7 +1903,7 @@ System.out.println(pairs);
 System.out.println(pairs.get("a"));
 
 for (String k : pairs.keySet()) {
-    System.out.println(key + ": " + pairs.get(key));
+	System.out.println(key + ": " + pairs.get(key));
 }
 ```
 
@@ -1919,20 +1920,20 @@ for (String k : pairs.keySet()) {
 ```java
 @FunctionalInterface
 interface Calc {
-    void add(int a, int b);
+	void add(int a, int b);
 }
 
 // Anonymous Inner Class
 Calc c = new Calc() {
-    @Override
-    public void add(int a, int b) {
-        System.out.println(a + b);
-    }
+	@Override
+	public void add(int a, int b) {
+		System.out.println(a + b);
+	}
 };
 
 // Lambda Expression
 Calc c = (int a, int b) -> {
-    System.out.println(a + b);
+	System.out.println(a + b);
 };
 // OR
 Calc c = (int a, int b) -> System.out.println(a + b);
@@ -1951,7 +1952,7 @@ Calc c = (a, b) -> a + b;
         - Introduced in Java 8
         - Provides a concise way to refer to a method by its name without actually invoking it, or defining a lambda expression to represent the same functionality.
     - **Types of Method References**:
-        - Static Methods  - e.g., `ClassName::staticMethodName`
+        - Static Methods - e.g., `ClassName::staticMethodName`
         - Instance Methods of an object - e.g., `objectRef::instanceMethodName`
         - Instance Methods of a particular type - e.g., `ContainingType::methodName`
         - Constructors - e.g., `ClassName::new`
@@ -1975,8 +1976,8 @@ public EV(String brand) { this.brand = brand; }
 List<String> evBrands = Arrays.asList("Rivian", "Tesla", "Polestar");
 
 evBrands.stream()
-    .map(EV::new)
-    .toArray(EV[]::new);
+	.map(EV::new)
+	.toArray(EV[]::new);
 ```
 
 ## Threads
@@ -1985,11 +1986,11 @@ evBrands.stream()
 
 ```java
 class A extends Thread {
-    public void run() { /*...*/ }
+	public void run() { /*...*/ }
 }
 
 class B extends Thread {
-    public void run() { /*...*/ }
+	public void run() { /*...*/ }
 }
 
 A a = new A();
@@ -2004,11 +2005,11 @@ b.start();
 
 ```java
 class A implements Runnable {
-    public void run() { /*...*/ }
+	public void run() { /*...*/ }
 }
 
 class B implements Runnable {
-    public void run() { /*...*/ }
+	public void run() { /*...*/ }
 }
 
 Runnable a = new A();
@@ -2023,37 +2024,37 @@ t2.start();
 
 ### Synchronization
 
--  Ensures thread safety by controlling access of multiple threads to shared resources.
+- Ensures thread safety by controlling access of multiple threads to shared resources.
     - `synchronized` can be applied to methods or blocks of code to prevent [[race conditions]] when using threads.
         - Synchronized methods and blocks of code can be `static`.
 - Enables inter-thread communication using methods like `wait()`, `notify()`, and `notifyAll()`.
 
 ```java
 class Counter {
-    int count;
+	int count;
 
-    // Synchronized Method
-    public synchronized void increment() { count++; }
+	// Synchronized Method
+	public synchronized void increment() { count++; }
 
-    public void decrement() {
-        // Synchronized Block
-        synchronized (this) {
-            count--;
-        }
-    }
+	public void decrement() {
+		// Synchronized Block
+		synchronized (this) {
+			count--;
+		}
+	}
 }
 
 Counter c = new Counter();
 
 Runnable a = () -> {
-    for (int i = 0; i < 1000; i++) {
-        c.increment();
-    }
+	for (int i = 0; i < 1000; i++) {
+		c.increment();
+	}
 };
 Runnable b = () -> {
-    for (int i = 0; i < 1000; i++) {
-        c.increment();
-    }
+	for (int i = 0; i < 1000; i++) {
+		c.increment();
+	}
 };
 
 Thread t1 = new Thread(a);
@@ -2070,7 +2071,7 @@ System.out.print(c.count);
 
 ## Ecosystem
 
-- Apache Commons and Google Guava are open-source libraries in the Java ecosystem that provide reusable components and utilities. 
+- Apache Commons and Google Guava are open-source libraries in the Java ecosystem that provide reusable components and utilities.
     - Apache Commons offers a range of general-purpose libraries.
     - Google Guava extends the Java Collections Framework and includes additional features like caching, string processing, and concurrency utilities.
 
@@ -2094,38 +2095,38 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CalcTest {
-    private Calc c;
+	private Calc c;
 
-    @BeforeEach
-    void setUp() {
-        c = new Calc();
-    }
+	@BeforeEach
+	void setUp() {
+		c = new Calc();
+	}
 
-    @AfterAll
-    static void cleanUp() {
-        c = null;
-    }
+	@AfterAll
+	static void cleanUp() {
+		c = null;
+	}
 
-    @Test
-    @DisplayName("Add Two Integers")
-    void testAdd() {
-        int sum = c.add(2, 3);
-        assertEquals(5, sum);
-    }
-    
-    @Test
-    @DisplayName("Multiply Two Integers")
-    void testMultiply() {
-        int product = c.multiply(2, 3);
-        assertEquals(6, product);
-    }
+	@Test
+	@DisplayName("Add Two Integers")
+	void testAdd() {
+		int sum = c.add(2, 3);
+		assertEquals(5, sum);
+	}
+
+	@Test
+	@DisplayName("Multiply Two Integers")
+	void testMultiply() {
+		int product = c.multiply(2, 3);
+		assertEquals(6, product);
+	}
 }
 ```
 
 - JUnit 5 provides annotations to define methods that will be executed at specific points in a test's lifecycle.
     - **Setup Phase**
         - `@BeforeAll`
-            - A static method that is executed once before all test methods in the class. 
+            - A static method that is executed once before all test methods in the class.
             - Used for expensive setup operations that should be done only once for the entire test class.
         - If the test class has a constructor, it runs before `@BeforeEach`.
         - `@BeforeEach`
@@ -2150,20 +2151,21 @@ class CalcTest {
 
 > [!example]- Test Lifecycle
 > ![Test Lifecycles](assets/images/java.test-lifecycles.png)
+>
 > - **Source**: Hyperskill
 
 - The `@TestInstance` annotation is used to configure the lifecycle of test instances for a test class or test interface.
     - Useful to share state or perform expensive setup/teardown operations across multiple test methods in the same test class.
     - Can introduce dependencies between test methods, potentially violating the principle of test isolation.
     - `@TestInstance(Lifecycle.PER_CLASS)`
-        - A single instance of the test class is created and reused for all test methods in that class. 
+        - A single instance of the test class is created and reused for all test methods in that class.
         - Can improve performance and simplify test code.
     - `@TestInstance(Lifecycle.PER_METHOD)`
         - The default mode if `@TestInstance` is not specified.
         - A new instance of the test class is created for each test method.
 
-- `fail()` is used to explicitly fail a test. 
-    - It is useful 
+- `fail()` is used to explicitly fail a test.
+    - It is useful
         - when a test is incomplete or not yet implemented.
         - when an exception is expected or to test whether code throws a desired exception or not.
         - when an unexpected exception is likely to be thrown.
@@ -2173,10 +2175,10 @@ class CalcTest {
 // Expected Exception
 String str = null;
 try {
-    System.out.print(str.length());  // should throw exception
-    fail("Expected Exception Not Thrown");
+	System.out.print(str.length());  // should throw exception
+	fail("Expected Exception Not Thrown");
 } catch (NullPointerException e) {
-    assertNotNull(e);
+	assertNotNull(e);
 }
 // OR
 String str = null;
@@ -2186,14 +2188,14 @@ assertThrows(NullPointerException.class, () -> str.length()); // Test Passes
 
 // Unexpected Exception
 try {
-    Calc c = new Calc();
-    c.divide(5, 0);
+	Calc c = new Calc();
+	c.divide(5, 0);
 } catch (ArithmeticException e) {
-    fail("Division by Zero!")
-}    
+	fail("Division by Zero!")
+}
 ```
 
-- Other assertion libraries can be used with JUnit. 
+- Other assertion libraries can be used with JUnit.
     - A popular assertion library is AssertJ. AssertJ provides assertion methods that are specific to the passed data type.
 
 ```java
@@ -2208,27 +2210,27 @@ assertThat(product).isEqualTo(6);
 @ParameterizedTest
 @ValueSource(ints = {13, 15, 20})
 void testIsEven(int num) {
-    boolean result = Calculator.isEven(num);
-    
-    assertThat(result).isTrue();
+	boolean result = Calculator.isEven(num);
+
+	assertThat(result).isTrue();
 }
 
 // For tests requiring multiple arguments
 @ParameterizedTest(name = "{0} + {1} = {2}")
 @CsvSource({"1, 1, 2", "2, 3, 5", "42, 57, 99"})
 void testAdd(int a, int b, int expected) {
-    assertEquals(expected, Calculator.add(a, b));
+	assertEquals(expected, Calculator.add(a, b));
 }
 ```
 
-- Test methods or classes can be annotated using one or more `@Tag` (e.g. `@Tag("unit")`). 
+- Test methods or classes can be annotated using one or more `@Tag` (e.g. `@Tag("unit")`).
     - This information can be used when running tests from a CLI or CI/CD pipeline to specify which tests should run.
 
 ```bash
 mvn test -Dgroups=unit
 ```
 
-- For projects setup using Maven, the Surefire plugin can be used during the `test` phase of the build lifecycle to execute the unit tests of an application. 
+- For projects setup using Maven, the Surefire plugin can be used during the `test` phase of the build lifecycle to execute the unit tests of an application.
     - This allows running test without relying on an IDE.
     - It generates reports in two different file formats: `*.txt` and `*.xml`.
 
@@ -2246,50 +2248,50 @@ List mockedList = Mockito.mock(List.class);
 
 // @Mock
 @Mock
-List mockedList; 
+List mockedList;
 
-@BeforeEach 
+@BeforeEach
 void setUp() {
-    MockitoAnnotations.openMocks(this);
+	MockitoAnnotations.openMocks(this);
 }
 ```
 
 ```java
 public class User {
-    private String id;
-    private String name;
+	private String id;
+	private String name;
 
-    public User(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+	public User(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
-    /* ... */
+	/* ... */
 }
 
 public interface UserRepository {
-    User findById(String id);
-    void save(User user);
+	User findById(String id);
+	void save(User user);
 }
 
 public class UserService {
-    private UserRepository repository;
+	private UserRepository repository;
 
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
+	public UserService(UserRepository repository) {
+		this.repository = repository;
+	}
 
-    public User getUserById(String id) {
-        return repository.findById(id);
-    }
+	public User getUserById(String id) {
+		return repository.findById(id);
+	}
 
-    public void updateUserName(String id, String newName) {
-        User user = repository.findById(id);
-        if (user != null) {
-            user.setName(newName);
-            repository.save(user);
-        }
-    }
+	public void updateUserName(String id, String newName) {
+		User user = repository.findById(id);
+		if (user != null) {
+			user.setName(newName);
+			repository.save(user);
+		}
+	}
 }
 ```
 
@@ -2303,49 +2305,49 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
-    @Mock
-    private UserRepository userRepository;
+	@Mock
+	private UserRepository userRepository;
 
-    private UserService userService;
+	private UserService userService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        userService = new UserService(userRepository);
-    }
+	@BeforeEach
+	void setUp() {
+		MockitoAnnotations.openMocks(this);
+		userService = new UserService(userRepository);
+	}
 
-    @Test
-    void testGetUserById() {
-        // Arrange
-        String userId = "123";
-        User expectedUser = new User(userId, "John Doe");
-        when(userRepository.findById(userId)).thenReturn(expectedUser);
+	@Test
+	void testGetUserById() {
+		// Arrange
+		String userId = "123";
+		User expectedUser = new User(userId, "John Doe");
+		when(userRepository.findById(userId)).thenReturn(expectedUser);
 
-        // Act
-        User actualUser = userService.getUserById(userId);
+		// Act
+		User actualUser = userService.getUserById(userId);
 
-        // Assert
-        assertEquals(expectedUser, actualUser);
-        verify(userRepository).findById(userId);
-    }
+		// Assert
+		assertEquals(expectedUser, actualUser);
+		verify(userRepository).findById(userId);
+	}
 
-    @Test
-    void testUpdateUserName() {
-        // Arrange
-        String userId = "123";
-        String newName = "Jane Doe";
-        User existingUser = new User(userId, "John Doe");
-        when(userRepository.findById(userId)).thenReturn(existingUser);
+	@Test
+	void testUpdateUserName() {
+		// Arrange
+		String userId = "123";
+		String newName = "Jane Doe";
+		User existingUser = new User(userId, "John Doe");
+		when(userRepository.findById(userId)).thenReturn(existingUser);
 
-        // Act
-        userService.updateUserName(userId, newName);
+		// Act
+		userService.updateUserName(userId, newName);
 
-        // Assert
-        verify(userRepository).findById(userId);
-        verify(userRepository).save(argThat(user -> 
-            user.getId().equals(userId) && user.getName().equals(newName)
-        ));
-    }
+		// Assert
+		verify(userRepository).findById(userId);
+		verify(userRepository).save(argThat(user ->
+			user.getId().equals(userId) && user.getName().equals(newName)
+		));
+	}
 }
 ```
 
@@ -2355,7 +2357,7 @@ class UserServiceTest {
 - It's used for building and managing Java-based projects.
 
 - **POM** - Project Object Model
-    - Maven uniquely identifies projects through *project coordinates* defined in a `pom.xml` file:
+    - Maven uniquely identifies projects through _project coordinates_ defined in a `pom.xml` file:
         - `group-id` - e.g. `com.oneminch`
         - `artifact-id` - e.g. `java-app`
         - `version` - e.g. `0.0.1-SNAPSHOT`
@@ -2364,7 +2366,7 @@ class UserServiceTest {
         - `<modelVersion>` -which version of the page object model to be used
         - `<name>` - project name
         - `<properties>` - project-specific settings
-        - `<dependencies>` - Java dependencies. 
+        - `<dependencies>` - Java dependencies.
             - Each one needs a `<dependency>`, which has:
                 - `<groupId>`
                 - `<artifactId>`
@@ -2373,38 +2375,38 @@ class UserServiceTest {
 
 ```xml
 <project>
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>com.oneminch</groupId>
-    <artifactId>java-app</artifactId>
-    <version>1</version>
+	<modelVersion>4.0.0</modelVersion>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-artifact</artifactId>
-            <version>${mavenVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-core</artifactId>
-            <version>${mavenVersion}</version>
-        </dependency>
-    </dependencies>
+	<groupId>com.oneminch</groupId>
+	<artifactId>java-app</artifactId>
+	<version>1</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-artifact</artifactId>
+			<version>${mavenVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-core</artifactId>
+			<version>${mavenVersion}</version>
+		</dependency>
+	</dependencies>
 </project>
 ```
 
-- When building a project, Maven goes thru several steps called *phases*. 
+- When building a project, Maven goes thru several steps called _phases_.
 - The Maven Build Lifecycle is a well-defined sequence of phases that a Maven build goes through.
 - By default, these are:
-    1. `validate` - Ensure project is correct and all necessary information is available
-    2. `compile` - Compile source code
-    3. `test` - Test all compiled code
-    4. `package` - Package all compiled code to WAR/JAR file
-    5. `integration` - Perform all integration tests on WAR/JAR
-    6. `verify` - Run any checks on the results of integration tests
-    7. `install` - Install WAR/JAR to local repository
-    8. `deploy` - Copy final WAR/JAR to the remote repository
+    1.  `validate` - Ensure project is correct and all necessary information is available
+    2.  `compile` - Compile source code
+    3.  `test` - Test all compiled code
+    4.  `package` - Package all compiled code to WAR/JAR file
+    5.  `integration` - Perform all integration tests on WAR/JAR
+    6.  `verify` - Run any checks on the results of integration tests
+    7.  `install` - Install WAR/JAR to local repository
+    8.  `deploy` - Copy final WAR/JAR to the remote repository
 - Each phase is composed of plugin goals which represent a specific task that contributes to the process.
 
 ```bash
@@ -2421,7 +2423,7 @@ mvn dependency:copy-dependencies
 - The `resources` folder in a Maven project is a designated directory for storing non-code files that are required by the application at runtime.
     - Typically located at `src/main/resources` for the main codebase and `src/test/resources` for test resources.
     - Holds configuration files (e.g., properties files, XML files), data files, images, and other static assets needed by the application.
-    - Allows for separating application code from non-code resources. 
+    - Allows for separating application code from non-code resources.
         - This promotes better organization and maintainability of the project structure.
     - During the build process, Maven copies the contents of the resources folder into the root of the compiled output (e.g., JAR or WAR file), making them accessible to the application's classpath.
     - Maven provides flexibility in specifying additional resource directories other than the default `src/main/resources` location.
@@ -2436,8 +2438,8 @@ mvn archetype:generate -DgroupId={group.id} -DartifactId={artifact-id} -Darchety
 ```
 
 ```bash
-# Project Structure 
-# (groupId = com.example, artifactId = my-app) 
+# Project Structure
+# (groupId = com.example, artifactId = my-app)
 my-app
 ├── pom.xml
 ├── src
@@ -2450,10 +2452,10 @@ my-app
 │           └── com/example
 │               └── AppTest.java
 └── target
-    ├── classes
-    ├── test-classes
-    ├── surefire-reports
-    └── my-app-1.0-SNAPSHOT.jar
+	├── classes
+	├── test-classes
+	├── surefire-reports
+	└── my-app-1.0-SNAPSHOT.jar
 
 ```
 
@@ -2494,14 +2496,14 @@ mvn clean
 
 ```xml
 <dependencies>
-    <dependency>
-        <groupId>com.example</groupId>
-        <artifactId>package-artifact-id</artifactId>
-        <version>1.0.0</version>
-    </dependency>
+	<dependency>
+		<groupId>com.example</groupId>
+		<artifactId>package-artifact-id</artifactId>
+		<version>1.0.0</version>
+	</dependency>
 </dependencies>
 ```
- 
+
 ```bash
 mvn install
 ```
@@ -2533,10 +2535,10 @@ mvn site
 - The most low-level way to accessing databases in Java.
 - Provides a set of interfaces and classes that enable Java programs to interact with different DBMSs in a uniform way.
 - Has a two-layer architecture:
-    - **API layer** 
+    - **API layer**
         - Provides interfaces and classes for database operations like connecting, querying, updating, etc.
         - `java.sql`
-    - **Driver layer** 
+    - **Driver layer**
         - Consists of database-specific JDBC drivers that implement the JDBC interfaces and communicate with the actual database
             - JDBC drivers act as a bridge between the Java application and the database. They translate JDBC calls into database-specific protocol.
                 - e.g. `org.xerial.sqlite-jdbc`
@@ -2554,43 +2556,43 @@ import java.sql.SQLException;
 // ...
 String dbUrl = "jdbc:sqlite:./src/main/resources/Users.db";
 try (Connection c = DriverManager.getConnection()) {
-    // Create
-    String createSql = "INSERT INTO Users (name) VALUES (?)";
-    PreparedStatement createPs = c.prepareStatement(createSql);
-    createPs.setString(1, "John");
-    createPs.executeUpdate();
-    
-    // Read
-    String readSql = "SELECT * FROM Users WHERE name = ?";
-    PreparedStatement readPs = c.prepareStatement(readSql);
-    readPs.setString(1, "John");
-    ResultSet rs = readPs.executeQuery();
+	// Create
+	String createSql = "INSERT INTO Users (name) VALUES (?)";
+	PreparedStatement createPs = c.prepareStatement(createSql);
+	createPs.setString(1, "John");
+	createPs.executeUpdate();
 
-    while (rs.next()) {
-        int userId = rs.getInt("id");
-        int userName = rs.getString("name");
-        
-        System.out.println(userId + " - " + userName);
-    }
+	// Read
+	String readSql = "SELECT * FROM Users WHERE name = ?";
+	PreparedStatement readPs = c.prepareStatement(readSql);
+	readPs.setString(1, "John");
+	ResultSet rs = readPs.executeQuery();
 
-    // Update
-    String updateSql = "UPDATE Users SET name = ? WHERE name = ?";
-    PreparedStatement updatePs = c.prepareStatement(updateSql);
-    updatePs.setString(1, "Jane");
-    updatePs.setString(2, "John");
-    updatePs.executeUpdate();
+	while (rs.next()) {
+		int userId = rs.getInt("id");
+		int userName = rs.getString("name");
 
-    // Delete
-    String deleteSql = "DELETE FROM Users WHERE name = ?";
-    PreparedStatement deletePs = c.prepareStatement(deleteSql);
-    deletePs.setString(1, "Jane");
-    deletePs.executeUpdate();
+		System.out.println(userId + " - " + userName);
+	}
+
+	// Update
+	String updateSql = "UPDATE Users SET name = ? WHERE name = ?";
+	PreparedStatement updatePs = c.prepareStatement(updateSql);
+	updatePs.setString(1, "Jane");
+	updatePs.setString(2, "John");
+	updatePs.executeUpdate();
+
+	// Delete
+	String deleteSql = "DELETE FROM Users WHERE name = ?";
+	PreparedStatement deletePs = c.prepareStatement(deleteSql);
+	deletePs.setString(1, "Jane");
+	deletePs.executeUpdate();
 } catch (SQLException e) {
-    e.printStackTrace();
+	e.printStackTrace();
 }
 ```
 
-- [[Connection Pool|Connection pools]] keep a small number of database connections open. 
+- [[Connection Pool|Connection pools]] keep a small number of database connections open.
     - When a connection is needed, instead of opening a new connection, the connection pool can give one of the connections it has already opened.
     - `HikariCP` is a popular tool used to achieve this.
 
@@ -2603,13 +2605,13 @@ ds.setJdbcUrl(dbUrl);
 // ds.setPassword("...");
 
 try (Connection c = ds.getConnection()) {
-    // Create
-    String createSql = "INSERT INTO Users (name) VALUES (?)";
-    PreparedStatement createPs = c.prepareStatement(createSql);
-    createPs.setString(1, "John");
-    createPs.executeUpdate();
+	// Create
+	String createSql = "INSERT INTO Users (name) VALUES (?)";
+	PreparedStatement createPs = c.prepareStatement(createSql);
+	createPs.setString(1, "John");
+	createPs.executeUpdate();
 } catch (SQLException e) {
-    e.printStackTrace();
+	e.printStackTrace();
 }
 ```
 
@@ -2623,7 +2625,7 @@ try (Connection c = ds.getConnection()) {
     - Perform CRUD (Create, Read, Update, Delete) operations on Java objects without writing SQL.
     - Query Java objects using JPQL (Java Persistence Query Language) instead of SQL.
 - Eliminates the need to write low-level JDBC code and SQL queries.
-- At the core of JPA are entities - Java classes that represent database tables. 
+- At the core of JPA are entities - Java classes that represent database tables.
     - These classes are annotated to define their mapping to database structures.
 - Can be implemented with different [[ORM]] tools.
     - Allows switching between different JPA implementations (e.g., Hibernate, EclipseLink) with minimal changes.
@@ -2641,14 +2643,14 @@ try (Connection c = ds.getConnection()) {
 @Entity
 @Table(name = "students")
 public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(name = "first_name", length = 50, nullable = false)
-    private String firstName;
-    
-    // Class body
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "first_name", length = 50, nullable = false)
+	private String firstName;
+
+	// Class body
 }
 ```
 
@@ -2676,9 +2678,9 @@ private Course course;
 
 @ManyToMany
 @JoinTable(
-    name = "student_projects",
-    joinColumns = @JoinColumn(name = "student_id"),
-    inverseJoinColumns = @JoinColumn(name = "project_id")
+	name = "student_projects",
+	joinColumns = @JoinColumn(name = "student_id"),
+	inverseJoinColumns = @JoinColumn(name = "project_id")
 )
 private Set<Project> projects;
 ```
@@ -2691,7 +2693,7 @@ private Set<Project> projects;
 private EntityManager entityManager;
 
 public void saveStudent(Student student) {
-    entityManager.persist(student);
+	entityManager.persist(student);
 }
 ```
 
@@ -2699,7 +2701,7 @@ public void saveStudent(Student student) {
 
 ```java
 TypedQuery<Student> query = entityManager.createQuery(
-    "SELECT s FROM Student s WHERE s.firstName = :name", Student.class);
+	"SELECT s FROM Student s WHERE s.firstName = :name", Student.class);
 query.setParameter("name", "John");
 List<Student> students = query.getResultList();
 ```
@@ -2709,8 +2711,8 @@ List<Student> students = query.getResultList();
 ```java
 @Transactional
 public void updateStudentName(Long id, String newName) {
-    Student student = entityManager.find(Student.class, id);
-    student.setFirstName(newName);
+	Student student = entityManager.find(Student.class, id);
+	student.setFirstName(newName);
 }
 ```
 
@@ -2719,19 +2721,19 @@ public void updateStudentName(Long id, String newName) {
 ```java
 @Embeddable
 public class Address {
-    private String street;
-    private String city;
-    private String zipCode;
+	private String street;
+	private String city;
+	private String zipCode;
 }
 
 @Entity
 public class Student {
-    @Embedded
-    private Address address;
+	@Embedded
+	private Address address;
 }
 ```
 
-##### [[ORM]]:  Hibernate 
+##### [[ORM]]: Hibernate
 
 - Maps Java objects to database tables.
 - Manages the storage and retrieval of Java objects in databases.
@@ -2745,17 +2747,17 @@ public class Student {
 @Entity
 @Table(name = "Employees")
 public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(name = "first_name")
-    private String firstName;
-    
-    @Column(name = "last_name")
-    private String lastName;
-    
-    // Getters and setters
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
+	private String lastName;
+
+	// Getters and setters
 }
 ```
 
@@ -2764,41 +2766,41 @@ public class Employee {
 Session session = sessionFactory.openSession();
 Transaction tx = null;
 try {
-    tx = session.beginTransaction();
-    Employee e = new Employee();
-    e.setFirstName("John");
-    e.setLastName("Doe");
-    session.save(employee);
-    tx.commit();
+	tx = session.beginTransaction();
+	Employee e = new Employee();
+	e.setFirstName("John");
+	e.setLastName("Doe");
+	session.save(employee);
+	tx.commit();
 } catch (Exception e) {
-    if (tx != null) tx.rollback();
-    e.printStackTrace();
+	if (tx != null) tx.rollback();
+	e.printStackTrace();
 } finally {
-    session.close();
+	session.close();
 }
 
 // Retrieving an Object
 Session session = sessionFactory.openSession();
 try {
-    Employee e = session.get(Employee.class, 1L);
-    String fname = e.getFirstName();
-    String lname = e.getLastName();
-    System.out.println("Employee: " + fname + " " + lname);
+	Employee e = session.get(Employee.class, 1L);
+	String fname = e.getFirstName();
+	String lname = e.getLastName();
+	System.out.println("Employee: " + fname + " " + lname);
 } finally {
-    session.close();
+	session.close();
 }
 
 // HQL
 Session session = sessionFactory.openSession();
 try {
-    Query<Employee> query = session.createQuery("FROM Employee WHERE lastName = :lastName", Employee.class);
-    query.setParameter("lastName", "Doe");
-    List<Employee> employees = query.list();
-    for (Employee emp : employees) {
-        System.out.println(emp.getFirstName());
-    }
+	Query<Employee> query = session.createQuery("FROM Employee WHERE lastName = :lastName", Employee.class);
+	query.setParameter("lastName", "Doe");
+	List<Employee> employees = query.list();
+	for (Employee emp : employees) {
+		System.out.println(emp.getFirstName());
+	}
 } finally {
-    session.close();
+	session.close();
 }
 ```
 
@@ -2809,78 +2811,78 @@ try {
 import org.apache.log4j.Logger;
 
 public class Application {
-    private static final Logger logger = Logger.getLogger(Application.class);
+	private static final Logger logger = Logger.getLogger(Application.class);
 
-    public static void main(String[] args) {
-        logger.info("Application starting up...");
-        logger.info("Loaded configuration from: " + configPath);
-        logger.info("Application started successfully");
-    }
+	public static void main(String[] args) {
+		logger.info("Application starting up...");
+		logger.info("Loaded configuration from: " + configPath);
+		logger.info("Application started successfully");
+	}
 }
 
 // Error Handling and Debugging
 public class UserService {
-    private static final Logger logger = Logger.getLogger(UserService.class);
+	private static final Logger logger = Logger.getLogger(UserService.class);
 
-    public User getUserById(int id) {
-        try {
-            // Code to fetch user from database
-            return user;
-        } catch (DatabaseException e) {
-            logger.error("Failed to fetch user with ID: " + id, e);
-            throw new ServiceException("User retrieval failed");
-        }
-    }
+	public User getUserById(int id) {
+		try {
+			// Code to fetch user from database
+			return user;
+		} catch (DatabaseException e) {
+			logger.error("Failed to fetch user with ID: " + id, e);
+			throw new ServiceException("User retrieval failed");
+		}
+	}
 }
 
 // Performance Monitoring
 public class DataProcessor {
-    private static final Logger logger = Logger.getLogger(DataProcessor.class);
+	private static final Logger logger = Logger.getLogger(DataProcessor.class);
 
-    public void processLargeDataSet(List<Data> dataSet) {
-        long startTime = System.currentTimeMillis();
-        logger.info("Starting to process data set of size: " + dataSet.size());
+	public void processLargeDataSet(List<Data> dataSet) {
+		long startTime = System.currentTimeMillis();
+		logger.info("Starting to process data set of size: " + dataSet.size());
 
-        // Process data...
+		// Process data...
 
-        long endTime = System.currentTimeMillis();
-        logger.info("Data processing completed in " + (endTime - startTime) + " ms");
-    }
+		long endTime = System.currentTimeMillis();
+		logger.info("Data processing completed in " + (endTime - startTime) + " ms");
+	}
 }
 
 // Audit Logging
 public class UserActionLogger {
-    private static final Logger auditLogger = Logger.getLogger("AuditLog");
+	private static final Logger auditLogger = Logger.getLogger("AuditLog");
 
-    public void logUserAction(String username, String action) {
-        auditLogger.info("User: " + username + " performed action: " + action);
-    }
+	public void logUserAction(String username, String action) {
+		auditLogger.info("User: " + username + " performed action: " + action);
+	}
 }
 
 // Configuration Changes
 public class ConfigurationManager {
-    private static final Logger logger = Logger.getLogger(ConfigurationManager.class);
+	private static final Logger logger = Logger.getLogger(ConfigurationManager.class);
 
-    public void updateConfiguration(String key, String value) {
-        logger.info("Updating configuration: " + key + " = " + value);
-        // Update configuration
-        logger.info("Configuration updated successfully");
-    }
+	public void updateConfiguration(String key, String value) {
+		logger.info("Updating configuration: " + key + " = " + value);
+		// Update configuration
+		logger.info("Configuration updated successfully");
+	}
 }
 
 // External Service Interactions
 public class ExternalAPIClient {
-    private static final Logger logger = Logger.getLogger(ExternalAPIClient.class);
+	private static final Logger logger = Logger.getLogger(ExternalAPIClient.class);
 
-    public Response callExternalAPI(String endpoint, String payload) {
-        logger.info("Calling external API: " + endpoint);
-        logger.debug("Request payload: " + payload);
+	public Response callExternalAPI(String endpoint, String payload) {
+		logger.info("Calling external API: " + endpoint);
+		logger.debug("Request payload: " + payload);
 
-        // Make API call
+		// Make API call
 
-        logger.info("API call completed. Response code: " + response.getStatusCode());
-        return response;
-    }
+		logger.info("API call completed. Response code: " + response.getStatusCode());
+		return response;
+	}
 }
 ```
 
@@ -2888,7 +2890,7 @@ public class ExternalAPIClient {
 
 ### Documentation: Javadoc
 
-- A documentation generator tool for Java source code. 
+- A documentation generator tool for Java source code.
 - Generates API documentation in HTML format from Java source code by parsing the code and extracting the documentation comments (known as "doc comments") written in a specific format.
 - All modern versions of the JDK provide the Javadoc tool.
 
@@ -2904,9 +2906,9 @@ public class ExternalAPIClient {
         - A description
         - Standalone (block) tags (marked with the `@` symbol)
     - Tags provide specific and structured meta-data.
-        - *Block tags* - placed on their own line. 
+        - _Block tags_ - placed on their own line.
             - e.g. `@version`, `@since`
-        - *Inline tags* - used within descriptions. 
+        - _Inline tags_ - used within descriptions.
             - e.g. `{@link}`, `{@code}`
 
 ```java
@@ -2917,32 +2919,32 @@ package com.example.math;
 
 /**
  * This class represents a simple calculator.
- * 
+ *
  * @author John Doe
  * @version 1.0
  */
 public class Calculator {
-    /** An instance variable */
-    private String ops;
+	/** An instance variable */
+	private String ops;
 
-    /**
-     * Adds two numbers.
-     *
-     * @param a the first number
-     * @param b the second number
-     * @return the sum of a and b
-     */
-    public int add(int a, int b) {
-        return a + b;
-    }
-    
-    /**
-     * This method is deprecated and should not be used.
-     *
-     * @deprecated Use {@link #add()} instead.
-     */
-    @Deprecated
-    public void oldAdd() { /* implementation */ }
+	/**
+	 * Adds two numbers.
+	 *
+	 * @param a the first number
+	 * @param b the second number
+	 * @return the sum of a and b
+	 */
+	public int add(int a, int b) {
+		return a + b;
+	}
+
+	/**
+	 * This method is deprecated and should not be used.
+	 *
+	 * @deprecated Use {@link #add()} instead.
+	 */
+	@Deprecated
+	public void oldAdd() { /* implementation */ }
 }
 ```
 
@@ -2970,7 +2972,7 @@ javadoc *.java
 
 ### Web Development: Javalin
 
-- A lightweight, interoperable and flexible web framework for Java and Kotlin. 
+- A lightweight, interoperable and flexible web framework for Java and Kotlin.
 - Servlet-based.
 - Supports modern features such as HTTP/2, WebSocket, and asynchronous requests.
 - Considered as a library rather than a framework.
@@ -2984,11 +2986,11 @@ javadoc *.java
 import io.javalin.Javalin;
 
 public class HelloWorld {
-    public static void main(String[] args) {
-        var app = Javalin.create(/*config*/)
-            .get("/", ctx -> ctx.result("Hello, Javalin!"))
-            .start(7070);
-    }
+	public static void main(String[] args) {
+		var app = Javalin.create(/*config*/)
+			.get("/", ctx -> ctx.result("Hello, Javalin!"))
+			.start(7070);
+	}
 }
 ```
 
@@ -3009,22 +3011,22 @@ public class HelloWorld {
 - Are Java classes that run on the server-side to handle client requests and generate dynamic responses.
 - Form the foundation of Java web apps.
 - **Lifecycle**:
-    - *Initialization (`init()`)*
+    - _Initialization (`init()`)_
         - Called when the servlet is first created or loaded into memory.
-        - Used for one-time initialization of resources. 
+        - Used for one-time initialization of resources.
             - e.g. opening database connections, loading config files
-    - *Request Handling (`service()`)*
+    - _Request Handling (`service()`)_
         - Called for each client request.
         - Handles the request and generates the response.
-    - *Destruction (`destroy()`)* 
+    - _Destruction (`destroy()`)_
         - Called when the servlet is unloaded from memory.
-        - Used for cleanup of resources. 
+        - Used for cleanup of resources.
             - e.g. closing database connections, releasing any held resources, saving state information
 - All servlets must implement the `Servlet` interface either directly or, more commonly, by extending a class that implements it (e.g., `HttpServlet`).
 - Can be configured using either web.xml or annotations.
 
 - `ServletContext` can be used to share information across all servlets.
-- *Filters* intercept requests before they reach the servlet. They serve a similar function to [[middleware]].
+- _Filters_ intercept requests before they reach the servlet. They serve a similar function to [[middleware]].
 
 ```java
 import java.io.IOException;
@@ -3036,27 +3038,27 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/myservlet")
 public class MyServlet extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res) 
-            throws ServletException, IOException {
-        String name = req.getParameter("name");
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		String name = req.getParameter("name");
 
-        PrintWriter out = res.getWriter();
+		PrintWriter out = res.getWriter();
 
-        res.setContentType("text/html");
-        out.println("<html><body>");
-        out.println("<h1>Hello, " + name + "!</h1>");
-        out.println("</body></html>");
-    }
+		res.setContentType("text/html");
+		out.println("<html><body>");
+		out.println("<h1>Hello, " + name + "!</h1>");
+		out.println("</body></html>");
+	}
 
-    public void doPost(HttpServletRequest req, HttpServletResponse res) 
-            throws ServletException, IOException {
-        // Handle POST requests
-    }
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		// Handle POST requests
+	}
 
-    public void doPut(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        // Handle PUT requests
-    }
+	public void doPut(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		// Handle PUT requests
+	}
 }
 ```
 
@@ -3072,14 +3074,14 @@ public class MyServlet extends HttpServlet {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My First JSP</title>
+	<title>My First JSP</title>
 </head>
 <body>
-    <h1>Hello, JSP!</h1>
-    <% 
-        String name = "World";
-        out.println("Hello, " + name + "!");
-    %>
+	<h1>Hello, JSP!</h1>
+	<%
+		String name = "World";
+		out.println("Hello, " + name + "!");
+	%>
 </body>
 </html>
 ```
@@ -3089,16 +3091,16 @@ public class MyServlet extends HttpServlet {
 
 <!-- Declarations -->
 <%!
-    int count = 0; 
-    void incrementCount() {
-        count++;
-    }
+	int count = 0;
+	void incrementCount() {
+		count++;
+	}
 %>
 
 <!-- Scriptlets -->
-<% 
-    incrementCount();
-    String message = "You are visitor number: ";
+<%
+	incrementCount();
+	String message = "You are visitor number: ";
 %>
 
 <!-- Expressions -->
@@ -3117,15 +3119,14 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/api")
 public class HelloResource {
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello, RESTful World!";
-    }
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String hello() {
+		return "Hello, RESTful World!";
+	}
 }
 
 ```
-
 
 ## Miscellany
 
@@ -3140,41 +3141,41 @@ import java.net.URL;
 
 public class FetchData {
 
-    public static void main(String[] args) {
-        String urlString = "https://jsonplaceholder.typicode.com/todos";
-        try {
-            // Create a URI object & Convert to a URL
-            URI uri = new URI(urlString);
-            URL url = uri.toURL();
+	public static void main(String[] args) {
+		String urlString = "https://jsonplaceholder.typicode.com/todos";
+		try {
+			// Create a URI object & Convert to a URL
+			URI uri = new URI(urlString);
+			URL url = uri.toURL();
 
-            // Open a connection to the URL
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			// Open a connection to the URL
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            // Set the request method (GET, POST, etc.)
-            connection.setRequestMethod("GET");
+			// Set the request method (GET, POST, etc.)
+			connection.setRequestMethod("GET");
 
-            // Get the response code
-            int responseCode = connection.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
+			// Get the response code
+			int responseCode = connection.getResponseCode();
+			System.out.println("Response Code: " + responseCode);
 
-            // Read the response
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
+			// Read the response
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String inputLine;
+			StringBuffer content = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				content.append(inputLine);
+			}
 
-            // Close the connections
-            in.close();
-            connection.disconnect();
+			// Close the connections
+			in.close();
+			connection.disconnect();
 
-            // Print the fetched data
-            System.out.println("Fetched Data: " + content.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			// Print the fetched data
+			System.out.println("Fetched Data: " + content.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 ```
 
@@ -3185,9 +3186,9 @@ public class FetchData {
 ```
 src
 └── com
-    └── example
-        ├── HelloWorld.java
-        └── MessageUtil.java
+	└── example
+		├── HelloWorld.java
+		└── MessageUtil.java
 ```
 
 ```java
@@ -3195,9 +3196,9 @@ src
 package com.example;
 
 public class MessageUtil {
-    public static String getGreeting() {
-        return "Hello, World!";
-    }
+	public static String getGreeting() {
+		return "Hello, World!";
+	}
 }
 ```
 
@@ -3209,14 +3210,14 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class HelloWorld {
-    private static final Logger LOGGER = Logger.getLogger(HelloWorld.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(HelloWorld.class.getName());
 
-    public static void main(String[] args) {
-        LOGGER.info("Application starting");
-        String message = MessageUtil.getGreeting();
-        System.out.println(message);
-        LOGGER.info("Application ending");
-    }
+	public static void main(String[] args) {
+		LOGGER.info("Application starting");
+		String message = MessageUtil.getGreeting();
+		System.out.println(message);
+		LOGGER.info("Application ending");
+	}
 }
 ```
 
@@ -3236,7 +3237,7 @@ Main-Class: com.example.HelloWorld
 
 - Use the `jar` command to create a JAR file.
     - The command below creates a JAR file named `HelloWorld.jar` with the manifest file and all compiled classes in the `bin` directory.
-    - For this simple application, the `HelloWorld.jar` file is the deployment artifact. 
+    - For this simple application, the `HelloWorld.jar` file is the deployment artifact.
         - In a real-world scenario, you might also include:
             - A `README` file with instructions
             - Any necessary configuration files
@@ -3305,16 +3306,16 @@ CMD ["java", "-jar", "app.jar"]
 enum Shape { CIRCLE, SQUARE, RECTANGLE }
 ```
 
-- Essentially a special class in Java that cannot be extended or inherited. 
+- Essentially a special class in Java that cannot be extended or inherited.
     - They are implicitly `public`, `static`, and `final`.
-- Commonly used to represent a fixed set of values, such as days of the week, months, directions, etc. 
+- Commonly used to represent a fixed set of values, such as days of the week, months, directions, etc.
     - They help ensure type safety and prevent invalid values.
 - Can be used in `switch` statements, and the `values()` method can be used to iterate over all the enum constants.
 - Values are zero-indexed, and their indexes can be accessed using the `ordinal()` method.
 
 ```java
-enum Color { 
-    RED, BLUE, GREEN;
+enum Color {
+	RED, BLUE, GREEN;
 }
 
 Color c = Color.RED;
@@ -3324,21 +3325,21 @@ System.out.print(c.ordinal());  // 0
 - Enums Can have their own methods, variables, and constructors, just like regular classes.
 
 ```java
-enum EV { 
-    RIVIAN(80000), LUCID(100000), TESLA;
+enum EV {
+	RIVIAN(80000), LUCID(100000), TESLA;
 
-    private int msrp;
+	private int msrp;
 
-    private EV() {
-        this.msrp = 50000;
-    }
+	private EV() {
+		this.msrp = 50000;
+	}
 
-    private EV(int msrp) {
-        this.msrp = msrp;
-    }
+	private EV(int msrp) {
+		this.msrp = msrp;
+	}
 
-    public int getPrice() { /*...*/ }
-    public void setPrice() { /*...*/ }
+	public int getPrice() { /*...*/ }
+	public void setPrice() { /*...*/ }
 }
 
 Color c = Color.RED;
@@ -3348,7 +3349,7 @@ System.out.print(c.ordinal());  // 0
 ### Varargs
 
 - Variable-length arguments
-- Allow methods to accept an arbitrary number of arguments of the same type. 
+- Allow methods to accept an arbitrary number of arguments of the same type.
 - Declared using three dots (`...`) after the parameter type.
     - e.g. `public static void methodName(int... numbers)`
 - Must be the last parameter in a method's parameter list.
@@ -3362,10 +3363,10 @@ System.out.print(c.ordinal());  // 0
 
 ```java
 public static void printNums(int... nums) {
-    for (int num : nums) {
-        System.out.print(num + " ");
-    }
-    System.out.println();
+	for (int num : nums) {
+		System.out.print(num + " ");
+	}
+	System.out.println();
 }
 
 printNums(1, 2, 3);
@@ -3375,15 +3376,15 @@ printNums();
 
 ### Annotations
 
-- A form of metadata that provide additional information about a program, but do not directly affect its execution. 
+- A form of metadata that provide additional information about a program, but do not directly affect its execution.
     - Used to provide supplemental information or instructions to the compiler, development tools, frameworks, or the JVM, and they can be applied to various program elements, including classes, interfaces, methods, fields, parameters, and local variables.
     - Start with the `@` symbol, followed by the annotation name and optional elements or values.
     - Widely used in various Java frameworks, libraries, and tools, such as JUnit for testing, Hibernate for [[ORM]], and Spring for dependency injection.
 - While they do not change code behavior, but they can be processed and utilized by various tools and libraries.
-    - They can be accessed and processed at runtime using reflection or annotation processors. 
+    - They can be accessed and processed at runtime using reflection or annotation processors.
 - Java provides several built-in annotations, such as `@Override`, `@Deprecated`, `@SuppressWarnings`, and `@FunctionalInterface`.
 - Can have elements (members) that can be assigned values when the annotation is used.
-- Can be classified into different categories: 
+- Can be classified into different categories:
     - Marker annotations - e.g. `@Override`
     - Single-value annotations
     - Full annotations
@@ -3393,8 +3394,8 @@ printNums();
 
 ### Build Path
 
-- Used by an IDE like Eclipse to determine where to find the source code files, libraries, and other resources required to build (compile) a Java project. 
-- An IDE-specific concept and is not used directly by the Java compiler or runtime. 
+- Used by an IDE like Eclipse to determine where to find the source code files, libraries, and other resources required to build (compile) a Java project.
+- An IDE-specific concept and is not used directly by the Java compiler or runtime.
 - Specifies the locations of:
     - Source code folders containing .java files
     - External libraries/JARs required for compilation
@@ -3415,9 +3416,9 @@ Pattern emailPattern = Pattern.compile(emailRegex);
 Matcher emailMatcher = emailPattern.matcher(emailAddr);
 
 if (emailMatcher.matches())
-    System.out.println("Valid email address: " + email);
+	System.out.println("Valid email address: " + email);
 else
-    System.out.println("Invalid email address: " + email);
+	System.out.println("Invalid email address: " + email);
 ```
 
 ### New Features
@@ -3446,9 +3447,9 @@ var b; // Invalid ⛔
 
 ```java
 record Person(String name, int age) {
-    public void greet() {
-        System.out.print("Hi, my name is " + name + ".");
-    }
+	public void greet() {
+	System.out.print("Hi, my name is " + name + ".");
+	}
 }
 
 /* ... */
@@ -3464,26 +3465,26 @@ person.greet();
 // Printing the record
 System.out.print("Person: " + person);
 ```
-   
+
 - Common methods like `equals()`, `hashCode()`, and `toString()` are automatically generated.
 - Can have additional methods and constructors defined within the record body, allowing for custom behavior if needed.
 - Useful for creating simple data carrier classes, also known as Plain Old Java Objects (POJOs) or Data Transfer Objects (DTOs), where the focus is on containing and transporting data rather than complex logic.
 
 ### JVM
 
-- The JVM is the core of the Java ecosystem, enabling Java-based software programs to run on any machine that has a JVM installed. 
+- The JVM is the core of the Java ecosystem, enabling Java-based software programs to run on any machine that has a JVM installed.
 - The JVM creates an isolated space on a host machine, allowing Java programs to execute regardless of the platform or operating system of the machine, which is a key feature that supports the "write once, run anywhere" approach.
 - Java code is first compiled into bytecode, which is then interpreted by the JVM on the target machine. This allows Java programs to be platform-independent.
 
 #### Architecture
 
-- **Class Loader** is responsible for loading Java classes into the JVM. 
+- **Class Loader** is responsible for loading Java classes into the JVM.
     - It reads the bytecode files (.class files), verifies them, and loads them into the JVM.
-- **Runtime Data Areas** are the memory areas allocated by the JVM for the execution of Java programs. 
+- **Runtime Data Areas** are the memory areas allocated by the JVM for the execution of Java programs.
     - Key areas include the heap (for dynamic memory allocation), the method area (for storing class and method data), and the stack (for storing local variables and partial results).
-- **Execution Engine** executes the bytecode. It can use an interpreter or a [[Just-In-Time Compilation|Just-In-Time]] (JIT) compiler to convert bytecode into machine language instructions for execution. 
+- **Execution Engine** executes the bytecode. It can use an interpreter or a [[Just-In-Time Compilation|Just-In-Time]] (JIT) compiler to convert bytecode into machine language instructions for execution.
     - The JIT compiler improves performance by compiling bytecode into native machine code at runtime.
-        - **Heap** is a region of memory used for dynamic memory allocation. 
+        - **Heap** is a region of memory used for dynamic memory allocation.
             - It is where objects are allocated and deallocated.
         - **Stack** contains frames, each of which corresponds to a method invocation.
             - It stores local variables and partial results.
@@ -3492,7 +3493,7 @@ System.out.print("Person: " + person);
 
 #### Class Path
 
-- Used by the Java compiler (`javac`) and the JVM to locate the `.class` files required for compilation and execution respectively. 
+- Used by the Java compiler (`javac`) and the JVM to locate the `.class` files required for compilation and execution respectively.
 - A core Java concept and is used directly by `javac` and the JVM.
 - Typically specified using the `-cp` or `-classpath` command line option, or the `CLASSPATH` environment variable.
 - Specifies the locations of:
@@ -3512,11 +3513,12 @@ System.out.print("Person: " + person);
 
 ### Naming Conventions
 
-- Variables and methods should start with a lowercase letter and be camel cased. 
+- Variables and methods should start with a lowercase letter and be camel cased.
 - Constants should be defined in all uppercase letters.
 - Classes and interfaces should start with a uppercase letter and be camel cased.
 
 ---
+
 ## Further
 
 ### Reads 📄

@@ -1,6 +1,7 @@
 ---
 alias: JS Snippets
 ---
+
 ## Arrays
 
 ### Create an array of certain length
@@ -11,7 +12,7 @@ const list = new Array(100);
 
 // create an array of length
 // & populate it with 1's
-const list = new Array(100).fill(1)
+const list = new Array(100).fill(1);
 ```
 
 ### Cloning an Array
@@ -31,7 +32,7 @@ const cloneArr = (arr) => arr.concat([]);
 ```
 
 > [!warning]
-> 
+>
 > Be careful of values not compatible with JSON when using the `JSON.parse(JSON.stringify(anyObj))` technique. Nested objects must be serializable and deserializable via JSON. They can't be `undefined` or `null`.
 >
 > When in doubt, revert to `lodash.cloneDeep()` for cloning.
@@ -57,15 +58,15 @@ arr = [];
 ```js
 // Using Set
 const removeDuplicates = (arr) => {
-    return [...new Set(arr)]
-    // OR
-    // return Array.from(new Set(arr));
-}
+	return [...new Set(arr)];
+	// OR
+	// return Array.from(new Set(arr));
+};
 
 // Using filter()
 const removeDuplicates = (arr) => {
-    return arr.filter((item, index, array) => array.indexOf(item) === index);
-}
+	return arr.filter((item, index, array) => array.indexOf(item) === index);
+};
 ```
 
 ## Objects
@@ -100,7 +101,7 @@ cloneObj.b.c = 4;
 ```
 
 > [!warning]
-> 
+>
 > Be careful of values not compatible with JSON when using the `JSON.parse(JSON.stringify(anyObj))` technique. Nested objects must be serializable and deserializable via JSON. They can't be `undefined` or `null`.
 >
 > When in doubt, revert to `lodash.cloneDeep()` for cloning.
@@ -132,8 +133,8 @@ console.log(strings.sort((a, b) => a.localeCompare(b)));
 ```js
 // Create a hash table of english alphabets
 const range = [...Array(26).keys()].reduce((acc, curr) => {
-    acc[curr + 97] = 0;
-    return acc;
+	acc[curr + 97] = 0;
+	return acc;
 }, {});
 ```
 
@@ -147,28 +148,29 @@ const range = [...Array(26).keys()].reduce((acc, curr) => {
 */
 
 const stringSearch = (str, query, caseInsensitive = true) => {
-  caseInsensitive =
-    typeof caseInsensitive !== "undefined" ? caseInsensitive : true;
+	caseInsensitive =
+		typeof caseInsensitive !== "undefined" ? caseInsensitive : true;
 
-  if (str.length === 0 || query.length === 0) {
-    return [];
-  }
+	if (str.length === 0 || query.length === 0) {
+		return [];
+	}
 
-  let indexes = [],
-    i = 0,
-    findIndex = -1,
-    localStr = caseInsensitive ? str.toLowerCase() : str,
-    localQuery = caseInsensitive ? query.toLowerCase() : query;
+	let indexes = [],
+		i = 0,
+		findIndex = -1,
+		localStr = caseInsensitive ? str.toLowerCase() : str,
+		localQuery = caseInsensitive ? query.toLowerCase() : query;
 
-  while (localStr.indexOf(localQuery, i) !== -1) {
-    findIndex = localStr.indexOf(localQuery, i);
-    indexes.push([findIndex, findIndex + query.length]);
-    i = findIndex + 1;
-  }
+	while (localStr.indexOf(localQuery, i) !== -1) {
+		findIndex = localStr.indexOf(localQuery, i);
+		indexes.push([findIndex, findIndex + query.length]);
+		i = findIndex + 1;
+	}
 
-  return indexes;
+	return indexes;
 };
 ```
+
 ### Timer
 
 ```js
@@ -180,42 +182,44 @@ const stringSearch = (str, query, caseInsensitive = true) => {
 let bi;
 
 const countdown_timer = (seconds) => {
-  clearInterval(bi);
-  const now = Date.now();
-  const later = now + seconds * 1000;
-  console.log(seconds);
+	clearInterval(bi);
+	const now = Date.now();
+	const later = now + seconds * 1000;
+	console.log(seconds);
 
-  bi = setInterval(() => {
-    const timeLeft = Math.round((later - Date.now()) / 1000);
+	bi = setInterval(() => {
+		const timeLeft = Math.round((later - Date.now()) / 1000);
 
-    if (timeLeft < 0) {
-      clearInterval(bi);
-      return;
-    }
+		if (timeLeft < 0) {
+			clearInterval(bi);
+			return;
+		}
 
-    console.log(timeLeft);
-  }, 1000);
+		console.log(timeLeft);
+	}, 1000);
 };
 ```
+
 ### Typing Animation
 
 ```js
 const elt = document.querySelector("h1");
 const str = "Hello, World!";
 
-let i = 0, j = str.length;
+let i = 0,
+	j = str.length;
 
 let timerId = setTimeout(function type() {
-    if (i < str.length) {
-        elt.textContent += str[i];
-        i += 1;
-    } else if (j >= 0) {
-        elt.textContent = str.slice(0, j);
-        j -= 1;
-    }
-    
-    if (j >= 0 || i < str.length) {
-        timerId = setTimeout(type, 200);
-    }
+	if (i < str.length) {
+		elt.textContent += str[i];
+		i += 1;
+	} else if (j >= 0) {
+		elt.textContent = str.slice(0, j);
+		j -= 1;
+	}
+
+	if (j >= 0 || i < str.length) {
+		timerId = setTimeout(type, 200);
+	}
 }, 200);
 ```

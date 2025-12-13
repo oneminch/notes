@@ -2,10 +2,10 @@
 alias: L10n
 ---
 
-- Website localization is the process of adapting a website to suit the linguistic, cultural, and technical preferences of a specific target audience or market. 
+- Website localization is the process of adapting a website to suit the linguistic, cultural, and technical preferences of a specific target audience or market.
 - It goes beyond simple translation and involves comprehensive modifications to make the website feel native to users in different regions.
 - **Key Aspects**
-    - Translating the website's text content into the target language. 
+    - Translating the website's text content into the target language.
         - This involves more than word-for-word translation:
             - Adapting idioms, metaphors, and cultural references
             - Adjusting tone and style to match local preferences
@@ -23,4 +23,3 @@ alias: L10n
         - Adapting navigation structures to local preferences
         - Modifying user interface elements for cultural appropriateness
         - Implementing region-specific features or functionalities
-

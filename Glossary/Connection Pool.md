@@ -1,10 +1,10 @@
-- A method of maintaining a cache of database connections that can be reused when future requests to the database are required. 
+- A method of maintaining a cache of database connections that can be reused when future requests to the database are required.
     - Instead of opening and closing a new connection for each database operation, connection pooling allows applications to reuse existing connections.
-- Used to manage and optimize database connections in applications. 
+- Used to manage and optimize database connections in applications.
 - **Benefits**:
-    - *Improved Performance* - Reduces the overhead of repeatedly opening and closing connections.
-    - *Resource Efficiency* - Minimizes the number of active connections, conserving server resources.
-    - *Better Scalability* - Allows applications to handle more concurrent users with fewer resources.
+    - _Improved Performance_ - Reduces the overhead of repeatedly opening and closing connections.
+    - _Resource Efficiency_ - Minimizes the number of active connections, conserving server resources.
+    - _Better Scalability_ - Allows applications to handle more concurrent users with fewer resources.
 - Many ORMs and database drivers provide built-in connection pooling.
 
 ## How It Works
@@ -31,7 +31,7 @@ const pool = new Pool({
 app.get('/employees', (req, res) => {
     const { id } = req.query;
     const sqlQuery = 'SELECT name FROM employees WHERE id = $1';
-    
+
     try {
         const res = await pool.query(query, [id]);
         if (res.rows.length > 0) {
@@ -47,6 +47,7 @@ app.get('/employees', (req, res) => {
 ```
 
 ---
+
 ## Further
 
 ### Reads 📄

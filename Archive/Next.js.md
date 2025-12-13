@@ -22,7 +22,7 @@
 
 ```jsx
 import { Inter } from 'next/font/google';
- 
+
 export const inter = Inter({ subsets: ['latin'] });
 
 export default function Page() {
@@ -44,7 +44,7 @@ export default function Page() {
 
 ### Pre-rendering
 
-- Pre-rendering is the process of generating HTML for each page in advance. 
+- Pre-rendering is the process of generating HTML for each page in advance.
 - HTML is displayed on initial load even if [[JavaScript|JS]] is disabled.
 - It is followed by [[hydration]] to run JS code and make the page fully interactive.
 - This improves [[Web Performance|performance]] and [[Search Engine Optimization]].
@@ -69,7 +69,7 @@ export default function HomePage({ data }) { ... }
 export async function getStaticProps() {
     const res = await fetch("https://api.example.com");
     const data = await res.json();
-    
+
     return { props: { data } };
 }
 ```
@@ -83,11 +83,11 @@ export async function getStaticProps() {
 
 ```js
 export async function getServerSideProps(context) {
-    return {
-        props: {
-            // props for the page component
-        },
-    };
+	return {
+		props: {
+			// props for the page component
+		},
+	};
 }
 ```
 
@@ -99,9 +99,9 @@ export async function getServerSideProps(context) {
 
 ## Styling
 
-- Next.js supports different styling methods out of the box: 
-    - Sass, 
-    - CSS Modules, 
+- Next.js supports different styling methods out of the box:
+    - Sass,
+    - CSS Modules,
     - CSS-in-JS.
 - Sass (`.scss` & `.sass`) imports are supported out of the box, including component-level Sass (`.module.scss` & `.module.sass`).
 - Next.js compiles CSS using PostCSS, which can be configured using a top-level `postcss.config.js` file.
@@ -114,11 +114,11 @@ export async function getServerSideProps(context) {
     - Served from `/`
 - `src/` - optional source directory
 
-- **Layouts** are persistent UI shells that wrap around the application's pages. 
+- **Layouts** are persistent UI shells that wrap around the application's pages.
     - They maintain their state and do not re-render when navigating between pages that share the same layout.
     - They are defined by creating a React component in a file named `layout.js` or `layout.tsx` (for App Router) with a `children` prop to integrate child layouts or pages.
     - They can be nested to create complex UI structures.
-- **Templates** are similar to layouts, but a template is fully remounted every time a user navigates to a new page. 
+- **Templates** are similar to layouts, but a template is fully remounted every time a user navigates to a new page.
     - This process resets the component state and effects, providing a fresh start with each page transition.
     - They are defined by exporting a default React component from a `template.js` or `template.tsx` file (for App Router).
 
@@ -138,11 +138,11 @@ export async function getServerSideProps(context) {
 
 ```jsx
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+	return <Component {...pageProps} />;
 }
 ```
 
-- Similar to `app.vue` in Nuxt applications, a default-exported `/pages/_app.js` is a top-level component that wraps all pages in a Next.js application. 
+- Similar to `app.vue` in Nuxt applications, a default-exported `/pages/_app.js` is a top-level component that wraps all pages in a Next.js application.
     - It can be used to keep state when navigating between pages, or to add global styles.
 
 > [!important]
@@ -161,8 +161,8 @@ export default function Post() { ... }
 
 // (1) SSR
 export async function getServerSideProps(context) {
-    const { query: { slug } } = context;
-    // ...
+	const { query: { slug } } = context;
+	// ...
 }
 
 // (2) SSG
@@ -183,20 +183,20 @@ export async function getStaticProps({ params }) { ... }
 
 ### API Routes
 
-- Server endpoints created in the `pages/api` directory and defined as [[Node|Node.js]] serverless functions. 
+- Server endpoints created in the `pages/api` directory and defined as [[Node|Node.js]] serverless functions.
     - Any file inside `pages/api` is mapped to `/api/*`.
     - They can be dynamic just like page routes.
 
 ```js
 export default function handler(req, res) {
-    res.status(200).json({ message: "Hello, World!" })
+	res.status(200).json({ message: "Hello, World!" });
 }
 ```
 
 - A common use case for API routes is for handling forms.
 
 > [!important]
-> API Routes should *not* be fetched from `getStaticProps` or `getStaticPaths`.
+> API Routes should _not_ be fetched from `getStaticProps` or `getStaticPaths`.
 
 ## App Router
 
@@ -208,14 +208,14 @@ export default function handler(req, res) {
 - Unlike Pages Router, global CSS can be imported into any component, but it's usually a good practice to do so into the top-level component (`app/layout.tsx`).
 
 ```jsx
-import '@/app/ui/global.css';
+import "@/app/ui/global.css";
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body>{children}</body>
+		</html>
+	);
 }
 ```
 
@@ -226,17 +226,17 @@ export default function RootLayout({ children }) {
 
 ```jsx
 /* app/dashboard/layout.tsx */
-import SideBar from '@/app/components/dashboard/sidebar';
- 
+import SideBar from "@/app/components/dashboard/sidebar";
+
 export default function Layout({ children }) {
-  return (
-    <div className="...">
-      <div className="...">
-        <SideBar />
-      </div>
-      <div className="...">{children}</div>
-    </div>
-  );
+	return (
+		<div className="...">
+			<div className="...">
+				<SideBar />
+			</div>
+			<div className="...">{children}</div>
+		</div>
+	);
 }
 ```
 
@@ -249,26 +249,26 @@ export default function Layout({ children }) {
 - Used to create custom request handlers for a given route using the Web Request and Response APIs.
 - The equivalent of API Routes in Pages Router.
 - Defined in a `route.js|ts` file inside `app/`.
-- Can be nested inside `app/`, similar to `page.jsx` and `layout.jsx`. 
+- Can be nested inside `app/`, similar to `page.jsx` and `layout.jsx`.
 
-> [!important] 
+> [!important]
 > There **cannot** be a route handler at the same route segment level as `page.js`.
 
 ```ts
 /* app/api/route.ts */
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers";
 
 // For dynamic rendering
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
-    const cookieStore = cookies()
-    const token = cookieStore.get("token")
- 
-    return new Response("Hello, Next.js!", {
-        status: 200,
-        headers: { 'Set-Cookie': `token=${token.value}` },
-    })
+	const cookieStore = cookies();
+	const token = cookieStore.get("token");
+
+	return new Response("Hello, Next.js!", {
+		status: 200,
+		headers: { "Set-Cookie": `token=${token.value}` },
+	});
 }
 ```
 
@@ -277,7 +277,7 @@ export async function GET(request: Request) {
 - `loading.tsx` is a special Next.js file built on top of `<Suspense>`.
     - It can be used to create fallback UI (e.g. skeletons) to show as a replacement while loading page content.
     - It is used to stream an entire page.
-    - By default, it is applied to nested pages in the directory it's created in. 
+    - By default, it is applied to nested pages in the directory it's created in.
         - To prevent it from being applied to nested pages, we can move the file inside a route group along with the adjacent `page.tsx` file.
         - e.g. `app/dashboard/(home)/loading.tsx` will only be applied to `/dashboard` (but not to any nested paths `/dashboard/*`).
 - `<Suspense>` is used to stream individual components.
@@ -306,7 +306,7 @@ export default function Page() {
 
 ### Route Groups
 
-- Nested folders are normally mapped to URL paths. 
+- Nested folders are normally mapped to URL paths.
 - To prevent a folder from being included in the route's URL path, we can mark a folder as a **Route Group** by wrapping it in parenthesis.
     - e.g. `app/dashboard/(home)/page.tsx` or `app/dashboard/(home)/loading.tsx`
 
@@ -354,26 +354,27 @@ export default function Page() {
 }
 ```
 
-> [!important] 
+> [!important]
 > It's important to avoid importing server components directly into client components, as this can convert them into client components unexpectedly.
 
 ```jsx
-'use client';
+"use client";
 
 // This will make ServerComponent a client component
-import ServerComponent from './ServerComponent'; 
+import ServerComponent from "./ServerComponent";
 
 export default function ClientComponent() {
 	return (
 		<div>
 			{/* This is now client-side rendered */}
-			<ServerComponent /> 
+			<ServerComponent />
 		</div>
 	);
 }
 ```
 
 ---
+
 ## Further
 
 ### Learn 🧠

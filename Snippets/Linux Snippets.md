@@ -84,7 +84,7 @@
 
 - `ps` - displays information about currently running processes.
     - `ps aux` - detailed view.
-- `kill` - terminates processes by their PID (Process ID). 
+- `kill` - terminates processes by their PID (Process ID).
     - `kill -9` - forceful termination.
 - `top` - provides a dynamic, real-time view of running processes and system resource usage.
 - `htop` - interactive process viewer, with more user-friendly interface than `top`.

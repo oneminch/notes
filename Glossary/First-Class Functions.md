@@ -1,5 +1,5 @@
-- Functions that can be treated like any other variable. 
-- Such functions can be 
+- Functions that can be treated like any other variable.
+- Such functions can be
     - passed as an argument to other functions.
     - returned by another function.
     - assigned as a value to a variable.

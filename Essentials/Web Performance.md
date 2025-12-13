@@ -4,7 +4,7 @@ alias: WPO
 
 > [!quote] MDN
 > Web performance refers to how quickly site content **loads** and **renders** in a web browser, and how well it responds to user interaction.
-> 
+>
 > It is the objective measurement and perceived user experience of a website or application.
 
 ## Why
@@ -23,7 +23,7 @@ alias: WPO
     - **Smoothness & interactivity**: utilizing best practices to give smooth animations/transitions a smooth feel improves perceived performance.
     - **Perceived performance**: matters as much, or perhaps more than, any objective measurement.
         - Providing a quick response / feedback and regular status updates (e.g. via a loading animation) improves perceived performance.
-        - Tips for improving perceived performance: 
+        - Tips for improving perceived performance:
             - Minimizing initial load
             - Reducing content reflows
             - Using progressive enhancement
@@ -38,46 +38,47 @@ alias: WPO
     - **Performance measurements**: include both actual (objectively measured) and perceived (subjectively experienced) speeds.
         - Tools that can help measure and improve performance:
             - **PageSpeed Insights / WebPageTest** - websites for getting useful performance reports
-            - **Network & Performance Monitor** (Firefox) - browser built-in tools 
+            - **Network & Performance Monitor** (Firefox) - browser built-in tools
             - **Performance API** - to build custom tools
+
 ## Multimedia
 
-- For the average website, multimedia accounts for 75% of its bandwidth. 
+- For the average website, multimedia accounts for 75% of its bandwidth.
 - It's important to consider data usage, and device memory usage of users.
     - Downloaded images are stored in device memory.
 
 ### Images
 
-- [[Lazy Loading]] images defers the loading of images until they are needed, specifically when they enter the user's viewport, and can greatly improve performance. 
+- [[Lazy Loading]] images defers the loading of images until they are needed, specifically when they enter the user's viewport, and can greatly improve performance.
     - Can help decrease in the overall page size, thus improving loading times, and reduce data transfer expenses by not loading images that users may never see.
 - Native lazy loading can be implemented using the `loading` attribute of `<img>`.
 
 ```html
-<img src="image.jpg" loading="lazy" alt="Description">
+<img src="image.jpg" loading="lazy" alt="Description" />
 ```
 
 - For more control, developers can use the Intersection Observer API. This allows for lazy loading images based on their visibility in the viewport.
 
 ```js
-const images = document.querySelectorAll('img[data-src]');
+const images = document.querySelectorAll("img[data-src]");
 const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
+	root: null,
+	rootMargin: "0px",
+	threshold: 0.1,
 };
 
 const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src; // Set the actual image source
-            observer.unobserve(img); // Stop observing the image
-        }
-    });
+	entries.forEach((entry) => {
+		if (entry.isIntersecting) {
+			const img = entry.target;
+			img.src = img.dataset.src; // Set the actual image source
+			observer.unobserve(img); // Stop observing the image
+		}
+	});
 }, options);
 
-images.forEach(image => {
-    imageObserver.observe(image);
+images.forEach((image) => {
+	imageObserver.observe(image);
 });
 ```
 
@@ -93,7 +94,7 @@ images.forEach(image => {
     - Setting the `width` and `height` attributes on an image can reserve space in the layout to avoid shifts when the image finally loads.
     - Once the image has loaded, the image's intrinsic aspect ratio is used, instead of the aspect ratio from the attributes. Even if the attribute dimensions are not accurate, the image is displayed in its correct aspect ratio.
 - For `background-image` images, it's important to add a `background-color` value so if there is any overlaid content, it's still readable before the image has loaded.
-- Use placeholders such as a low-resolution version or a solid color while the actual image loads. 
+- Use placeholders such as a low-resolution version or a solid color while the actual image loads.
     - This improves perceived performance and UX.
 - Prioritize above-the-fold images.
     - Avoid lazy loading images that are visible in the initial viewport to enhance the first impression of the site.
@@ -135,7 +136,11 @@ images.forEach(image => {
 
 <link rel="stylesheet" href="print.css" media="print" />
 
-<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 480px)" />
+<link
+	rel="stylesheet"
+	href="mobile.css"
+	media="screen and (max-width: 480px)"
+/>
 ```
 
 - Minify and compress CSS files.
@@ -149,7 +154,7 @@ images.forEach(image => {
 
 ### JavaScript
 
-- Write less JavaScript. 
+- Write less JavaScript.
     - Consider not using a framework for fairly static experiences.
 - Clean up unused code.
 - Split code into modules and load each part on demand.
@@ -160,10 +165,10 @@ images.forEach(image => {
 
 ```html
 <head>
-  ...
-  <link rel="preload" href="important-js.js" as="script" />
-  <link rel="modulepreload" href="important-module.js" />
-  ...
+	...
+	<link rel="preload" href="important-js.js" as="script" />
+	<link rel="modulepreload" href="important-module.js" />
+	...
 </head>
 
 <!-- Can be includeded wherever in the page -->
@@ -190,10 +195,10 @@ images.forEach(image => {
     - Using `<link rel="preload">` can help load critical fonts earlier in the page load process.
     - Use `rel="preconnect"` to make an early connection to an external font provider.
 - Load only the glyphs needed using the `unicode-range` `@font-face` descriptor.
-- Self-hosting fonts can reduce latency caused by external requests. 
+- Self-hosting fonts can reduce latency caused by external requests.
     - By including the `@font-face` declaration directly in [[CSS]], the loading process can be streamlined and the overhead associated with third-party font services eliminated.
 - Utilizing modern formats like WOFF2 provides better compression and faster loading times compared to older formats like TTF or OTF.
-- Font subsetting involves creating a custom font file that includes only the characters used on your website. 
+- Font subsetting involves creating a custom font file that includes only the characters used on your website.
     - This can drastically reduce file size and improve loading times, as the browser does not have to download unnecessary glyphs.
 - Since fonts are typically static resources that don’t change often, implementing a robust caching strategy improves performance on subsequent visits
 
@@ -202,28 +207,28 @@ images.forEach(image => {
 #### Preload
 
 - Resource prioritization technique similar to `async` and `defer`.
-- Instructs the browser to load critical resources before they are needed for the initial rendering of the current page. 
-- Particularly useful for resources such as CSS, JavaScript, and images that are essential for displaying content quickly. 
+- Instructs the browser to load critical resources before they are needed for the initial rendering of the current page.
+- Particularly useful for resources such as CSS, JavaScript, and images that are essential for displaying content quickly.
 - Ensures that resources are cached in the browser.
 - Overuse can lead to bandwidth issues and unnecessary consumption of resources.
 - Applied using the `<link rel="preload">` tag in the HTML `<head>`.
 
 ```html
-<link rel="preload" href="styles.css" as="style">
-<link rel="preload" href="main.js" as="script">
+<link rel="preload" href="styles.css" as="style" />
+<link rel="preload" href="main.js" as="script" />
 ```
 
 #### Prefetch
 
 - Allows the browser to load resources that are anticipated to be needed in the near future, typically for subsequent pages.
-- Done using the `<link rel="prefetch">` tag. 
+- Done using the `<link rel="prefetch">` tag.
 - Operates at a lower priority than preloading.
     - It will not interfere with the loading of critical resources for the current page.
 - Should be used for resources that are genuinely expected to be needed.
     - Unnecessary prefetching can waste bandwidth and resources.
 
 ```html
-<link rel="prefetch" href="next-page.js" as="script">
+<link rel="prefetch" href="next-page.js" as="script" />
 ```
 
 #### Preconnect
@@ -234,7 +239,7 @@ images.forEach(image => {
 - Should be used sparingly only to preconnect to critical domains.
 
 ```html
-<link rel="preconnect" href="https://fonts.example.com">
+<link rel="preconnect" href="https://fonts.example.com" />
 ```
 
 ## Core Web Vitals
@@ -250,8 +255,8 @@ images.forEach(image => {
     - A good CLS score is considered to be 0.1 or less
 
 - **Interaction to Next Paint (INP)**
-    - Measures the delay between a user's action (like a click or touch) and the browser's response. 
-    - Introduced as a replacement for FID 
+    - Measures the delay between a user's action (like a click or touch) and the browser's response.
+    - Introduced as a replacement for FID
     - Google recommends an INP of 100 milliseconds or less.
 
 ### Other Metrics
@@ -291,7 +296,7 @@ images.forEach(image => {
 ## CDNs
 
 - Benefits:
-    - **Reduced Latency**: 
+    - **Reduced Latency**:
         - Minimize the distance data must travel by serving content from the nearest edge server to the user.
     - **Caching**
         - Reduce the load on the origin server by storing cached versions of content on edge servers.
@@ -318,7 +323,7 @@ images.forEach(image => {
     - Implementing Gzip compression can reduce file sizes significantly, improving transfer speeds.
 - Ignoring Critical CSS
     - Loading essential styles for above-the-fold content first can enhance perceived performance and UX.
-- Improper Font Loading Strategy 
+- Improper Font Loading Strategy
     - Using strategies like `font-display: swap` can reduce layout shifts by ensuring fallback fonts are used until the desired font is fully loaded.
 - Not Leveraging a Content Delivery Network (CDN)
     - CDNs can reduce latency and speed up access.
@@ -329,6 +334,7 @@ images.forEach(image => {
     - Avoid unnecessary addition of dependencies (e.g. frameworks) for minor features, which can bloat the website.
 
 ---
+
 ## Further
 
 ### Reads 📄

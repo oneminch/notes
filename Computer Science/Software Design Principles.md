@@ -10,11 +10,10 @@
 
 ## [[SOLID]]
 
-
-
 [^1]: [Wikipedia - The DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
 
 ---
+
 ## Further
 
 ### Books 📚
@@ -23,4 +22,4 @@
 
 - Tidy First? (Kent Beck)
 
--  Grokking Simplicity (Eric Normand)
+- Grokking Simplicity (Eric Normand)

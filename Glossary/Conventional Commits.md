@@ -1,6 +1,6 @@
 | Commit Type | Title                    | Description                                                                                                 | Emoji | Release                        | Include in changelog |
-|:-----------:|--------------------------|-------------------------------------------------------------------------------------------------------------|:-----:|--------------------------------|:--------------------:|
-|   `feat`    | Features                 | A new feature                                                                                               |   ✨   | `minor`                        |        `true`        |
+| :---------: | ------------------------ | ----------------------------------------------------------------------------------------------------------- | :---: | ------------------------------ | :------------------: |
+|   `feat`    | Features                 | A new feature                                                                                               |  ✨   | `minor`                        |        `true`        |
 |    `fix`    | Bug Fixes                | A bug Fix                                                                                                   |  🐛   | `patch`                        |        `true`        |
 |   `docs`    | Documentation            | Documentation only changes                                                                                  |  📚   | `patch` if `scope` is `readme` |        `true`        |
 |   `style`   | Styles                   | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)      |  💎   | -                              |        `true`        |

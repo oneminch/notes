@@ -45,14 +45,14 @@ git pull origin main
 
 - Has more rules and structure.
 - Contains long-running branches (`main` and `develop`) and short-lived branches (e.g. `feature`) that start from and get merged to a long-running branch (e.g. `develop`).
-    - e.g. A `release` branch can be started from a long-running branch such as `develop`, but get merged to the `main` branch. 
+    - e.g. A `release` branch can be started from a long-running branch such as `develop`, but get merged to the `main` branch.
 
 ## Manipulating History
 
 ### Merge
 
 - **Fast Forward Merges**
-    - A simplified merging process that occurs when the branch being merged into (usually `main`) *has not diverged* from the feature branch being merged.
+    - A simplified merging process that occurs when the branch being merged into (usually `main`) _has not diverged_ from the feature branch being merged.
     - Maintains a linear commit history, keeping all the commits from the feature branch in sequence.
     - Possible when there's a linear path from the base branch to the feature branch.
         - No new commits on base branch: The base branch (e.g., main) must not have any new commits since the feature branch was created or last updated.
@@ -115,8 +115,8 @@ A --- B --- C (main)
 ```
 
 > [!important]
-> Rebase shouldn't be used on commits that are already pushed to a remote repository. 
-> 
+> Rebase shouldn't be used on commits that are already pushed to a remote repository.
+>
 > They should be used locally to clean up commit history before merging into a shared branch.
 
 ### Stash
@@ -225,7 +225,7 @@ git reset --soft HEAD~1
 # Undo last commit, unstage changes:
 git reset HEAD~1
 
-# Undo last commit and discard changes:   
+# Undo last commit and discard changes:
 git reset --hard HEAD~1
 ```
 
@@ -235,7 +235,7 @@ git reset --hard HEAD~1
     - Doesn't affect commit history.
     - Useful for undoing local file changes.
     - Generally safe for local changes.
-    - Behaves like an "undo" button for specific files. 
+    - Behaves like an "undo" button for specific files.
 
 ```bash
 # Discard changes in a file:
@@ -251,7 +251,7 @@ git restore --staged file.txt
     - Creates a new commit to undo changes.
     - Useful for safely undoing pushed commits.
     - Safe for shared repositories.
-    - Behaves like an "undo" that creates a new commit. 
+    - Behaves like an "undo" that creates a new commit.
 
 ```bash
 # Revert the last commit:
@@ -295,7 +295,7 @@ git push origin --tags
     - `/` - used to ignore pathnames relative to the `.gitignore` file.
     - `#` - used to add comments to a `.gitignore` file.
     - `**` - used to match any number of directories.
-    - `!`  - used to negate a file that would be ignored.
+    - `!` - used to negate a file that would be ignored.
 
 ```gitignore
 *.log
@@ -306,7 +306,7 @@ git push origin --tags
 
 ### Conventional Commits
 
-- A specification for adding structure and meaning to commit messages. 
+- A specification for adding structure and meaning to commit messages.
 - Provides a set of rules for creating an explicit commit history that is both human and machine-readable.
 - Designed to work with SemVer (Semantic Versioning).
     - e.g. `fix` correlates with `PATCH`, `feat` with `MINOR`, and `BREAKING CHANGE` with `MAJOR` version changes.
@@ -336,13 +336,14 @@ git push origin --tags
 > ![[Conventional Commits]]
 
 > [!example]
+>
 > ```
 > feat(auth): implement 2fa
-> 
+>
 > - Add email verification step
 > - Create recovery code generation
 > - Update account settings page with 2FA options
-> 
+>
 > Closes #12
 > ```
 
@@ -360,10 +361,11 @@ git push origin --tags
 - `git reflog`
     - Helps track changes made to the tips of branches in a local git repo.
 - `git bisect`
-    - Used to identify the specific commit that introduced a bug in code. 
+    - Used to identify the specific commit that introduced a bug in code.
     - Employs a binary search algorithm to efficiently narrow down the range of commits, to find the offending commit without having to check each one individually.
 
 ---
+
 ## Further
 
 ### Books 📚

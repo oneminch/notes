@@ -14,11 +14,13 @@
 
 <a href="sms:1-800-000-0000">Text us: +1(800)000-0000</a>
 <a href="sms:1-800-000-0000,1-800-000-1000?body=hello%20there">
-    Text us: +1(800)000-0000
+	Text us: +1(800)000-0000
 </a>
 
 <a href="mailto:hi@email.com">Send us an email!</a>
-<a href="mailto:hi@email.com?cc=sales@email.com&bcc=privacy@email.com&subject=The%20subject%20of%20the%20email&body=The%20body%20of%20the%20email">
-    Send an email with cc, bcc, subject and body
+<a
+	href="mailto:hi@email.com?cc=sales@email.com&bcc=privacy@email.com&subject=The%20subject%20of%20the%20email&body=The%20body%20of%20the%20email"
+>
+	Send an email with cc, bcc, subject and body
 </a>
 ```

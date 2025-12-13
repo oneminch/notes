@@ -88,4 +88,3 @@ a[i], a[j] = a[j], a[i]
 ```python
 min = a if a < b else b
 ```
-

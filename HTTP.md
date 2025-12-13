@@ -1,11 +1,11 @@
 ---
-aliases: 
+aliases:
     - HyperText Transfer Protocol
     - HTTPS
 ---
 
 - HTTP is a technique of transmitting data in a particular format between a server (destination) and a client (source).
-- Considered stateless i.e. once a request and response has completed, the server doesn't retain any data about the request. 
+- Considered stateless i.e. once a request and response has completed, the server doesn't retain any data about the request.
 - Capable of transmitting hypermedia documents as well as hypertext documents.
 - Composed of two parts:
     - **Request**
@@ -46,7 +46,7 @@ aliases:
 
 ## Headers
 
-- Allow the client and server to exchange additional information with an HTTP request or response. 
+- Allow the client and server to exchange additional information with an HTTP request or response.
 - Formatted as `name: value`
     - `name` is case-insensitive.
     - Whitespace before the value is ignored.
@@ -83,15 +83,15 @@ Expires: Sun, 03 May 2025 23:02:37 GMT
 - A status consists of a numeric status code and an HTTP reason phrase.
     - e.g. `500: Internal Server Error`
 
-- `100` – `199` 
+- `100` – `199`
     - Informational responses
-- `200` – `299` 
+- `200` – `299`
     - Successful responses
-- `300` – `399` 
+- `300` – `399`
     - Redirection messages
-- `400` – `499` 
+- `400` – `499`
     - Client error responses
-- `500` – `599` 
+- `500` – `599`
     - Server error responses
 
 - Learn more - [HTTP Status Codes Explained In 5 Minutes (YouTube)](https://www.youtube.com/watch?v=qmpUfWN7hh4)
@@ -112,8 +112,8 @@ Expires: Sun, 03 May 2025 23:02:37 GMT
 - Often used for session management, user preferences, and tracking.
 - Because cookies are repeatedly sent with every request, it consumes bandwidth and impacts performance.
 - **Types**:
-    - *Session cookies* have no `Max-Age` or `Expires` attribute, and are deleted when an HTTP session is completed or the browser closes.
-    - *Permanent cookies* remain until expiration date or they are manually deleted.
+    - _Session cookies_ have no `Max-Age` or `Expires` attribute, and are deleted when an HTTP session is completed or the browser closes.
+    - _Permanent cookies_ remain until expiration date or they are manually deleted.
 - **Attributes**:
     - `Secure` - ensures the cookie is only sent over HTTPS.
     - `HttpOnly` - prevents client-side access to the cookie.
@@ -124,18 +124,22 @@ Expires: Sun, 03 May 2025 23:02:37 GMT
 
 > [!important]
 > By default, cookies are not sent with cross-origin requests. To allow this, the server must specify allowed origins.
-> 
+>
 > ```js
 > // Client
 > fetch("https://api.acme.org/", { credentials: "include" });
-> 
+>
 > // Server
-> app.use(cors({
->     origin: 'https://acme.org',
->     credentials: true
-> }));
+> app.use(
+> 	cors({
+> 		origin: "https://acme.org",
+> 		credentials: true,
+> 	}),
+> );
 > ```
+>
 > It's important to note that:
+>
 > - Allowing credentials in cross-origin requests can pose security risks.
 > - When using credentials, the `Access-Control-Allow-Origin` header cannot be set to `*`. The exact origin must be specified.
 > - Many browsers are implementing restrictions on 3rd-party cookies, which can affect cross-origin requests with credentials.
@@ -153,23 +157,23 @@ Expires: Sun, 03 May 2025 23:02:37 GMT
 app.use(cookieParser());
 
 // Setting Cookies
-app.get('/', (req, res) => {
-    res.cookie('user_id', '12345', {
-        maxAge: 25200,
-        httpOnly: true,
-        secure: true
-    });
-    res.send('Cookie has been set.');
+app.get("/", (req, res) => {
+	res.cookie("user_id", "12345", {
+		maxAge: 25200,
+		httpOnly: true,
+		secure: true,
+	});
+	res.send("Cookie has been set.");
 });
 
 // Reading Cookies
-app.get('/read-cookie', (req, res) => {
-    const userId = req.cookies.user_id;
-    res.send(`User ID from cookie: ${userId}`);
+app.get("/read-cookie", (req, res) => {
+	const userId = req.cookies.user_id;
+	res.send(`User ID from cookie: ${userId}`);
 });
 ```
 
-- *Cookie prefixes* are a security feature that allows servers to indicate certain security requirements for cookies. They are enforced by most modern browsers.
+- _Cookie prefixes_ are a security feature that allows servers to indicate certain security requirements for cookies. They are enforced by most modern browsers.
     - `__Secure-` prefix:
         - Must be set with the Secure flag.
         - Must be set from a secure origin (HTTPS).
@@ -179,15 +183,15 @@ app.get('/read-cookie', (req, res) => {
         - Must have `Path` set to `/`.
 
 ```js
-res.cookie('__Secure-ID', '123', {
-    secure: true,
-    httpOnly: true
+res.cookie("__Secure-ID", "123", {
+	secure: true,
+	httpOnly: true,
 });
 
-res.cookie('__Host-ID', '456', {
-    secure: true,
-    httpOnly: true,
-    path: '/'
+res.cookie("__Host-ID", "456", {
+	secure: true,
+	httpOnly: true,
+	path: "/",
 });
 ```
 
@@ -198,7 +202,7 @@ res.cookie('__Host-ID', '456', {
 
 ### Implementation using [[Express]]
 
-- Create Self-Signed Certificates (for Development Purposes) 
+- Create Self-Signed Certificates (for Development Purposes)
 
 ```bash
 openssl req -nodes -new -x509 -keyout private-key.pem -out certificate.pem
@@ -210,18 +214,17 @@ openssl req -nodes -new -x509 -keyout private-key.pem -out certificate.pem
 const app = express();
 
 const credentials = {
-    key: fs.readFileSync('private-key.pem', 'utf8'),
-    cert: fs.readFileSync('certificate.pem', 'utf8')
+	key: fs.readFileSync("private-key.pem", "utf8"),
+	cert: fs.readFileSync("certificate.pem", "utf8"),
 };
 
-app.get('/', (req, res) => {
-    res.send('Hello, HTTPS world!');
+app.get("/", (req, res) => {
+	res.send("Hello, HTTPS world!");
 });
 
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(443, () => {
-    console.log('HTTPS Server running on port 443');
+	console.log("HTTPS Server running on port 443");
 });
 ```
-

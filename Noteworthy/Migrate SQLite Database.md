@@ -42,5 +42,3 @@ sqlite3 ./restore.db
 sqlite> .read ./backup_db.sql
 sqlite> .exit
 ```
-
-

@@ -1,4 +1,4 @@
-- The practice of recording information about a program's execution for debugging, performance monitoring, and auditing purposes. 
+- The practice of recording information about a program's execution for debugging, performance monitoring, and auditing purposes.
 - An important part of software development and maintenance.
 - It's important to:
     - be mindful of sensitive information in logs and implementing appropriate safeguards.
@@ -34,7 +34,7 @@ public class LogLevelExample {
 
 - **Loggers** are objects responsible for capturing log events and routing them to appropriate destinations.
     - Are often organized hierarchically.
-- **Appenders / Handlers** are components that determine where log messages are sent. 
+- **Appenders / Handlers** are components that determine where log messages are sent.
     - Common destinations include console, files, databases, and external logging services.
 - **Layouts / Formatters** are responsible for converting and formatting log data into a specific output format (e.g., plain text, JSON, XML).
 

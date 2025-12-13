@@ -10,21 +10,21 @@ alias: Node.js
     - A Node.js app runs without creating a new thread for every request.
 - Execution stops as soon as there is no more tasks left in the event loop.
     - `http.createServer()` event never finishes running by default.
-    - The event loop is only used to determine what to do next when the execution of a task finishes. 
+    - The event loop is only used to determine what to do next when the execution of a task finishes.
     - e.g. In the snippet below, the `while` loop is not interrupted by `setTimeout`, because the event loop is only checked for new tasks once an ongoing execution is complete.
 
 ```js
 setTimeout(() => {
-    console.log('Timeout')
-}, 1000)
+	console.log("Timeout");
+}, 1000);
 
-console.log("Enter Loop")
+console.log("Enter Loop");
 
-let i = 0
-while(new Date().getTime() < start.getTime() + 4000) {
-    i++
+let i = 0;
+while (new Date().getTime() < start.getTime() + 4000) {
+	i++;
 }
-console.log("Exit Loop")
+console.log("Exit Loop");
 
 /*
 Output:
@@ -34,13 +34,13 @@ Timeout
 */
 ```
 
-- Non-blocking I/O model using the *event loop* (events and callbacks)
+- Non-blocking I/O model using the _event loop_ (events and callbacks)
     - Code is not necessarily executed in the order that it is written.
     - Every I/O operation takes a callback. When performing I/O, control is passed back to the event loop. The callback will be run once the data from the I/O operation is available.
 
 ```js
-fs.readFile('/path/to/file.txt', (err, data) => {
-    console.log(data);
+fs.readFile("/path/to/file.txt", (err, data) => {
+	console.log(data);
 });
 ```
 
@@ -78,16 +78,16 @@ fs.readFile('/path/to/file.txt', (err, data) => {
 
 ### `process`
 
-- The `process` object provides information about and control over the current Node.js process. 
+- The `process` object provides information about and control over the current Node.js process.
 - It is a global object that can be accessed from anywhere in a Node.js application without requiring it.
 - It offers various data sets about the program's runtime providing properties that allow for managing the Node.js process effectively like `process.versions`, `process.release`, and methods like `process.exit()` for exiting the event loop.
 - Furthermore, it facilitates interactions with the environment through properties like `process.env` and enables access to command-line arguments via `process.argv`.
 
 ```js
 const server = http.createServer((req, res) => {
-    console.log(req);
-    process.exit();
-})
+	console.log(req);
+	process.exit();
+});
 ```
 
 - **Properties** & **Methods**
@@ -97,51 +97,51 @@ const server = http.createServer((req, res) => {
 
 > [!tip]
 > `__filename` is a variable in Node.js that contains the full path to the currently executing file.
-> 
+>
 > `__dirname` provides the path to the directory that contains that file.
 
 ## Core Modules
 
 - Node.js provides a number of built-in modules that can be used without having to install them separately:
 
-- `fs` 
-    - provides an API for reading and writing files, as well as working with directories. 
+- `fs`
+    - provides an API for reading and writing files, as well as working with directories.
     - can be used to perform various file system operations such as creating, deleting, renaming, and modifying files.
     - `readFile()` & `readFileSync()`
 
 ```js
-import fs from 'node:fs';
+import fs from "node:fs";
 
-fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log(data);
+fs.readFile("/Users/joe/test.txt", "utf8", (err, data) => {
+	if (err) {
+		console.error(err);
+		return;
+	}
+	console.log(data);
 });
 ```
 
-> [!note] 
-> All read methods of the `fs` module read the full content of a file in memory before returning the data. Therefore, for big files, the process can be memory-intensive and slow. It's recommended to read file contents using *streams*.
-> 
+> [!note]
+> All read methods of the `fs` module read the full content of a file in memory before returning the data. Therefore, for big files, the process can be memory-intensive and slow. It's recommended to read file contents using _streams_.
+>
 > ```js
 > async function readFile(filePath) {
-> 	const readStream = fs.createReadStream(filePath, { encoding: 'utf8' });
-> 
+> 	const readStream = fs.createReadStream(filePath, { encoding: "utf8" });
+>
 > 	try {
 > 		for await (const chunk of readStream) {
-> 			console.log('--- File chunk start ---');
+> 			console.log("--- File chunk start ---");
 > 			console.log(chunk);
-> 			console.log('--- File chunk end ---');
+> 			console.log("--- File chunk end ---");
 > 		}
-> 		console.log('Finished reading the file.');
+> 		console.log("Finished reading the file.");
 > 	} catch (error) {
 > 		console.error(`Error reading file: ${error.message}`);
 > 	}
 > }
 > ```
 
-- `path` 
+- `path`
     - provides utilities for working with file and directory paths.
         - `dirname()`: gets the parent folder of a file
         - `basename()`: gets the filename part
@@ -149,34 +149,34 @@ fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
     - It can be used to join multiple path segments together, resolve relative paths, and parse path strings into their components.
 
 ```js
-import path from 'node:path';
+import path from "node:path";
 
-const notes = '/users/jdoe/file.md';
+const notes = "/users/jdoe/file.md";
 
 path.dirname(notes); // /users/jdoe
 path.basename(notes); // file.txt
 path.extname(notes); // .md
 
-path.resolve('notes', 'file.md'); 
+path.resolve("notes", "file.md");
 // '/Users/jdoe/notes/file.md' if run from home (/) folder
 ```
 
-- `os` 
-    - provides information about the operating system on which Node.js is running. 
+- `os`
+    - provides information about the operating system on which Node.js is running.
     - can be used to retrieve information such as the hostname, CPU architecture, and amount of free memory.
-- `events` 
+- `events`
     - can be used to create custom events and handle them.
-- `crypto` 
+- `crypto`
     - provides cryptographic functionality that can be used to generate hash values, encrypt and decrypt data, and generate random numbers.
 
-- `http` & `https` modules allow us to launch a server among other things. 
+- `http` & `https` modules allow us to launch a server among other things.
     - `https` launches an SSL server.
     - Data send thru a `POST` request is sent as a stream which has to be buffered in to the desired data.
 
 ```js
 const http = require("node:http");
 
-const createPage = (text) => (`
+const createPage = (text) => `
   <html>
     <head>
       <title>Welcome to Node.js</title>
@@ -185,33 +185,33 @@ const createPage = (text) => (`
       <h1>${text}</h1>
     </body>
   </html>
-`);
+`;
 
 const reqHandler = (req, res) => {
-    const { headers } = request;
-    const userAgent = headers['user-agent'];
+	const { headers } = request;
+	const userAgent = headers["user-agent"];
 
-    res.setHeader("Content-Type", "text/html");
-    
-    if (req.url === "/") {
-        res.write(createPage("Hello, Node!"));
-        return res.end();
-    }
-    
-    res.write(createPage("404 - Not Found!"));
-    res.end();
-}
+	res.setHeader("Content-Type", "text/html");
+
+	if (req.url === "/") {
+		res.write(createPage("Hello, Node!"));
+		return res.end();
+	}
+
+	res.write(createPage("404 - Not Found!"));
+	res.end();
+};
 
 const server = http.createServer(reqHandler);
 // OR
 const server = http.createServer();
-server.on('request', reqHandler)
+server.on("request", reqHandler);
 
-server.listen(2345)
+server.listen(2345);
 ```
 
 > [!important]
-> It's important to set the status and headers _before_ writing chunks of data to the body. 
+> It's important to set the status and headers _before_ writing chunks of data to the body.
 
 ## Debugging
 
@@ -224,7 +224,7 @@ server.listen(2345)
 
 ## Async Programming
 
-- Synchronous code is said to be *blocking* can only execute after the one before has finished executed. e.g. `fs.readFileSync()` and `fs.writeFileSync()`
+- Synchronous code is said to be _blocking_ can only execute after the one before has finished executed. e.g. `fs.readFileSync()` and `fs.writeFileSync()`
 
 ```js
 const fs = require("fs");
@@ -239,18 +239,18 @@ fs.writeFileSync("input.md", textOut);
 - Node.js uses callbacks to make execution asynchronous / non-blocking. e.g. `fs.readFile()` and `fs.writeFile()`
 
 ```js
-const fs = require("fs")
+const fs = require("fs");
 
 fs.readFile("input.md", "utf-8", (err, data) => {
-    console.log(data)
+	console.log(data);
 });
-console.log("Reading file...")
+console.log("Reading file...");
 ```
 
->[!note]
->Because of its event-driven architecture, some operations rely on callbacks that get executed during a certain event. The `return` keyword is often used before a function call to prevent further execution of code.
+> [!note]
+> Because of its event-driven architecture, some operations rely on callbacks that get executed during a certain event. The `return` keyword is often used before a function call to prevent further execution of code.
 
-- Node.js also provides Promise-based versions of many core APIs, especially ones where asynchronous operations were traditionally handled using callbacks. 
+- Node.js also provides Promise-based versions of many core APIs, especially ones where asynchronous operations were traditionally handled using callbacks.
     - This reduces the risk of "callback hell."
     - e.g. `fs` -> `fs.promises` (or import from `node:fs/promises`)
 
@@ -258,37 +258,37 @@ console.log("Reading file...")
 
 - `EventEmitter`s serve as the foundation for event-driven architecture in Node.js.
 
-> [!quote] Architecture 
+> [!quote] Architecture
 > Much of the Node.js core API is built around an idiomatic asynchronous event-driven architecture in which certain kinds of objects (called "emitters") emit named events that cause `Function` objects ("listeners") to be called.
 
 - All objects that emit events are instances of the `EventEmitter` class.
     - They expose an `eventEmitter.on()` function that allows one or more functions to be attached to named events emitted by the object.
-    - When an object emits an event, all listeners attached to that specific event are called _synchronously_ to avoid race conditions and logic errors. 
+    - When an object emits an event, all listeners attached to that specific event are called _synchronously_ to avoid race conditions and logic errors.
         - Any values returned values by the called listeners are _ignored_ and discarded.
         - Listener functions can be made to run asynchronously using the `setImmediate()` or `process.nextTick()` methods.
 
 ```js
-import { EventEmitter } from 'node:events';
+import { EventEmitter } from "node:events";
 
 class OrderSystem extends EventEmitter {
-    placeOrder(order) {
-        this.emit('order', order);
-    }
+	placeOrder(order) {
+		this.emit("order", order);
+	}
 }
 
 const orders = new OrderSystem();
 
 // Process Payment
-orders.on('order', (order) => {
-    console.log(`Processing payment for ${order.amount}`);
+orders.on("order", (order) => {
+	console.log(`Processing payment for ${order.amount}`);
 });
 
 // Inventory update
-orders.on('order', (order) => {
-    console.log(`Updating inventory for ${order.items.length} items`);
+orders.on("order", (order) => {
+	console.log(`Updating inventory for ${order.items.length} items`);
 });
 
-orders.placeOrder({ amount: 99.99, items: ['Shirt', 'Mug'] });
+orders.placeOrder({ amount: 99.99, items: ["Shirt", "Mug"] });
 // Processing payment for 99.99
 // Updating inventory for 2 items[7][6]
 ```
@@ -300,15 +300,15 @@ orders.placeOrder({ amount: 99.99, items: ['Shirt', 'Mug'] });
 
 - Node.js provides other mechanisms for scheduling tasks in the event loop.
 
-- **`queueMicrotask`** 
+- **`queueMicrotask`**
     - used to schedule a microtask (a lightweight task that runs after the script that's currently executing but before any other I/O events/timers).
     - typically used for Promise resolutions.
     - should be favored over `process.nextTick`.
 
 ```js
-queueMicrotask(() => console.log("Logs Next."))
+queueMicrotask(() => console.log("Logs Next."));
 
-console.log("Logs First.")
+console.log("Logs First.");
 ```
 
 - **`process.nextTick`** (Legacy)
@@ -320,23 +320,23 @@ console.log("Logs First.")
 
 ```js
 process.nextTick(() => {
-  console.log('Second.');
+	console.log("Second.");
 });
 
-console.log('First.');
+console.log("First.");
 ```
 
 - **`setImmediate`**
-    - executes a callback after the current event loop cycle is finished and all I/O events have been processed. 
+    - executes a callback after the current event loop cycle is finished and all I/O events have been processed.
     - callbacks run after any I/O callbacks and in the next iteration of the event loop, but before timers.
     - equivalent to `setTimeout(() => {}, 0)`
 
 ```js
 setImmediate(() => {
-  console.log('Immediate callback');
+	console.log("Immediate callback");
 });
 
-console.log('Synchronous task executed');
+console.log("Synchronous task executed");
 ```
 
 > [!important]
@@ -348,10 +348,10 @@ console.log('Synchronous task executed');
 
 ```js
 setTimeout(() => {
-    console.log('After');
+	console.log("After");
 }, 0);
 
-console.log('Before');
+console.log("Before");
 
 /* 
 Logs:
@@ -360,7 +360,7 @@ Logs:
 */
 ```
 
-- This can be useful to avoid blocking on CPU-intensive tasks. 
+- This can be useful to avoid blocking on CPU-intensive tasks.
     - The callback function is added to the queue in the scheduler and other functions can be executed beforehand.
 - `setTimeout` and `setInterval` are global functions available in Node.js thru the `timer` module; They don't require imports.
 - Timer functions in Node.js implement a similar API as the ones provided by [[Web Browsers]] but use a different internal implementation that is built around the Node.js Event Loop.
@@ -375,60 +375,59 @@ Logs:
 ### Unit Testing
 
 > [!example] Example: Testing a Node server with Jest & Supertest
+
 ```js
 // app.test.js
-const request = require('supertest');
+const request = require("supertest");
 
-describe('Product API', () => {
-    describe('GET /api/products', () => {
-        it('should return all products', async () => {
-            const res = await request(app).get('/api/products');
-            expect(res.statusCode).toBe(200);
-            expect(res.body.length).toBeGreaterThan(0);
-            expect(res.body[0]).toHaveProperty('id');
-            expect(res.body[0]).toHaveProperty('name');
-            expect(res.body[0]).toHaveProperty('price');
-        });
-    });
+describe("Product API", () => {
+	describe("GET /api/products", () => {
+		it("should return all products", async () => {
+			const res = await request(app).get("/api/products");
+			expect(res.statusCode).toBe(200);
+			expect(res.body.length).toBeGreaterThan(0);
+			expect(res.body[0]).toHaveProperty("id");
+			expect(res.body[0]).toHaveProperty("name");
+			expect(res.body[0]).toHaveProperty("price");
+		});
+	});
 
-    describe('GET /api/products/:id', () => {
-        it('should return a product if valid id is passed', async () => {
-            const res = await request(app).get('/api/products/1');
-            expect(res.statusCode).toBe(200);
-            expect(res.body).toHaveProperty('id', 1);
-        });
+	describe("GET /api/products/:id", () => {
+		it("should return a product if valid id is passed", async () => {
+			const res = await request(app).get("/api/products/1");
+			expect(res.statusCode).toBe(200);
+			expect(res.body).toHaveProperty("id", 1);
+		});
 
-        it('should return 404 if invalid id is passed', async () => {
-            const res = await request(app).get('/api/products/9999');
-            expect(res.statusCode).toBe(404);
-        });
-    });
+		it("should return 404 if invalid id is passed", async () => {
+			const res = await request(app).get("/api/products/9999");
+			expect(res.statusCode).toBe(404);
+		});
+	});
 
-    describe('PUT /api/products/:id', () => {
-        it('should update an existing product', async () => {
-            const res = await request(app)
-                .put('/api/products/1')
-                .send({
-                    name: 'Updated Name',
-                    price: 69.99
-                });
-            expect(res.statusCode).toBe(200);
-            expect(res.body.name).toBe('Updated Name');
-            expect(res.body.price).toBe(69.99);
-        });
-    });
+	describe("PUT /api/products/:id", () => {
+		it("should update an existing product", async () => {
+			const res = await request(app).put("/api/products/1").send({
+				name: "Updated Name",
+				price: 69.99,
+			});
+			expect(res.statusCode).toBe(200);
+			expect(res.body.name).toBe("Updated Name");
+			expect(res.body.price).toBe(69.99);
+		});
+	});
 
-    describe('DELETE /api/products/:id', () => {
-        it('should delete an existing product', async () => {
-            const res = await request(app).delete('/api/products/2');
-            expect(res.statusCode).toBe(204);
-        });
+	describe("DELETE /api/products/:id", () => {
+		it("should delete an existing product", async () => {
+			const res = await request(app).delete("/api/products/2");
+			expect(res.statusCode).toBe(204);
+		});
 
-        it('should return 404 if product not found', async () => {
-            const res = await request(app).delete('/api/products/9999');
-            expect(res.statusCode).toBe(404);
-        });
-    });
+		it("should return 404 if product not found", async () => {
+			const res = await request(app).delete("/api/products/9999");
+			expect(res.statusCode).toBe(404);
+		});
+	});
 });
 ```
 
@@ -436,44 +435,44 @@ describe('Product API', () => {
 
 ```js
 // app.test.js
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
 let server;
 let browser;
 
 beforeAll((done) => {
-    server = http.createServer(app);
-    server.listen(3000, () => {
-        console.log('Test server running on port 3000');
-        done();
-    });
+	server = http.createServer(app);
+	server.listen(3000, () => {
+		console.log("Test server running on port 3000");
+		done();
+	});
 });
 
 afterAll((done) => {
-    server.close(done);
+	server.close(done);
 });
 
 beforeEach(async () => {
-    browser = await puppeteer.launch();
+	browser = await puppeteer.launch();
 });
 
 afterEach(async () => {
-    await browser.close();
+	await browser.close();
 });
 
 test("should display 'Hello, Node!'", async () => {
-    const page = await browser.newPage();
-    await page.goto("http://localhost:3000");
-    
-    const content = await page.content();
-    expect(content).toContain("Hello, world!");
+	const page = await browser.newPage();
+	await page.goto("http://localhost:3000");
+
+	const content = await page.content();
+	expect(content).toContain("Hello, world!");
 });
 ```
 
 ## TypeScript
 
-- Prior to v22, Node.js didn't have built-in TypeScript support. 
-- `.ts` will have to be compiled into `.js` files before running them with Node. 
+- Prior to v22, Node.js didn't have built-in TypeScript support.
+- `.ts` will have to be compiled into `.js` files before running them with Node.
 
 ```bash
 npx tsc -p .
@@ -486,7 +485,7 @@ npx tsc -p .
     - TypeORM
     - AdonisJS
 
-- Starting from v22, Node provides some level of native but experimental support for TypeScript using flags: 
+- Starting from v22, Node provides some level of native but experimental support for TypeScript using flags:
 
 ```bash
 # Enabled by default since v23.6.0
@@ -503,13 +502,13 @@ node --experimental-transform-types app.ts
 > ![[JS Module System]]
 
 - By default, Node.js will treat a file as a CommonJS module:
-    - via the `.cjs` file extension, 
-    - via a `.js` extension when the nearest parent `package.json` file contains a top-level field `"type"` with a value of `"commonjs"`, or 
+    - via the `.cjs` file extension,
+    - via a `.js` extension when the nearest parent `package.json` file contains a top-level field `"type"` with a value of `"commonjs"`, or
     - via a `.js` extension or without an extension, when the nearest parent `package.json` file doesn't contain a top-level field `"type"` or there is no `package.json` in any parent folder
 - Node.js interprets JavaScript as an ES module:
-    - via the `.mjs` file extension, 
-    - via the `package.json` `"type"` field with a value `"module"`, or 
-    - via the `--input-type` flag with a value of `"module"`. 
+    - via the `.mjs` file extension,
+    - via the `package.json` `"type"` field with a value `"module"`, or
+    - via the `--input-type` flag with a value of `"module"`.
     - These are explicit markers of code being intended to run as an ES module.
 - The `__filename` or `__dirname` CommonJS variables are not available in ES modules.
     - Their use cases can be replicated via `import.meta.filename` and `import.meta.dirname`.
@@ -524,25 +523,25 @@ node --experimental-transform-types app.ts
 - Creates stores that stay coherent through asynchronous operations.
 
 ```js
-import express from 'express';
-import { AsyncLocalStorage } from 'node:async_hooks';
+import express from "express";
+import { AsyncLocalStorage } from "node:async_hooks";
 
 const asyncLocalStorage = new AsyncLocalStorage();
 
 function authMiddleware(req, res, next) {
-    const user = { id: 1, name: 'John Doe' };
+	const user = { id: 1, name: "John Doe" };
 
-    // Runs the rest of the request handler 
-    // within the context of AsyncLocalStorage
-    asyncLocalStorage.run(user, () => {
-        next();
-    });
+	// Runs the rest of the request handler
+	// within the context of AsyncLocalStorage
+	asyncLocalStorage.run(user, () => {
+		next();
+	});
 }
 
 function logUserMiddleware(req, res, next) {
-    const user = asyncLocalStorage.getStore();
-    console.log(`User: ${user.name}`);
-    next();
+	const user = asyncLocalStorage.getStore();
+	console.log(`User: ${user.name}`);
+	next();
 }
 
 const app = express();
@@ -550,58 +549,54 @@ const app = express();
 app.use(authMiddleware);
 app.use(logUserMiddleware);
 
-app.get('/user', (req, res) => {
-    const user = asyncLocalStorage.getStore();
-    res.send(`Hello, ${user.name}!`);
+app.get("/user", (req, res) => {
+	const user = asyncLocalStorage.getStore();
+	res.send(`Hello, ${user.name}!`);
 });
 
 app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+	console.log("Server is running on http://localhost:3000");
 });
 ```
 
 #### Streams
 
-- The `stream` module provides a set of classes for working with streaming data, such as reading or writing from files and network requests, without compromising performance. 
+- The `stream` module provides a set of classes for working with streaming data, such as reading or writing from files and network requests, without compromising performance.
 - Useful for large files.
 - Includes implementations of readable, writable, duplex, and transform streams.
-- For instance, in a request handler callback for `http.createServer`, the `request` object implements the `ReadableStream` interface and the `response` object implements the `WritableStream` interface. 
+- For instance, in a request handler callback for `http.createServer`, the `request` object implements the `ReadableStream` interface and the `response` object implements the `WritableStream` interface.
     - The `data` & `end` events can be listened to on the `request` object get the data from the stream.
     - The chunk of data emitted in each `data` event is a `Buffer`.
-- When reading from or writing to a stream, the data is not processed all at once. 
-    - Instead, it is handled in chunks, which are stored in a buffer. 
+- When reading from or writing to a stream, the data is not processed all at once.
+    - Instead, it is handled in chunks, which are stored in a buffer.
     - The size of the buffer is controlled by the `highWaterMark` option, which determines how much data can be stored before the stream pauses to prevent memory overload (a mechanism called _backpressure_)
 
 ```js
-http
-    .createServer((request, response) => {
-        const { headers, method, url } = request;
-        let body = [];
-        request
-            .on('error', err => {
-                console.error(err);
-            })
-            .on('data', chunk => {
-                body.push(chunk);
-            })
-            .on('end', () => {
-                body = Buffer.concat(body).toString();
-            });
-    })
-    .listen(8080);
+http.createServer((request, response) => {
+	const { headers, method, url } = request;
+	let body = [];
+	request
+		.on("error", (err) => {
+			console.error(err);
+		})
+		.on("data", (chunk) => {
+			body.push(chunk);
+		})
+		.on("end", () => {
+			body = Buffer.concat(body).toString();
+		});
+}).listen(8080);
 ```
 
 ```js
-http
-    .createServer((req, res) => {
-        if (req.method === 'POST' && req.url === '/echo') {
-            req.pipe(res);
-        } else {
-            res.statusCode = 404;
-            res.end();
-        }
-    })
-    .listen(8080);
+http.createServer((req, res) => {
+	if (req.method === "POST" && req.url === "/echo") {
+		req.pipe(res);
+	} else {
+		res.statusCode = 404;
+		res.end();
+	}
+}).listen(8080);
 ```
 
 #### Buffers
@@ -613,39 +608,39 @@ http
 - Particularly useful for dealing with streams of binary data, such as reading from or writing to files, network communication, and image processing.
 
 ```js
-import { writeFile, readFile } from 'fs/promises';
+import { writeFile, readFile } from "fs/promises";
 
 async function readFileIntoBuffer(filePath) {
-    try {
-        // Read the file into a buffer
-        const buffer = await readFile(filePath);
+	try {
+		// Read the file into a buffer
+		const buffer = await readFile(filePath);
 
-        // Convert the buffer to a string
-        const content = buffer.toString('utf-8');
+		// Convert the buffer to a string
+		const content = buffer.toString("utf-8");
 
-        console.log('File content:', content);
-    } catch (error) {
-        console.error('Error reading file:', error);
-    }
+		console.log("File content:", content);
+	} catch (error) {
+		console.error("Error reading file:", error);
+	}
 }
 
 async function writeBufferToFile(filePath, data) {
-    try {
-        // Create a buffer from a string
-        const buffer = Buffer.from(data, 'utf-8');
+	try {
+		// Create a buffer from a string
+		const buffer = Buffer.from(data, "utf-8");
 
-        // Write the buffer to a file
-        await writeFile(filePath, buffer);
+		// Write the buffer to a file
+		await writeFile(filePath, buffer);
 
-        console.log('File written successfully');
-    } catch (error) {
-        console.error('Error writing file:', error);
-    }
+		console.log("File written successfully");
+	} catch (error) {
+		console.error("Error writing file:", error);
+	}
 }
 
 // Usage
-readFileIntoBuffer('example.txt');
-writeBufferToFile('output.txt', 'Hello, world!');
+readFileIntoBuffer("example.txt");
+writeBufferToFile("output.txt", "Hello, world!");
 ```
 
 #### Other Modules
@@ -656,16 +651,16 @@ writeBufferToFile('output.txt', 'Hello, world!');
     - creates multiple worker processes (child processes) to handle incoming requests, enabling your app to utilize multiple CPU cores.
     - Multiple processes with separate memory.
     - solves Node.js' default single-threaded limitation for CPU-bound tasks.
-- `node:dns` 
+- `node:dns`
     - enables name resolution.
     - e.g. use it to look up IP addresses of host names.
 - `node:querystring`
     - provides utilities for parsing and formatting URL query strings.
     - more performant than `URLSearchParams`, but is not standardized.
-- `node:worker_threads` 
+- `node:worker_threads`
     - enables the use of threads that execute JavaScript in parallel for CPU-intensive tasks.
     - can share memory (via `SharedArrayBuffer`) unlike `child_process` or `cluster`.
-    - The `Worker` class represents an independent JavaScript execution thread. 
+    - The `Worker` class represents an independent JavaScript execution thread.
         - Most Node.js APIs are available inside of it.
 - `node:zlib`
     - provides compression functionality implemented using Gzip, Deflate/Inflate, Brotli, and Zstd.
@@ -680,7 +675,7 @@ writeBufferToFile('output.txt', 'Hello, world!');
 // JS Code
 ```
 
- - To run a node file as a script, it requires an executable permission.
+- To run a node file as a script, it requires an executable permission.
 
 ```bash
 chmod u+x app.js
@@ -708,6 +703,7 @@ node --env-file=.env app.js
 ```
 
 ---
+
 ## Further
 
 ## Reads 📄

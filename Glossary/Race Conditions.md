@@ -1,4 +1,4 @@
-- A race condition occurs when two or more processes or threads access shared resources or perform operations concurrently, and the final outcome depends on the specific order or timing of their execution. 
+- A race condition occurs when two or more processes or threads access shared resources or perform operations concurrently, and the final outcome depends on the specific order or timing of their execution.
 - It can lead to unexpected or inconsistent results, potentially causing bugs or system failures.
 - **Examples**
     - Multiple threads incrementing a shared counter without proper synchronization

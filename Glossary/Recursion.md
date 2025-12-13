@@ -1,4 +1,4 @@
-- Recursion is a technique where a function calls itself. 
+- Recursion is a technique where a function calls itself.
 - It can be ideal for problems that have a repeating structure.
 - A recursive function must have a base case and a recursive step that moves closer to the base case in each step.
 - Recursion typically takes up more memory than an iterative version, thus it can be less efficient.

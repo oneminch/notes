@@ -6,49 +6,49 @@
 
 ### CommonJS Modules
 
-- In [[Node]], CommonJS modules are supported using `require()` and `module.exports` (or more succinctly `exports`). 
+- In [[Node]], CommonJS modules are supported using `require()` and `module.exports` (or more succinctly `exports`).
 
 ```js
 // Exporting
 // ------------- 1 --------------
 // same as 'module.exports.hello'
-exports.hello = function() {
-    console.log("hello, node!")
-}
+exports.hello = function () {
+	console.log("hello, node!");
+};
 
 // ------------- 2 --------------
 // good practice
 module.exports = exports = {
-    hello() {
-        console.log("hello, node!")
-    }
-}
+	hello() {
+		console.log("hello, node!");
+	},
+};
 
 // ------------- 3 --------------
 function hello() {
-    console.log("hello, node")
+	console.log("hello, node");
 }
 
-module.exports = exports = { hello }
+module.exports = exports = { hello };
 
 // ------------- 4 --------------
 // Default export
 module.exports = exports = function hello() {
-    console.log("hello, node!")
-}
+	console.log("hello, node!");
+};
 ```
 
 ```js
 // Importing
 // ------------- 1 --------------
-const greet = require("./greet")
+const greet = require("./greet");
 
-greet.hello()
+greet.hello();
 
 // ------------- 2 --------------
-const { hello } = require("./greet")
+const { hello } = require("./greet");
 
-hello()
+hello();
 ```
 
 ### ES Modules
@@ -100,7 +100,7 @@ class Person {
     }
 }
 
-export default Person; 
+export default Person;
 // OR
 export { Person as default }
 ```
@@ -108,22 +108,22 @@ export { Person as default }
 ```js
 // Importing
 // ------------- 1 --------------
-import { fname } from "..."
-import { firstName } from "..."
-import { fname as firstName, hello } from "..."
+import { fname } from "...";
+import { firstName } from "...";
+import { fname as firstName, hello } from "...";
 
 // ------------- 2 --------------
-import * as greet from "./greet"
+import * as greet from "./greet";
 
-console.log(greet.fname)
-greet.hello()
+console.log(greet.fname);
+greet.hello();
 
 // ------------- 3 --------------
 // Importing default exports
-import Person from "./person"
+import Person from "./person";
 ```
 
 > [!note]
 > Named exports can export multiple values and must use the exported name in import statements.
-> 
+>
 > Default exports export a single value and can be imported using any name.

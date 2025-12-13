@@ -18,8 +18,8 @@ alias: A11y
         - **Robust** - accessible by a wide range of user agents and ATs:
             - Ensuring content is accessible even as technologies used evolve.
 - Different operating systems provide a set of special accessibility APIs that expose information useful for ATs.
-    - Web browsers utilize these APIs to provide basic accessibility wherever semantic information (excluding styling information, and JavaScript) is used. 
-    - Such information is structured into an *accessibility tree*.
+    - Web browsers utilize these APIs to provide basic accessibility wherever semantic information (excluding styling information, and JavaScript) is used.
+    - Such information is structured into an _accessibility tree_.
     - We can further improve accessibility using features from the WAI-ARIA specification, which add semantic information to the accessibility tree.
 - The accessibility tree is created based on the [[DOM]] tree that contains A11y-related information for most HTML elements.
     - Each object in an accessibility tree has four properties:
@@ -41,7 +41,7 @@ alias: A11y
     - Use the right tag hierarchy, specially with headings.
     - Only have one `<h1>` per page.
 - Use clear and unambiguous language.
-    - Make sure to avoid using language, characters, abbreviations or acronyms that are likely to get mispronounced by screen readers. 
+    - Make sure to avoid using language, characters, abbreviations or acronyms that are likely to get mispronounced by screen readers.
         - e.g. Write 4 to 8 instead of 4-8, Write February instead of Feb.
 - Use the right techniques for content layout.
     - Don't use tables for content layout.
@@ -49,8 +49,8 @@ alias: A11y
     - Avoid using labels such as "Click Here". Provide more context as these labels tend to be read out in isolation.
     - e.g. `<a href="/accessibility.html">Learn more about accessibility.</a>` ✅
 - For media elements such as images, a descriptive alternative text should be provided.
-    - If an `alt` text is not provided, screen readers will read out loud the image source URL. 
-    - To avoid this for decorative images, 
+    - If an `alt` text is not provided, screen readers will read out loud the image source URL.
+    - To avoid this for decorative images,
         - an empty `alt` text should be provided, or
         - alternatively, a `role` attribute of `presentation` value should be specified to ensure screen readers skip reading out the alternative text.
 
@@ -64,16 +64,13 @@ alias: A11y
 <p id="dino-label">Image Description...</p>
 ```
 
-- There is mixed reader support for implicitly associating a `<figcaption>`  to a `<figure>`. 
+- There is mixed reader support for implicitly associating a `<figcaption>` to a `<figure>`.
     - Using attributes, such as `aria-describedby`, creates this association.
 
 ```html
 <figure>
-  <img
-    src="/path/to/image.png"
-    alt="..." 
-    aria-describedby="image-desc" />
-  <figcaption id="image-desc">Image Description...</figcaption>
+	<img src="/path/to/image.png" alt="..." aria-describedby="image-desc" />
+	<figcaption id="image-desc">Image Description...</figcaption>
 </figure>
 ```
 
@@ -85,7 +82,7 @@ alias: A11y
 <a href="link-to-video-stream"> Watch video (opens in new tab) </a>
 
 <a href="link-to-download-item" download="default-save-filename">
-    Download report (PDF, 5MB)
+	Download report (PDF, 5MB)
 </a>
 ```
 
@@ -104,13 +101,13 @@ alias: A11y
     - Feedback is essential when interacting with UI controls.
         - Even if slightly changed to match creative/brand needs, default feedback mechanisms like UI state styles (focus, hover, active), and pointer cursors should still remain.
 - Using `visibility: hidden` or `display: none` hides content from screen readers.
-- Users might want to override styles with their own custom styles for a variety of reasons: 
-    - to make text bigger, 
+- Users might want to override styles with their own custom styles for a variety of reasons:
+    - to make text bigger,
     - to increase the contrast ratio.
 
 ## JavaScript
 
-- JavaScript should be used to enhance an existing functionality, and not build it entirely. 
+- JavaScript should be used to enhance an existing functionality, and not build it entirely.
     - An good example of this is providing client-side form validation using the Constraint Validation API. It's not necessary, but enhances the experience.
 - When implementing functionalities using device-specific events (like mouse events, `mouseover` and `mouseout`), it's important to ensure the same functionalities can be activated by other means (`focus`, `blur` for keyboard users).
 
@@ -137,7 +134,7 @@ thumbnail.onblur = hideImg;
 - ARIA should enhance accessibility for complex interfaces, but it should not replace semantic HTML.
 - The spec has 3 main features:
     - **Roles** define what an element is or does.
-        - By default, many semantic elements have a role, but it can be replicated using `role`. 
+        - By default, many semantic elements have a role, but it can be replicated using `role`.
         - For non-semantic elements, `role` can provide semantics.
             - e.g. `role="navigation"` (`<nav>`)
         - It can also be used to provide signposts to different components.
@@ -146,12 +143,12 @@ thumbnail.onblur = hideImg;
         - e.g. `aria-required="true"` to specify that filling a form input is required
         - Screen readers can have difficulty with constantly changing content.
             - When an area of content is updated dynamically, `aria-live` can be used to signal that change.
-    - **States** define the current conditions of elements. 
+    - **States** define the current conditions of elements.
         - Unlike properties, states can change throughout the lifecycle of an app.
         - They can be programmatically changed using JS.
         - e.g. `aria-disabled="true"`
 - [**When should you use WAI-ARIA?**](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics#when_should_you_use_wai-aria)
-    - **Answer**: *only when you need to*
+    - **Answer**: _only when you need to_
 
 ## Multimedia
 
@@ -176,17 +173,17 @@ thumbnail.onblur = hideImg;
 ## Best Practices
 
 - **Avoid Unnecessary ARIA**
-    - Use ARIA attributes only when necessary. 
+    - Use ARIA attributes only when necessary.
     - Prioritize native HTML elements with built-in a11y features.
     - If an element already has a clear semantic meaning, additional ARIA attributes may confuse assistive technologies.
 - **Use Descriptive Labels**
-    - For elements with no discernible text, use `aria-label`, `aria-labelledby`, or `aria-describedby` to provide context. 
+    - For elements with no discernible text, use `aria-label`, `aria-labelledby`, or `aria-describedby` to provide context.
     - For example, an icon button should use `aria-label` to convey its function.
 - **Dynamic Content Updates**
-    - Use ARIA live regions (e.g., `aria-live="polite"`) to announce updates to dynamic content. 
+    - Use ARIA live regions (e.g., `aria-live="polite"`) to announce updates to dynamic content.
     - This ensures that screen readers notify users of changes without disrupting their current task.
 - **Utilize ARIA Landmarks**
-    - Implement ARIA landmarks (e.g., `role="banner"`, `role="main"`, `role="complementary"`) to define regions of a web page. 
+    - Implement ARIA landmarks (e.g., `role="banner"`, `role="main"`, `role="complementary"`) to define regions of a web page.
     - This helps users of assistive technologies navigate your site more efficiently by allowing them to jump to specific sections.
 
 ### Common Mistakes
@@ -202,6 +199,7 @@ thumbnail.onblur = hideImg;
 - Inaccessible Multimedia Content
 
 ---
+
 ## Further
 
 ### Books 📚

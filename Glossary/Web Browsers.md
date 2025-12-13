@@ -1,6 +1,6 @@
 ## Standardization
 
-- Web standards are the technologies used to build on the web. They exist as long technical documents called *specifications* (*specs*), and are created by standards bodies (which are institutions that invite groups of people from different tech companies to come together and agree on how the technologies should work in the best way). The [[W3C]] is the best known body. Others include:
+- Web standards are the technologies used to build on the web. They exist as long technical documents called _specifications_ (_specs_), and are created by standards bodies (which are institutions that invite groups of people from different tech companies to come together and agree on how the technologies should work in the best way). The [[W3C]] is the best known body. Others include:
     - **WHATWG**: maintain the living standards of [[HTML]].
     - **ECMA**: publish standard for ECMAScript, which [[JavaScript]] is based on.
         - Early versions (ES1 to ES6) were named numerically, increasing by 1 for each new edition.

@@ -14,7 +14,7 @@ alias: I18n
 const greeting = "Hello, World!";
 
 // Use a translation function:
-const greeting = i18n.t('greeting');
+const greeting = i18n.t("greeting");
 ```
 
 - I18n involves adapting various elements to suit different locales:
@@ -31,5 +31,5 @@ console.log(formattedNumberDE); // Output: 1.004.580,89
 - Different languages have varying rules for pluralization, and i18n frameworks typically provide methods to handle this complexity:
 
 ```javascript
-i18n.t('catCount', { count: 5 });
+i18n.t("catCount", { count: 5 });
 ```

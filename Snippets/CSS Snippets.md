@@ -11,57 +11,57 @@
 ```css
 /* Using 'position' (1) */
 .parent {
-  position: relative;
+	position: relative;
 }
 
 .child {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 /* Using 'position' (2) */
 .parent {
-  position: relative;
+	position: relative;
 }
 
 .child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
 }
 
 /* Using 'flexbox' (1) */
 
 .parent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* Using 'flexbox' (2) */
 
 .parent {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .child {
-  align-self: center;
+	align-self: center;
 }
 
 /* Using 'flexbox' (3) */
 
 .parent {
-  display: flex;
+	display: flex;
 }
 
 .child {
-  margin: auto;
+	margin: auto;
 }
 ```
 
@@ -70,25 +70,25 @@
 ```css
 /* Using 'position' (1) */
 .parent {
-  position: relative;
+	position: relative;
 }
 
 .child {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 /* Using 'position' (2) */
 .parent {
-  position: relative;
+	position: relative;
 }
 
 .child {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
 }
 ```
 
@@ -97,25 +97,25 @@
 ```css
 /* Using 'position' (1) */
 .parent {
-  position: relative;
+	position: relative;
 }
 
 .child {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 /* Using 'position' (2) */
 .parent {
-  position: relative;
+	position: relative;
 }
 
 .child {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto;
 }
 ```
 
@@ -129,13 +129,13 @@
 
 ```css
 div {
-  position: absolute;
-  background-color: gold;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  /* OR shorthand prop `inset: 0 0 0 0;` */
-  margin: 0;
+	position: absolute;
+	background-color: gold;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	/* OR shorthand prop `inset: 0 0 0 0;` */
+	margin: 0;
 }
 ```

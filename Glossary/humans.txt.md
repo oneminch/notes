@@ -1,4 +1,4 @@
-- A text file that contains information about the people behind a certain website. 
+- A text file that contains information about the people behind a certain website.
 - It is an initiative that acknowledges that authors of a site and meant for humans not bots. It can be located in the root directory along with `robots.txt`.
 
 ```html

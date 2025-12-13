@@ -1,1 +1,1 @@
-- Multiple inheritance is an OOP feature where a class can inherit properties and methods from more than one parent class. 
+- Multiple inheritance is an OOP feature where a class can inherit properties and methods from more than one parent class.

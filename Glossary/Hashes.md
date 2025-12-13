@@ -10,20 +10,19 @@
 
 ```js
 // server.js
-const crypto = require('crypto');
+const crypto = require("crypto");
 const script = "console.log('Hello, CSP!');";
-const hash = crypto.createHash('sha256').update(script).digest('base64');
+const hash = crypto.createHash("sha256").update(script).digest("base64");
 
 /* ... */
 res.setHeader(
-    'Content-Security-Policy',
-    `script-src 'sha256-${hash}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`
+	"Content-Security-Policy",
+	`script-src 'sha256-${hash}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`,
 );
 ```
 
 ```html
 <script>
-    console.log('Hello, CSP!');
+	console.log("Hello, CSP!");
 </script>
 ```
-

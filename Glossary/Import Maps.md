@@ -2,24 +2,24 @@
 
 ```html
 <script type="importmap">
-  {
-    "imports": {
-      "vue": "https://esm.sh/vue@3"
-    }
-  }
+	{
+		"imports": {
+			"vue": "https://esm.sh/vue@3"
+		}
+	}
 </script>
 
 <div id="app">{{ message }}</div>
 
 <script type="module">
-  import { createApp } from 'vue'
+	import { createApp } from "vue";
 
-  createApp({
-    data() {
-      return {
-        message: 'Hello Vue!'
-      }
-    }
-  }).mount('#app')
+	createApp({
+		data() {
+			return {
+				message: "Hello Vue!",
+			};
+		},
+	}).mount("#app");
 </script>
 ```

@@ -1,3 +1,3 @@
 - aka Code Debt
-- It is the cost of additional work (or rework) caused by prioritizing speed rather than better code. 
+- It is the cost of additional work (or rework) caused by prioritizing speed rather than better code.
 - It is an umbrella term that covers things like bugs and code smells.

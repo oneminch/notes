@@ -1,4 +1,4 @@
-- The difference between passing by reference and passing by value lies in how the parameter is handled when passed to a function. 
+- The difference between passing by reference and passing by value lies in how the parameter is handled when passed to a function.
 
 - **Passing by Value**:
     - A copy of the actual parameter's value is created and passed to the calling function.

@@ -3,8 +3,8 @@
 
 ```js
 let obj = {
-  firstName: "john",
-  lastName: "smith"
+	firstName: "john",
+	lastName: "smith",
 };
 
 obj.age = 33;

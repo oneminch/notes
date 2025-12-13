@@ -1,2 +1,2 @@
 - In programming languages, ==variables== are storage units or containers for data.
-- They are the addresses in memory used for storing and referencing a particular data. 
+- They are the addresses in memory used for storing and referencing a particular data.

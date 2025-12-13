@@ -33,7 +33,7 @@ git reset <file>
 
 ## Branches
 
-### Create a Local Branch Tracking a Remote One. 
+### Create a Local Branch Tracking a Remote One.
 
 ```bash
 # To work on a non-default branch after cloning
@@ -122,8 +122,8 @@ git checkout <commit-number>
 ### Remove File from Previous Commit
 
 ```bash
-git reset --soft HEAD^ 
-# OR git reset --soft HEAD~1 
+git reset --soft HEAD^
+# OR git reset --soft HEAD~1
 # OR git reset HEAD path/to/file (Old Way)
 
 # New Way
@@ -257,14 +257,14 @@ ssh-add ~/.ssh/id_ed25519_work
 ```yml
 # ~/.ssh/config
 Host gh-personal
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_ed25519_personal
+HostName github.com
+User git
+IdentityFile ~/.ssh/id_ed25519_personal
 
 Host gh-work
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_ed25519_work
+HostName github.com
+User git
+IdentityFile ~/.ssh/id_ed25519_work
 ```
 
 ```bash
@@ -272,4 +272,3 @@ cd /path/to/repo
 
 git remote add origin git@[gh-personal|gh-work]:username/repo.git
 ```
-

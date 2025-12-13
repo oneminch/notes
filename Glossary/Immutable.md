@@ -1,1 +1,1 @@
-- A variable / object is said to be *immutable* if after declaration or [[instantiation]], its properties cannot be modified.
+- A variable / object is said to be _immutable_ if after declaration or [[instantiation]], its properties cannot be modified.

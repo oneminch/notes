@@ -25,22 +25,21 @@ alias: JS
         - `var` causes confusion because it allows [[hoisting]] and redeclaration of variables.
             - Unlike `let`, `var` has no block scope; it creates either function-scoped or global-scoped variables.
     - names can start with an underscore (`_`) or a dollar sign (`$`), in addition to letters.
-    
 - **Constants**
     - are like variables except that:
         - they must be initialized upon declaration.
         - after initializing, a new value can't be assigned to them.
 
 ```javascript
-let a;		// ✅ valid, no error
+let a; // ✅ valid, no error
 
-const b;  	// ⛔ will throw an error
+const b; // ⛔ will throw an error
 
 let c;
-c = 1;  	// ✅ valid, no error
+c = 1; // ✅ valid, no error
 
 const d;
-d = 1;  	// ⛔ will throw an error
+d = 1; // ⛔ will throw an error
 ```
 
 - For reference types like objects, the content of the value that a constant names can be changed.
@@ -59,7 +58,7 @@ person.name = "Jane Doe"; // ✅ valid
 
 - Script execution blocks page rendering.
 - `async` and `defer` allow scripts to be downloaded in a separate thread without interfering with the page loading process.
-- `async` execute as soon as the download is complete. They should be used to load independent scripts and background scripts that don't interfere with rendering. 
+- `async` execute as soon as the download is complete. They should be used to load independent scripts and background scripts that don't interfere with rendering.
     - e.g. loading data that could be used later on.
 - `defer` is similar to `async` but script is executed after document is done being parsed.
     - Scripts will run in the order they appear in the page; they get executed as soon as the script and content have finished downloading.
@@ -67,23 +66,27 @@ person.name = "Jane Doe"; // ✅ valid
 
 > [!quote] Techniques
 > ![script-loading.jpg](/assets/images/js.script-loading.jpg)
-> 
+>
 > **Source**: MDN
 
 ### Operators
 
 **Arithmetic**
+
 - `+`, `-`, `*`, `/`, `%`, `**` (exponent)
     - `a**x` is equivalent to `Math.pow(a, x)` ($a^x$).
 
 **Increment / Decrement**
+
 - `++` & `--`
 - These can't be applied directly to a number, but the variable holding the number.
 
 **Comparison**
+
 - `==`, `!=`, `===`, `!==`, `<`, `>`, `<=`, `>=`
 
 **Logical**
+
 - `&&` (and), `||` (or), `!` (not / negation)
 - `&&` - finds the first '==falsy==' value; has higher precedence than `||`.
 - `||` - finds the first 'truthy' value.
@@ -95,6 +98,7 @@ person.name = "Jane Doe"; // ✅ valid
 | `a ??= b`                   | `a ?? (a = b)`   | Nullish                           |
 
 **Bitwise**
+
 - `&` (AND), `|` (OR), `~` (NOT), `^` (XOR), ...
 
 **Assignment**
@@ -131,7 +135,7 @@ a = c;
 
 > [!example]
 > When the `toUpperCase()` function is called on a string, a special object wrapper with the string value is created. After the method runs and returns, the wrapper is destroyed.
-> 
+>
 > Due to the lack of such wrapper objects, `null` & `undefined` are considered the most primitive.
 
 - To keep primitives as lightweight as possible, constructors (`String` / `Number` / `Boolean`) should only be reserved for internal use only; using those functions without the `new` keyword is fine.
@@ -202,7 +206,7 @@ let micro = 1e-6;
 
 #### Numeric Methods
 
-- Numbers inherit methods from the `Number.prototype` object. 
+- Numbers inherit methods from the `Number.prototype` object.
     - e.g. `parseInt()`, `parseFloat()`, `toFixed()`, `isNaN()`, `isFinite()` and `toString()`
 - `parseInt()` & `parseFloat()` read a number left to right from a string until they can't:
 
@@ -258,7 +262,7 @@ const str2 = "Hello, World!\nThis is a string.";
 ```
 
 - Special characters like `\n` count towards the length of a string: `"Hi\n".length` -> `3`
-- Strings inherit methods from the `String.prototype` object. e.g. `substring()`, `indexOf()`, `concat()` and `toString()`. 
+- Strings inherit methods from the `String.prototype` object. e.g. `substring()`, `indexOf()`, `concat()` and `toString()`.
     - Using these methods creates new strings; it doesn't modify existing ones. ([[Immutable]])
 
 #### Comparison
@@ -317,7 +321,8 @@ let obj = {
 ### Type Casting vs Coercion
 
 > [!important]
-> - **Coercion** is the automatic or implicit conversion of a type. 
+>
+> - **Coercion** is the automatic or implicit conversion of a type.
 >     - e.g. Adding a number to a string will result in the number being coerced into a string and concatenated.
 > - Unlike coercion, **Type Casting** is an explicit and deliberate operation.
 >     - Typically done using functions like `Number()`, `String()` or `Boolean()`.
@@ -349,21 +354,21 @@ a == c; // false
 ```js
 // object literal
 const person = {
-    name: "John",
-  	greet: function () {
-        console.log(`Hi, my name is ${this.name}`);
-    }
-    // OR shortly,
-    // greet() {
-    //   console.log(`Hi, my name is ${this.name}`);
-    // }
+	name: "John",
+	greet: function () {
+		console.log(`Hi, my name is ${this.name}`);
+	},
+	// OR shortly,
+	// greet() {
+	//   console.log(`Hi, my name is ${this.name}`);
+	// }
 };
 
 console.log(user.newProp === undefined); // true
 console.log("newProp" in person); // false
 ```
 
-- Using `in` results in more accurate property existence checks. 
+- Using `in` results in more accurate property existence checks.
     - `undefined` equality fails when a property exists but has an explicit `undefined` value: `obj.key = undefined`
 
 - Object keys that are integers are sorted; other types follow their creation order.
@@ -384,16 +389,16 @@ p?.name?.first; // -> undefined
 
 ```js
 function newPerson(name, age) {
-    return {
-        name, // name: name
-        age // age: age
-    };
+	return {
+		name, // name: name
+		age, // age: age
+	};
 }
 ```
 
 ### Arrays
 
-> `typeof []` -> `"object"` 
+> `typeof []` -> `"object"`
 >
 > `Array.isArray([])` -> `true`
 
@@ -431,7 +436,7 @@ function newPerson(name, age) {
 - **Search / Lookup**
     - `arr.at(index)`
     - `arr.filter()`
-    - `arr.find()`, `arr.findIndex()`, `arr.findLast()`, `arr.findLastIndex()`, 
+    - `arr.find()`, `arr.findIndex()`, `arr.findLast()`, `arr.findLastIndex()`,
     - `arr.includes(value)`
     - `arr.indexOf(value)`, `arr.lastIndexOf(value)`
 - **Transform**
@@ -443,15 +448,18 @@ function newPerson(name, age) {
     - `arr.split()` / `arr.join()`
     - `arr.toSorted()` / `arr.toReversed()`
 
-> [!note] 
-> A reducer function (in `reduce()` and `reduceRight()` methods) is called on each element with the return value of the calculation from the previous element. Final output is a single value. 
+> [!note]
+> A reducer function (in `reduce()` and `reduceRight()` methods) is called on each element with the return value of the calculation from the previous element. Final output is a single value.
 
 ```js
 const strArr = ["H", "e", "l", "l", "o", "!"];
 
-const forwardStr = strArr.reduce((accumulator, el) => accumulator += el, "")
+const forwardStr = strArr.reduce((accumulator, el) => (accumulator += el), "");
 
-const reverseStr = strArr.reduceRight((accumulator, el) => accumulator += el, "")
+const reverseStr = strArr.reduceRight(
+	(accumulator, el) => (accumulator += el),
+	"",
+);
 
 // forwardStr: "Hello!"
 // reverseStr: "!olleH"
@@ -464,20 +472,20 @@ const reverseStr = strArr.reduceRight((accumulator, el) => accumulator += el, ""
 
 #### Sparse Arrays
 
-- Sparse arrays are arrays that contain 'empty slots'. 
+- Sparse arrays are arrays that contain 'empty slots'.
 - They can be created in several ways:
 
 ```js
-const x = new Array(5)
+const x = new Array(5);
 
-const y = [1, 2, , , 5]
+const y = [1, 2, , , 5];
 
-const z = [1, 2]
-z[4] = 5
-z.length = 10
+const z = [1, 2];
+z[4] = 5;
+z.length = 10;
 
-const w = [1, 2, 3, 4, 5]
-delete w[2]
+const w = [1, 2, 3, 4, 5];
+delete w[2];
 ```
 
 ### Iterables
@@ -495,7 +503,7 @@ delete w[2]
 - It uses a similar approach to strict equality to compare keys, but `NaN` is considered equal to `NaN`.
 - can be looped using `for...of` and `forEach(value, key, map)`.
 - Other methods include `has(key)`, `delete(key)`, and `clear()`.
-    - The `keys()`, `values()`, and `entries()` methods can be used for iterating; `entries()` is the default used in a `for...of` loop. 
+    - The `keys()`, `values()`, and `entries()` methods can be used for iterating; `entries()` is the default used in a `for...of` loop.
 - Maps also have a `size` attribute that returns the number of pairs.
 
 ```js
@@ -503,16 +511,16 @@ let mapOne = new Map();
 mapOne.set(1, "one").set("2", "two").set(true, "three");
 
 let mapTwo = new Map([
-    [1, "one"],
-    ["2", "two"],
-    [true, "three"]
+	[1, "one"],
+	["2", "two"],
+	[true, "three"],
 ]);
 
 let mapThree = new Map(
-    Object.entries({
-        name: "Jane",
-        age: 35
-    })
+	Object.entries({
+		name: "Jane",
+		age: 35,
+	}),
 );
 ```
 
@@ -535,15 +543,15 @@ let mapThree = new Map(
 ```js
 let set = new Set();
 
-let john = { name: "John" }; 
-let pete = { name: "Pete" }; 
-let mary = { name: "Mary" }; 
+let john = { name: "John" };
+let pete = { name: "Pete" };
+let mary = { name: "Mary" };
 
-// visits, some users come multiple times 
-set.add(a); 
-set.add(b); 
-set.add(c); 
-set.add(b); 
+// visits, some users come multiple times
+set.add(a);
+set.add(b);
+set.add(c);
+set.add(b);
 set.add(a);
 ```
 
@@ -557,21 +565,21 @@ set.add(a);
 
 - Object properties are of two kinds: data properties and accessor properties.
 - Accessor properties are functions that look like regular properties.
-    - They are represented by _getter_ and _setter_ methods that execute on getting and setting a value. 
+    - They are represented by _getter_ and _setter_ methods that execute on getting and setting a value.
     - They are _not called_ like a method but _read_ as a property.
 
 ```js
 let person = {
-    firstName: "Jane",
-    lastName: "Doe",
-    
-    get fullName() {
-        return `${this.firstName} ${this.lastName}`;
-    },
-    
-    set fullName(value) {
-        [this.firstName, this.lastName] = value.split(" ");
-    }
+	firstName: "Jane",
+	lastName: "Doe",
+
+	get fullName() {
+		return `${this.firstName} ${this.lastName}`;
+	},
+
+	set fullName(value) {
+		[this.firstName, this.lastName] = value.split(" ");
+	},
 };
 
 console.log(person.fullName); // Jane Doe
@@ -595,13 +603,13 @@ console.log(person.firstName, person.lastName); // John, Smith
 
 > Changing a property to be non-configurable can't be undone. It can't be reverted using `defineProperty`.
 
-- Multi-flag versions of the above methods (`Object.getOwnPropertyDescriptors` and `Object.defineProperties`) exist, and they can be used to clone objects along with all their property descriptors, symbolic and non-enumerable properties. 
+- Multi-flag versions of the above methods (`Object.getOwnPropertyDescriptors` and `Object.defineProperties`) exist, and they can be used to clone objects along with all their property descriptors, symbolic and non-enumerable properties.
     - This can't be done using `for...in` loops.
 
 ```js
 let cloneObj = Object.defineProperties(
-    {},
-    Object.getOwnPropertyDescriptors(obj)
+	{},
+	Object.getOwnPropertyDescriptors(obj),
 );
 ```
 
@@ -620,8 +628,8 @@ let cloneObj = Object.defineProperties(
 let veg = prompt("Which veggie to buy?", "peppers");
 
 let cart = {
-    [veg]: 5,
-    [`Bell ${veg}`]: 4
+	[veg]: 5,
+	[`Bell ${veg}`]: 4,
 };
 
 console.log(cart.peppers); // 5
@@ -666,8 +674,8 @@ y; // -> 0
 
 ```js
 let { firstName, lastName } = {
-    firstName: "Jane",
-    lastName: "Doe"
+	firstName: "Jane",
+	lastName: "Doe",
 };
 ```
 
@@ -684,7 +692,7 @@ let { firstName, lastName } = {
 
 ```js
 if (!window.Promise) {
-    // Promise polyfill
+	// Promise polyfill
 }
 ```
 
@@ -696,10 +704,10 @@ if (!window.Promise) {
 
 ```js
 function EV(make) {
-    this.make = make;
-    this.describe = function () {
-        console.log(`The ${this.make} is an electric vehicle brand.`);
-    };
+	this.make = make;
+	this.describe = function () {
+		console.log(`The ${this.make} is an electric vehicle brand.`);
+	};
 }
 
 const rivian = new EV("Rivian");
@@ -712,14 +720,14 @@ rivian.describe();
 
 ```js
 const rivian = new (function () {
-    this.make = "Rivian";
-    // ...
+	this.make = "Rivian";
+	// ...
 })();
 ```
 
 ### Prototype
 
-- Every object in JavaScript has a built-in property - its _prototype_. 
+- Every object in JavaScript has a built-in property - its _prototype_.
 - Every function has a prototype that references an object, which contains properties and methods shared by all instances created using that function as a constructor.
 - And because the prototype is itself an object, it will have its own prototype. This is called a _prototype chain_.
 
@@ -731,11 +739,11 @@ const rivian = new (function () {
 
 ```js
 let car = {
-    numWheels: 4
+	numWheels: 4,
 };
 
 function ElectricCar(name) {
-    this.name = name;
+	this.name = name;
 }
 
 ElectricCar.prototype = car; // overwrites the default prototype
@@ -746,11 +754,11 @@ console.log(ev.numWheels); // 4
 
 ```js
 function Person(name) {
-    this.name = name;
+	this.name = name;
 }
 
-Person.prototype.greet = function() {
-    console.log("hello!");
+Person.prototype.greet = function () {
+	console.log("hello!");
 };
 
 const john = new Person("John");
@@ -761,9 +769,9 @@ john.greet(); // hello!
 
 ```js
 const personPrototype = {
-    greet() {
-        console.log("hello!");
-    }
+	greet() {
+		console.log("hello!");
+	},
 };
 
 const john = Object.create(personPrototype);
@@ -774,13 +782,13 @@ john.greet(); // hello!
 
 ```js
 const personPrototype = {
-    greet() {
-        console.log(`Hi, my name is ${this.name}`);
-    }
+	greet() {
+		console.log(`Hi, my name is ${this.name}`);
+	},
 };
 
 function Person(name) {
-    this.name = name;
+	this.name = name;
 }
 
 Object.assign(Person.prototype, personPrototype);
@@ -790,18 +798,18 @@ Object.assign(Person.prototype, personPrototype);
 
 ```js
 Storage.prototype.set = function (key, value) {
-    this.setItem(key, JSON.stringify(value));
+	this.setItem(key, JSON.stringify(value));
 };
 
 Storage.prototype.get = function (key) {
-    var value = this.getItem(key);
-    
-    return value && JSON.parse(value);
+	var value = this.getItem(key);
+
+	return value && JSON.parse(value);
 };
 
 localStorage.set("obj", {
-    name: "john",
-    age: 34
+	name: "john",
+	age: 34,
 });
 
 console.log(localStorage.get("obj"));
@@ -848,39 +856,39 @@ console.log(Object.hasOwn(john, "greet")); // false
 
 ```js
 class User {
-    #name;
+	#name;
 
-    constructor(name) {
-        this.#name = name;
-    }
+	constructor(name) {
+		this.#name = name;
+	}
 
-    get name() {
-        return this.#name;
-    }
+	get name() {
+		return this.#name;
+	}
 
-    set name(value) {
-        if (typeof value !== "string") {
-            alert("Invalid Data Type");
-            return;
-        }
-        this.#name = value;
-    }
+	set name(value) {
+		if (typeof value !== "string") {
+			alert("Invalid Data Type");
+			return;
+		}
+		this.#name = value;
+	}
 }
 ```
 
 ```js
 // Class Expression
 let User = class {
-    sayHi() {
-        alert(MyClass); // MyClass name is visible only inside the class
-    }
+	sayHi() {
+		alert(MyClass); // MyClass name is visible only inside the class
+	}
 };
 
 // Named Class Expression
 let User = class MyClass {
-    sayHi() {
-        alert(MyClass); // MyClass name is visible only inside the class
-    }
+	sayHi() {
+		alert(MyClass); // MyClass name is visible only inside the class
+	}
 };
 ```
 
@@ -889,16 +897,16 @@ let User = class MyClass {
 
 ```js
 class User {
-  static staticMethod() {
-    alert(this === User);
-  }
+	static staticMethod() {
+		alert(this === User);
+	}
 }
 
 /* ====== OR ====== */
-class User { }
+class User {}
 
-User.staticMethod = function() {
-  alert(this === User);
+User.staticMethod = function () {
+	alert(this === User);
 };
 
 User.staticMethod(); // true
@@ -907,7 +915,7 @@ User.staticMethod(); // true
 - Taking inheritance into account, the `instanceof` operator allows to check whether an object belongs to a certain class.
 
 ```js
-john instanceof User
+john instanceof User;
 ```
 
 - If a subclass has its own initializations, it must first call the superclass constructor using `super()`, and pass any parameters that the superclass constructor expects.
@@ -915,36 +923,36 @@ john instanceof User
 
 ```js
 class Person {
-    name; // optional; can be initialized to a default value
+	name; // optional; can be initialized to a default value
 
-    // can be omitted
-    constructor(name) {
-        this.name = name;
-    }
+	// can be omitted
+	constructor(name) {
+		this.name = name;
+	}
 
-    greet() {
-        console.log(`Hi, my name is ${this.name}.`);
-    }
+	greet() {
+		console.log(`Hi, my name is ${this.name}.`);
+	}
 }
 ```
 
 ```js
 class Professor extends Person {
-    #teaches;
+	#teaches;
 
-    constructor(name, teaches) {
-        super(name);
-        this.#teaches = teaches;
-    }
+	constructor(name, teaches) {
+		super(name);
+		this.#teaches = teaches;
+	}
 
-    greet() {
-        super.greet();
-        this.#introduce();
-    }
+	greet() {
+		super.greet();
+		this.#introduce();
+	}
 
-    #introduce() {
-        console.log(`I will teach you ${this.#teaches}.`);
-    }
+	#introduce() {
+		console.log(`I will teach you ${this.#teaches}.`);
+	}
 }
 ```
 
@@ -965,7 +973,7 @@ john.#teaches; // SyntaxError
 
 ```js
 function fn() {
-    console.log(this);
+	console.log(this);
 }
 
 let user = {};
@@ -1018,12 +1026,12 @@ fn(); // -> undefined (strict mode)
 ```js
 // Encapsulation
 function createCounter() {
-    let count = 0;
-    
-    return {
-        increment: () => ++count,
-        getCount: () => count
-    };
+	let count = 0;
+
+	return {
+		increment: () => ++count,
+		getCount: () => count,
+	};
 }
 
 const counter = createCounter();
@@ -1035,28 +1043,28 @@ console.log(counter.getCount()); // Outputs: 2
 ```js
 // Memoization
 function memoizedFib() {
-    const cache = {
-        "0": 1,
-        "1": 1,
-    }
+	const cache = {
+		0: 1,
+		1: 1,
+	};
 
-    return function fib(n) {
-        if (n < 2 || n in cache) {
-            return cache[n];
-        }
+	return function fib(n) {
+		if (n < 2 || n in cache) {
+			return cache[n];
+		}
 
-        cache[n] = fib(n-1) + fib(n-2);
-        return cache[n];
-    }
+		cache[n] = fib(n - 1) + fib(n - 2);
+		return cache[n];
+	};
 }
 ```
 
 ```js
 // Function Factories
 function multiplyBy(factor) {
-    return function(number) {
-        return number * factor;
-    };
+	return function (number) {
+		return number * factor;
+	};
 }
 
 const double = multiplyBy(2);
@@ -1072,21 +1080,21 @@ console.log(triple(5)); // Outputs: 15
 
 ```js
 switch (expression) {
-    case case1:
-  		// code
-  		break;
-  	case case2:
-  		// code
-  		break;
-  	case case3:
-  	case case4:
-  		// code for grouped case
-        break;
+	case case1:
+		// code
+		break;
+	case case2:
+		// code
+		break;
+	case case3:
+	case case4:
+		// code for grouped case
+		break;
 
-  	/*...*/
+	/*...*/
 
-  	default:
-      	// code
+	default:
+	// code
 }
 ```
 
@@ -1102,11 +1110,11 @@ switch (expression) {
 const arr = ["x", "y", "z"];
 
 for (let i in arr) {
-    console.log(i); // '0', '1', '2'
+	console.log(i); // '0', '1', '2'
 }
 
 for (let i of arr) {
-    console.log(i); // 'x', 'y', 'z'
+	console.log(i); // 'x', 'y', 'z'
 }
 ```
 
@@ -1115,7 +1123,7 @@ for (let i of arr) {
 
 ```js
 for (initializer; condition; finalExpression) {
-    // code to run
+	// code to run
 }
 ```
 
@@ -1124,9 +1132,9 @@ for (initializer; condition; finalExpression) {
 ```js
 initializer;
 while (condition) {
-    // code to run
+	// code to run
 
-    finalExpression;
+	finalExpression;
 }
 ```
 
@@ -1135,9 +1143,9 @@ while (condition) {
 ```js
 initializer;
 do {
-    // code to run
+	// code to run
 
-    finalExpression;
+	finalExpression;
 } while (condition);
 ```
 
@@ -1149,14 +1157,14 @@ do {
 let i, j;
 
 loop1: for (i = 0; i < 3; i++) {
-    // first 'for' statement - "loop1"
-    loop2: for (j = 0; j < 3; j++) {
-        // second 'for' statement - "loop2"
-        if (i === 1 && j === 1) {
-            break loop1;
-        }
-        console.log(`i = ${i}, j = ${j}`);
-    }
+	// first 'for' statement - "loop1"
+	loop2: for (j = 0; j < 3; j++) {
+		// second 'for' statement - "loop2"
+		if (i === 1 && j === 1) {
+			break loop1;
+		}
+		console.log(`i = ${i}, j = ${j}`);
+	}
 }
 ```
 
@@ -1185,11 +1193,11 @@ let accessAllowed = age >= 18 ? "yes" : "no";
 ```js
 openMyFile();
 try {
-    await writeMyFile(theData); // This may throw an error
+	await writeMyFile(theData); // This may throw an error
 } catch (e) {
-    handleError(e); // If an error occurred, handle it
+	handleError(e); // If an error occurred, handle it
 } finally {
-    closeMyFile(); // Always close the resource
+	closeMyFile(); // Always close the resource
 }
 ```
 
@@ -1203,28 +1211,29 @@ throw new Error("This is a custom error");
 
 ```js
 class CustomError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = "CustomError";
-    }
+	constructor(message) {
+		super(message);
+		this.name = "CustomError";
+	}
 }
 
 throw new CustomError("This is a custom error");
 ```
 
-- Unlike [[Java]], JavaScript doesn't support multiple catch blocks. 
+- Unlike [[Java]], JavaScript doesn't support multiple catch blocks.
     - A common workaround is using conditionals to check the types.
 
 ```js
-try { /* ... */ } 
-catch (error) {
-    if (error instanceof TypeError) {
-        console.error("Type error:", error.message);
-    } else if (error instanceof RangeError) {
-        console.error("Range error:", error.message);
-    } else {
-        console.error("Unknown error:", error.message);
-    }
+try {
+	/* ... */
+} catch (error) {
+	if (error instanceof TypeError) {
+		console.error("Type error:", error.message);
+	} else if (error instanceof RangeError) {
+		console.error("Range error:", error.message);
+	} else {
+		console.error("Unknown error:", error.message);
+	}
 }
 ```
 
@@ -1255,17 +1264,17 @@ catch (error) {
 ```js
 // Function declaration / statement
 function fn() {
-    /* code */
+	/* code */
 }
 
 // Function expression / literal
 const fn = function () {
-    /* code */
+	/* code */
 };
 
 // Named function expression (NFE)
 const fn = function func() {
-    /* code */
+	/* code */
 };
 
 fn(); // ✅
@@ -1273,7 +1282,7 @@ func(); // ⛔
 
 // Arrow functions
 const fn = () => {
-    /* code */
+	/* code */
 };
 
 // 'new Function' syntax
@@ -1293,11 +1302,11 @@ input.addEventListener("keypress", fn); // ✅
 
 ```js
 function fn(a, b = 5) {
-    /* code */
+	/* code */
 }
 
 function fn(a, b = getSum()) {
-    /* code */
+	/* code */
 }
 ```
 
@@ -1315,28 +1324,28 @@ function fn(a, b = getSum()) {
 
 ```js
 function greet(phrase) {
-    console.log(`${phrase}, ${this.name}!`);
+	console.log(`${phrase}, ${this.name}!`);
 }
 
 let user = {
-    name: "John",
-    introduce() {
-        console.log(`My name is ${this.name}.`);
-    }
+	name: "John",
+	introduce() {
+		console.log(`My name is ${this.name}.`);
+	},
 };
 ```
 
-#### `call` 
+#### `call`
 
 - `fn.call(context, ...args)`
 - Provides a `this` context a function can execute in.
-- It takes an expanded list of arguments. 
+- It takes an expanded list of arguments.
 - It _calls_ the function with the context it provides.
 
 ```js
 greet.call(user, "Hello"); // Hello, John
 ```
-  
+
 #### `apply`
 
 - `fn.apply(context, args)`
@@ -1392,22 +1401,22 @@ setTimeout(introduce, 1000);
 
 ```js
 let users = {
-    name: "Users",
-    list: ["John", "Jane", "Alice"]
+	name: "Users",
+	list: ["John", "Jane", "Alice"],
 };
 
 users.displayList = function () {
-    this.list.forEach((user) => {
-        // this -> users
-        console.log(`${this.name}: ${user}`);
-    });
+	this.list.forEach((user) => {
+		// this -> users
+		console.log(`${this.name}: ${user}`);
+	});
 };
 
 users.displayList = function () {
-    this.list.forEach(function (user) {
-        // TypeError: this is undefined
-        console.log(`${this.name}: ${user}`);
-    });
+	this.list.forEach(function (user) {
+		// TypeError: this is undefined
+		console.log(`${this.name}: ${user}`);
+	});
 };
 ```
 
@@ -1430,8 +1439,8 @@ function sum(a, b, ...nums) {}
 - In non-arrow functions, [[JavaScript]] also provides a special array-like iterable object, `arguments`, which contains indexed list of all arguments.
 
 > [!info] **The Spread Operator (`...`)**
-> It expands an iterable object like a, string, an array or an object into a list of their values. 
-> 
+> It expands an iterable object like a, string, an array or an object into a list of their values.
+>
 > It can be used to clone arrays and objects.
 
 ## Events
@@ -1492,9 +1501,11 @@ function sum(a, b, ...nums) {}
 
 > [!important]
 > The `Promise` constructor returns a promise object. The promise object will become _resolved_ when either of the functions `resolveFn` or `rejectFn` are invoked.
-> 
+>
 > ```ts
-> new Promise((resolveFn, rejectFn) => { /* ... */ })
+> new Promise((resolveFn, rejectFn) => {
+> 	/* ... */
+> });
 > ```
 
 ### Async/Await
@@ -1507,18 +1518,18 @@ function sum(a, b, ...nums) {}
 
 ```js
 async function fetchTodos() {
-    try {
-        const response = await fetch(
-            "https://jsonplaceholder.typicode.com/todos"
-        );
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error(`Unable to get todos: ${error}`);
-    }
+	try {
+		const response = await fetch(
+			"https://jsonplaceholder.typicode.com/todos",
+		);
+		if (!response.ok) {
+			throw new Error(`HTTP error: ${response.status}`);
+		}
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error(`Unable to get todos: ${error}`);
+	}
 }
 
 const promise = fetchTodos();
@@ -1526,29 +1537,29 @@ const promise = fetchTodos();
 console.log(promise[0].name); // ⛔
 promise.then((data) => console.log(data[0].name)); // ✅
 ```
- 
- > [!example] Example: Implementing a promise-based sleep() function
- 
+
+> [!example] Example: Implementing a promise-based sleep() function
+
 ```js
 async function sleep(duration) {
-  return new Promise((resolve) => {
-    if (duration < 0) throw new Error("Negative Timer")
+	return new Promise((resolve) => {
+		if (duration < 0) throw new Error("Negative Timer");
 
-    setTimeout(resolve, duration)
-  })
+		setTimeout(resolve, duration);
+	});
 }
 
 (async () => {
-  console.log('Hi!');
-  await sleep(5000);
-  console.log('Bye!');
-})()
+	console.log("Hi!");
+	await sleep(5000);
+	console.log("Bye!");
+})();
 // 0s: Hi!
 // 5s: Bye!
 
-console.log('Hi!');
+console.log("Hi!");
 sleep(5000).then(() => {
-  console.log('Bye!');
+	console.log("Bye!");
 });
 ```
 
@@ -1556,27 +1567,27 @@ sleep(5000).then(() => {
 
 ```js
 function alarm(person, delay) {
-    return new Promise((resolve, reject) => {
-        if (delay < 0) {
-            throw new Error("Alarm delay must be set to a positive value");
-        }
+	return new Promise((resolve, reject) => {
+		if (delay < 0) {
+			throw new Error("Alarm delay must be set to a positive value");
+		}
 
-        setTimeout(() => {
-            resolve(`Wake up, ${person}!`);
-        }, delay);
-    });
+		setTimeout(() => {
+			resolve(`Wake up, ${person}!`);
+		}, delay);
+	});
 }
 
 alarm("Dave", 2000)
-    .then((message) => (output.textContent = message))
-    .catch((error) => (output.textContent = `Unable to set alarm: ${error}`));
+	.then((message) => (output.textContent = message))
+	.catch((error) => (output.textContent = `Unable to set alarm: ${error}`));
 
 // using async/await
 try {
-    const message = await alarm("Dave", 2000);
-    output.textContent = message;
+	const message = await alarm("Dave", 2000);
+	output.textContent = message;
 } catch (error) {
-    output.textContent = `Unable to set alarm: ${error}`;
+	output.textContent = `Unable to set alarm: ${error}`;
 }
 ```
 
@@ -1584,31 +1595,31 @@ try {
 
 ```js
 const fetchData = (url) => {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                const status = xhr.status;
-                if (status === 0 || (status >= 200 && status < 400)) {
-                    resolve(xhr.responseText);
-                } else {
-                    reject("Error!");
-                }
-            }
-        };
-        xhr.open("GET", url);
-        xhr.send();
-    });
+	return new Promise((resolve, reject) => {
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState === XMLHttpRequest.DONE) {
+				const status = xhr.status;
+				if (status === 0 || (status >= 200 && status < 400)) {
+					resolve(xhr.responseText);
+				} else {
+					reject("Error!");
+				}
+			}
+		};
+		xhr.open("GET", url);
+		xhr.send();
+	});
 };
 
 fetchData("https://jsonplaceholder.typicode.com/todos")
-    .then((res) => {
-        return JSON.parse(res);
-    })
-    .then((data) => {
-        console.log(data);
-    })
-    .catch((err) => console.log(err));
+	.then((res) => {
+		return JSON.parse(res);
+	})
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => console.log(err));
 ```
 
 ### Workers
@@ -1637,16 +1648,16 @@ fetchData("https://jsonplaceholder.typicode.com/todos")
 const request = new XMLHttpRequest();
 
 try {
-    request.open("GET", "https://jsonplaceholder.typicode.com/todos");
+	request.open("GET", "https://jsonplaceholder.typicode.com/todos");
 
-    request.responseType = "json";
+	request.responseType = "json";
 
-    request.addEventListener("load", () => console.log(request.response));
-    request.addEventListener("error", () => console.error("XHR error"));
+	request.addEventListener("load", () => console.log(request.response));
+	request.addEventListener("error", () => console.error("XHR error"));
 
-    request.send();
+	request.send();
 } catch (error) {
-    console.error(`XHR error: ${request.status}`);
+	console.error(`XHR error: ${request.status}`);
 }
 ```
 
@@ -1659,7 +1670,7 @@ try {
 
 ```html
 <canvas width="480" height="320">
-    <p><!-- fallback content --></p>
+	<p><!-- fallback content --></p>
 </canvas>
 ```
 
@@ -1673,16 +1684,16 @@ ctx.fillStyle = "rgb(0, 0, 0)";
 ctx.fillRect(0, 0, width, height);
 
 function random(number) {
-    return Math.floor(Math.random() * (number + 1));
+	return Math.floor(Math.random() * (number + 1));
 }
 
 function randomRect(x, y) {
-    ctx.fillStyle = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
-    ctx.fillRect(x, y, random(width) / 2, random(height) / 2);
+	ctx.fillStyle = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+	ctx.fillRect(x, y, random(width) / 2, random(height) / 2);
 }
 
 canvas.addEventListener("click", (e) => {
-    randomRect(e.clientX, e.clientY);
+	randomRect(e.clientX, e.clientY);
 });
 ```
 
@@ -1728,7 +1739,7 @@ canvas.addEventListener("click", (e) => {
  * @return {number} x raised to the n-th power.
  */
 function pow(x, n) {
-    return x ** n;
+	return x ** n;
 }
 ```
 
@@ -1740,26 +1751,26 @@ function pow(x, n) {
 
 ### Async Operations
 
-- Use `promise.all` to execute multiple but *independent* async operations in parallel, rather than sequentially.
+- Use `promise.all` to execute multiple but _independent_ async operations in parallel, rather than sequentially.
     - This potentially reduces the total time compared to making requests sequentially.
 
 ```js
 async function fetchData() {
-    try {
-        const [userData, productData, orderData] = await Promise.all([
-            fetch('https://api.example.com/user'),
-            fetch('https://api.example.com/products'),
-            fetch('https://api.example.com/orders')
-        ]);
-    
-        const user = await userData.json();
-        const products = await productData.json();
-        const orders = await orderData.json();
+	try {
+		const [userData, productData, orderData] = await Promise.all([
+			fetch("https://api.example.com/user"),
+			fetch("https://api.example.com/products"),
+			fetch("https://api.example.com/orders"),
+		]);
 
-        return { user, products, orders };
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+		const user = await userData.json();
+		const products = await productData.json();
+		const orders = await orderData.json();
+
+		return { user, products, orders };
+	} catch (error) {
+		console.error("Error fetching data:", error);
+	}
 }
 ```
 
@@ -1789,7 +1800,9 @@ async function fetchData() {
 ---
 
 > [!question]- Interview Emphasis Points
+>
 > > Concepts / sections to focus on when reading
+>
 > - Event Delegation / Bubbling
 > - DOM traversal & manipulation
 > - RegEx
@@ -1814,13 +1827,14 @@ async function fetchData() {
 > - Design Patterns: Observer Pattern & Module Pattern
 
 ---
+
 ## Further
 
 ### Books 📚
 
 - [Eloquent JavaScript (Marijn Haverbeke)](https://eloquentjavascript.net/)
 
-### Reads 📄 
+### Reads 📄
 
 - [Lydia Hallie's JavaScript Visualized Series (DEV)](https://dev.to/lydiahallie/series/3341)
 

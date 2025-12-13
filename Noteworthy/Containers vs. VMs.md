@@ -1,4 +1,3 @@
-
 | Feature               | Virtual Machines (VMs)                         | Containers                                                      |
 | --------------------- | ---------------------------------------------- | --------------------------------------------------------------- |
 | **Isolation**         | Full isolation; each VM has its own OS         | Process-level isolation; shares the host OS kernel              |

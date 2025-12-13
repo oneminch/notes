@@ -1,3 +1,3 @@
-- Be careful of values not compatible with JSON when using the `JSON.parse(JSON.stringify(anyObj))` technique. 
+- Be careful of values not compatible with JSON when using the `JSON.parse(JSON.stringify(anyObj))` technique.
 - Nested objects must be serializable and de-serializable via JSON; They can't be `undefined` or `null`.
 - When in doubt, use a library like `lodash.cloneDeep()` for cloning.

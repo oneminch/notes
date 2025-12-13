@@ -17,16 +17,17 @@
 
 > [!quote] Big-O Cheat Sheet
 > ![Big-O Cheat Sheet](big-o-cheat-sheet.png)
+>
 > - **Source**: [Big-O Cheat Sheet](https://www.bigocheatsheet.com)
 
 > [!note]
-> The '*slower*' an algorithm slows down as its input size grows, the better or the more scalable it is.
+> The '_slower_' an algorithm slows down as its input size grows, the better or the more scalable it is.
 
 - When calculating Big-O notation:
     1. Always consider what the worst case scenario is.
     2. Remove constants.
     3. Consider the number of inputs.
-    4. Keep the dominant term and drop the rest. 
+    4. Keep the dominant term and drop the rest.
     5. Add steps that are sequential.
     6. Add steps that are nested.
 
@@ -34,7 +35,7 @@
 
 - `O(n + c) = O(n)`
 - `O(cn) = O(n), c > 0`
-- For a polynomial function `f(n)`, the Big-O of f(n) is going to be the Big-O of the term with the largest exponent. 
+- For a polynomial function `f(n)`, the Big-O of f(n) is going to be the Big-O of the term with the largest exponent.
     - e.g. $f(n) = 13n^{2} + 2n^{3} + 6$ would have a Big-O Notation of $O(f(n)) \approx O(n^3)$.
 
 ## Examples
@@ -58,7 +59,5 @@ def nested_loops(list1, list2):
         for y in list2:
             print(x, y)
 ```
-
-
 
 [^1]: [Big _O_ notation - Wikipedia](https://en.wikipedia.org/wiki/Big_O_notation)

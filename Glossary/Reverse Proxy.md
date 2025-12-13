@@ -1,4 +1,4 @@
-- Sits between clients and servers, and receives client requests and forwards them to appropriate backend servers, then returns the server's response to the client. 
+- Sits between clients and servers, and receives client requests and forwards them to appropriate backend servers, then returns the server's response to the client.
     - The client interacts only with the reverse proxy, unaware of the backend infrastructure.
 - Primarily used for load balancing to distribute incoming requests across multiple backend servers to optimize resource utilization and improve performance.
 
@@ -9,7 +9,7 @@ http {
         server 192.168.1.11:8080;
         server 192.168.1.12:8080;
     }
-    
+
     server {
         listen 80;
         location / {
@@ -25,7 +25,7 @@ http {
 # Caching
 http {
     proxy_cache_path /path/to/cache levels=1:2 keys_zone=my_cache:10m;
-    
+
     server {
         listen 80;
         location / {
@@ -55,7 +55,7 @@ server {
 server {
     listen 80;
     server_tokens off;
-    
+
     location / {
         proxy_pass http://backend_server;
         proxy_set_header Server "Custom Server Name";
@@ -70,11 +70,11 @@ http {
     log_format detailed '$remote_addr - $remote_user [$time_local] '
                         '"$request" $status $body_bytes_sent '
                         '"$http_referer" "$http_user_agent"';
-    
+
     server {
         listen 80;
         access_log /var/log/nginx/access.log detailed;
-        
+
         location / {
             proxy_pass http://backend_server;
         }

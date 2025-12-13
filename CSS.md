@@ -40,7 +40,7 @@
 - _Pseudo-classes_ style certain states of an element. e.g. `:hover`
 - _Pseudo-elements_ select a certain part of an element rather than the element itself; They typically start with a double colon `::`. e.g. `::first-line`, `::marker`, `::selection`
     - `::before` and `::after` are used along with the `content` property to insert content into documents using CSS.
-        - `::before` or `::after` can only be inserted to an element that accepts child elements; it  won't work on elements such as `<img />`, `<video>` and `<input>` (with the exception of `input[type="checkbox"]`).
+        - `::before` or `::after` can only be inserted to an element that accepts child elements; it won't work on elements such as `<img />`, `<video>` and `<input>` (with the exception of `input[type="checkbox"]`).
         - Inserting strings of text from CSS isn't really something that's done very often on the web however, as it affects [[Accessibility]] with some screen readers and might be hard for someone to find and edit in the future.
         - A more valid use of these pseudo-elements is to insert an icon.
     - [Selector References](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Pseudo-classes_and_pseudo-elements#reference_section)
@@ -60,6 +60,7 @@
 - Parent elements can't be targeted; the cascade can only be downwards, selecting child elements.
 
 For the cascade, there are 4 stages to consider, listed in order of importance (Later ones overrule earlier ones):
+
 - **Source Order**: If you have more than one rule of exactly the same weight, the one that comes last in the CSS wins.
     - This also takes in consideration the order of `<link>` tags, declarations in embedded `<style>` tags, and inline CSS defined in the `style` attribute of an element.
     - Unless another ruleset has an `!important` declaration, an inline CSS defined in the `style` attribute of an element overrides all other CSS.
@@ -88,7 +89,7 @@ For the cascade, there are 4 stages to consider, listed in order of importance (
 - **Inheritance**: Some CSS properties on child elements are inherited from property values set on parent elements. Example, `color` and `font-family`.
     - Every CSS property accepts these four special universal property values for controlling inheritance:
         - `inherit`: sets the property value to be the same as the parent's value for that property.
-        - `initial`: sets the property value applied to a selected element to the initial value of that property. 
+        - `initial`: sets the property value applied to a selected element to the initial value of that property.
             - The property will revert to the value that is specified in the CSS standard for that property, which can differ from the default styles applied by the browser's user-agent stylesheet.
             - The initial value should not be confused with the value specified by the browser's style sheet.
         - `unset`: resets the property to its natural value, which means that if the property is naturally inherited it acts like `inherit`, otherwise it acts like `initial`.
@@ -153,19 +154,19 @@ For the cascade, there are 4 stages to consider, listed in order of importance (
 
 > [!quote]
 > ![box-layout.png](box-layout.png)
-> 
+>
 > **Source**: MDN
 
 - The margin is not counted towards the actual size of the box — it affects the total space that the box will take up on the page, but only the space outside the box. The box's area stops at the border — it does not extend into the margin.
 - By default, browsers use the standard box model (`box-sizing: content-box;`). An alternative box model can be turned on using: `box-sizing: border-box;`
-    - `content-box` - When dimensions like `width` and `height` are set, they will be applied to the _content box_ - the content area; 
-        - If `padding` and `border` are set, the values will be added on top of these dimensions to the content box's size. 
+    - `content-box` - When dimensions like `width` and `height` are set, they will be applied to the _content box_ - the content area;
+        - If `padding` and `border` are set, the values will be added on top of these dimensions to the content box's size.
         - The rendered element will be larger than the specified dimensions.
     - `border-box` - Dimensional values are applied to the _border box_; If `padding` and `border` are then set, they get _pushed in_ and the rendered box size doesn't exceed the set dimensions.
 
 > [!important]
 > **Margin Collapsing**: If you have two elements whose margins touch, and both margins are positive, those margins will combine to become one margin, which is the size of the largest individual margin. If one or both margins are negative, the amount of negative value will subtract from the total.
-> 
+>
 > - Read more - [Margin Collapsing - MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing)
 
 ### Display
@@ -200,10 +201,10 @@ For the cascade, there are 4 stages to consider, listed in order of importance (
 
 ```css
 article {
-    flex: 1 1 250px;
+	flex: 1 1 250px;
 }
 ```
-  
+
 - Horizontal and vertical alignment can be accomplished by applying the `align-items` and `justify-content` properties on the flex container.
     - `align-items` controls where flex items sit on the cross axis; it has default value of `stretch`.
         - Individual flex items can override this property using `align-self`.
@@ -215,28 +216,28 @@ article {
 
 - _Grid Layout_ is designed for two-dimensional layout: both horizontally _and_ vertically.
 - A grid typically has columns, rows, and gaps between each row and column, commonly referred to as _gutters_.
- 
- ![css-grid.png](grid.png)
-    **Source**: MDN
-    
+
+![css-grid.png](grid.png)
+**Source**: MDN
+
 ```html
 <div class="parent">
-    <div class="child"></div>
-    <div class="child"></div>
-    <div class="child"></div>
-    <div class="child"></div>
-    <div class="child"></div>
-    <div class="child"></div>
+	<div class="child"></div>
+	<div class="child"></div>
+	<div class="child"></div>
+	<div class="child"></div>
+	<div class="child"></div>
+	<div class="child"></div>
 </div>
 ```
 
 ```css
 .parent {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    /* grid-template-columns: (3, 1fr) */
-    grid-template-rows: 100px 100px;
-    gap: 10px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	/* grid-template-columns: (3, 1fr) */
+	grid-template-rows: 100px 100px;
+	gap: 10px;
 }
 ```
 
@@ -255,23 +256,23 @@ article {
 
 ```css
 header {
-    grid-column: 1 / 3;
-    grid-row: 1;
+	grid-column: 1 / 3;
+	grid-row: 1;
 }
 
 article {
-    grid-column: 2;
-    grid-row: 2;
+	grid-column: 2;
+	grid-row: 2;
 }
 
 aside {
-    grid-column: 1;
-    grid-row: 2;
+	grid-column: 1;
+	grid-row: 2;
 }
 
 footer {
-    grid-column: 1 / 3;
-    grid-row: 3;
+	grid-column: 1 / 3;
+	grid-row: 3;
 }
 ```
 
@@ -279,29 +280,29 @@ footer {
 
 ```css
 .container {
-    display: grid;
-    grid-template-areas:
-        "header header"
-        "sidebar article"
-        "footer footer";
-    grid-template-columns: 1fr 3fr;
-    gap: 10px;
+	display: grid;
+	grid-template-areas:
+		"header header"
+		"sidebar article"
+		"footer footer";
+	grid-template-columns: 1fr 3fr;
+	gap: 10px;
 }
 
 header {
-    grid-area: header;
+	grid-area: header;
 }
 
 article {
-    grid-area: article;
+	grid-area: article;
 }
 
 aside {
-    grid-area: sidebar;
+	grid-area: sidebar;
 }
 
 footer {
-    grid-area: footer;
+	grid-area: footer;
 }
 ```
 
@@ -334,17 +335,17 @@ footer {
 
 ```html
 <div id="wrapper">
-    <h1>Lorem ipsum dolor</h1>
-  	<p>Lorem ipsum dolor sit amet, consectetur...</p>
-  	<p>Lorem ipsum dolor sit amet, consectetur...</p>
+	<h1>Lorem ipsum dolor</h1>
+	<p>Lorem ipsum dolor sit amet, consectetur...</p>
+	<p>Lorem ipsum dolor sit amet, consectetur...</p>
 </div>
 ```
 
 ```css
 #wrapper {
-    column-count: 3;
-  	column-gap: 20px;
-  	column-rule: 4px dotted rgba(0, 0, 0, 0.25);
+	column-count: 3;
+	column-gap: 20px;
+	column-rule: 4px dotted rgba(0, 0, 0, 0.25);
 }
 ```
 
@@ -371,7 +372,7 @@ footer {
 
 > [!tip]
 > A common use of `max-width` is to cause images to scale down if there is not enough space to display them at their intrinsic width while making sure they don't become larger than that width. [^2]
-> 
+>
 > `img`s don't stretch / scale up to fill their parent but they do scale down to fit their container accordingly. It makes the images responsive. #rwd
 
 - **Viewport units**: `vh`, `vw`
@@ -384,8 +385,8 @@ footer {
     - `clip` (default)
     - `ellipsis` - displays an ellipsis (`...`).
 - While the CSS `direction` property exists for text direction (`ltr` & `rtl`), the [[HTML]] attribute `dir` is recommended.
-- `text-align` 
-    - `start` and `end` are logical alignments that represent the location of the start and end of a line of text in the current writing mode. 
+- `text-align`
+    - `start` and `end` are logical alignments that represent the location of the start and end of a line of text in the current writing mode.
         - e.g. `start` maps to `left` in English, and to `right` in Arabic script which is written right to left (RTL).
 - `writing-mode` changes the way text flows: `horizontal-tb` (default), `vertical-lr` or `vertical-rl`.
 - **Pseudo-Elements**
@@ -400,17 +401,17 @@ footer {
 
 ```css
 @font-face {
-    font-family: "myFont";
-    src:
-        local("myFont"),
-        url("myFont.woff2") format("woff2"), 
-        url("myFont.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
+	font-family: "myFont";
+	src:
+		local("myFont"),
+		url("myFont.woff2") format("woff2"),
+		url("myFont.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
 }
 
 html {
-    font-family: "myFont", serif;
+	font-family: "myFont", serif;
 }
 ```
 
@@ -428,15 +429,15 @@ html {
 
 ```css
 @supports (property: value) {
-    /* CSS declarations */
+	/* CSS declarations */
 }
 
 @supports (...) and (...) {
-    /* CSS declarations */
+	/* CSS declarations */
 }
 
 @supports (...) or (...) {
-    /* CSS declarations */
+	/* CSS declarations */
 }
 ```
 
@@ -444,22 +445,22 @@ html {
 
 ```css
 #app {
-    display: flex;
+	display: flex;
 }
 
 /* Use grid if it's supported */
 @supports (display: grid) {
-    #app {
-        display: grid;
-    }
+	#app {
+		display: grid;
+	}
 }
 ```
 
 - This can be achieved in [[JavaScript|JS]] using the [[CSSOM]] method `supports()`.
 
 ```js
-if (!CSS || !CSS.supports('display', 'grid')) {
-    /* CSS grid not supported */
+if (!CSS || !CSS.supports("display", "grid")) {
+	/* CSS grid not supported */
 }
 ```
 
@@ -483,36 +484,36 @@ if (!CSS || !CSS.supports('display', 'grid')) {
 ```scss
 // Define variables
 $primary-color: #3498db;
-$font-stack: 'Helvetica Neue', sans-serif;
+$font-stack: "Helvetica Neue", sans-serif;
 
 // Mixin for button styles
 @mixin button-styles($bg-color) {
-    background-color: $bg-color;
-    color: white;
-    &:hover {
-        opacity: 0.9;
-    }
+	background-color: $bg-color;
+	color: white;
+	&:hover {
+		opacity: 0.9;
+	}
 }
 
 // Base styles
 body {
-    font-family: $font-stack;
-    header {
-        background-color: $primary-color;
-        text-align: center;
-        h1 {
-            margin: 0;
-        }
-    }
+	font-family: $font-stack;
+	header {
+		background-color: $primary-color;
+		text-align: center;
+		h1 {
+			margin: 0;
+		}
+	}
 }
 
 // Button styles using mixin
 .button-primary {
-    @include button-styles($primary-color);
+	@include button-styles($primary-color);
 }
 
 .button-secondary {
-    @include button-styles($secondary-color);
+	@include button-styles($secondary-color);
 }
 ```
 
@@ -526,9 +527,7 @@ body {
 
 ```js
 module.exports = {
-    plugins: [
-        require('autoprefixer')
-    ]
+	plugins: [require("autoprefixer")],
 };
 ```
 
@@ -540,17 +539,17 @@ npx postcss styles.css -o output.css
 ```css
 /* styles.css */
 .example {
-    display: flex;
-    transition: all 200ms ease;
+	display: flex;
+	transition: all 200ms ease;
 }
 
 /* output.css */
 .example {
-    display: -webkit-box;  /* Old versions of Safari */
-    display: -ms-flexbox;  /* IE10 */
-    display: flex;
-    -webkit-transition: all 200ms ease;
-    transition: all 200ms ease;
+	display: -webkit-box; /* Old versions of Safari */
+	display: -ms-flexbox; /* IE10 */
+	display: flex;
+	-webkit-transition: all 200ms ease;
+	transition: all 200ms ease;
 }
 ```
 
@@ -561,26 +560,26 @@ npx postcss styles.css -o output.css
 - Emphasizes creation of reusable and modular components.
 - Styles are defined in a way that they can be applied across different contexts without modification.
 - Key principles:
-    - *Single Responsibility* - Each component should have one clear purpose.
-    - *Separation of Concerns* - Styles should be independent of the HTML structure, allowing for greater flexibility and reusability.
+    - _Single Responsibility_ - Each component should have one clear purpose.
+    - _Separation of Concerns_ - Styles should be independent of the HTML structure, allowing for greater flexibility and reusability.
 
 ```css
 .button {
-    box-sizing: border-box;
-    height: 50px;
-    width: 100%;
+	box-sizing: border-box;
+	height: 50px;
+	width: 100%;
 }
 
 .grey-btn {
-    background: #EEE;
-    border: 1px solid #DDD;
-    color: #555;
+	background: #eee;
+	border: 1px solid #ddd;
+	color: #555;
 }
 ```
 
 ### Block Element Modifier (BEM)
 
-- A naming convention that helps developers create reusable components with a clear structure. 
+- A naming convention that helps developers create reusable components with a clear structure.
 - Breaks down the user interface into three parts:
     - **Block**: The top-level component (e.g., `menu`, `button`).
     - **Element**: A part of the block that has no standalone meaning (e.g., `menu__item`).
@@ -588,30 +587,30 @@ npx postcss styles.css -o output.css
 
 ```html
 <button class="button button--primary">
-    <span class="button__icon">✔️</span>
-    <span class="button__text">Submit</span>
+	<span class="button__icon">✔️</span>
+	<span class="button__text">Submit</span>
 </button>
 ```
 
 ```css
 .button {
-    display: inline-flex;
-    align-items: center;
-    border: none;
+	display: inline-flex;
+	align-items: center;
+	border: none;
 }
 
 .button__icon {
-    margin-right: 0.25rem;
+	margin-right: 0.25rem;
 }
 
 .button--primary {
-    background-color: blue;
-    color: white;
+	background-color: blue;
+	color: white;
 }
 
 .button--secondary {
-    background-color: gray;
-    color: white;
+	background-color: gray;
+	color: white;
 }
 ```
 
@@ -660,8 +659,8 @@ select,
 button,
 input,
 textarea {
-    font-family: inherit;
-    font-size: 100%;
+	font-family: inherit;
+	font-size: 100%;
 }
 ```
 
@@ -670,7 +669,9 @@ textarea {
 ---
 
 > [!question]- Interview Emphasis Points
+>
 > > Concepts / sections to focus on when reading
+>
 > - Specificity
 > - Box Model
 > - Layout & Display
@@ -684,6 +685,7 @@ textarea {
 >     - Combinators
 
 ---
+
 ## Further
 
 ### Resources 🧩
@@ -691,8 +693,6 @@ textarea {
 - [CSS Almanac](https://css-tricks.com/almanac/)
 
 - [Defensive CSS - Tips](https://defensivecss.dev/tips/)
-
-
 
 [^1]: [Clearfix - CSS Tricks](https://css-tricks.com/clearfix-a-lesson-in-web-development-evolution/)
 

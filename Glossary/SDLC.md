@@ -3,7 +3,7 @@ alias: Software Development Lifecycle
 ---
 
 - SDLC (Software Development Life Cycle) is a systematic approach to software development that aims to minimize project risks and ensure that software meets customer expectations during delivery
-- It consists of several key stages: 
+- It consists of several key stages:
     - ==Planning==: includes tasks like cost-benefit analysis, scheduling, resource estimation, and allocation, with a software requirement specification document setting expectations and defining common goals for project planning.
     - ==Requirement Analysis==: involves gathering, analyzing, and documenting software requirements from the client, stakeholders, and end-users.
     - ==Design==: involves software engineers analyzing requirements and identifying the best solutions to create the software, considering factors like integration with existing IT infrastructure.
@@ -39,8 +39,8 @@ alias: Software Development Lifecycle
 
 ### Agile
 
-- This model is designed to facilitate change and eliminate waste processes. 
-- It emphasizes collaboration, working software, and customer involvement. 
+- This model is designed to facilitate change and eliminate waste processes.
+- It emphasizes collaboration, working software, and customer involvement.
 - It is highly adaptive and encourages iterative development, allowing for frequent changes based on customer feedback.
 
 - **Advantages**:
@@ -90,7 +90,7 @@ alias: Software Development Lifecycle
         - General format: "As a _user_ I want to _functionality_ so that _motivation._"
             - e.g. As a manager, I want to be able to understand my team members' progress, so I can better report our success and failures.
     - Sprints
-        - A short iteration, usually between one to three weeks to complete, where teams work on tasks determined in the sprint planning meeting. 
+        - A short iteration, usually between one to three weeks to complete, where teams work on tasks determined in the sprint planning meeting.
         - Continuously repeated until the product is feature ready.
         - Once the sprint is over, review the product to see what is and isn’t working, make adjustments, and begin another sprint to make improvements.
         - Implemented in the Agile framework Scrum but not in some other frameworks like Kanban.
@@ -117,11 +117,11 @@ alias: Software Development Lifecycle
         - Broad in scope and typically align with business goals or strategic initiatives.
         - e.g. Improve user engagement
     - **Epics**
-        - Large bodies of work that can be broken down into smaller, more manageable pieces. 
+        - Large bodies of work that can be broken down into smaller, more manageable pieces.
         - Usually too big to be completed in a single sprint and often span multiple sprints or even releases.
         - e.g. Redesign user profile page
     - **User Stories**
-        - Short, simple descriptions of a feature from the end-user's perspective. 
+        - Short, simple descriptions of a feature from the end-user's perspective.
         - Typically follow the format: `As a <type of user>, I want <goal> so that <benefit>.`
         - Typically weighted using relative units of measurement called ==story points==.
         - e.g. for the "Redesign user profile page" epic:
@@ -142,7 +142,7 @@ alias: Software Development Lifecycle
 - XP is an Agile software development framework that emphasizes frequent iteration, collaboration, and adaptation.
 - It is based on five core values:
     - **Communication**
-        - XP recognizes that problems often arise due to a lack of communication. 
+        - XP recognizes that problems often arise due to a lack of communication.
         - It emphasizes continuous and constant communication among team members, managers, and customers.
     - **Simplicity**
         - XP believes in "doing the simplest thing that could possibly work" and implementing a new capability in the simplest possible way.
@@ -152,14 +152,15 @@ alias: Software Development Lifecycle
         - XP provides courage to developers to focus on what is required, communicate and accept feedback, tell the truth about progress and estimates, refactor the code, adapt to changes, and throw away code when necessary.
     - **Respect**
         - Everyone contributes value, and management respects the right of developers to accept responsibility and receive authority over their own work.
+
 #### Scrum
 
 - Scrum is a framework for Agile development that is designed to facilitate rapid development and delivery of high-quality software.
 - It is based on a set of principles and practices that promote continuous improvement, collaboration, and transparency:
-    - It is based on the idea of *breaking down complex projects* into smaller, more manageable pieces and iterating on them over time.
-    - It promotes the idea of *iterative and incremental development*, with each iteration adding new features and functionality.
-    - It emphasizes the importance of *self-organizing teams*, where team members are empowered to make decisions and take ownership of their work.
-    - It promotes *transparency* by encouraging regular communication and collaboration between team members and stakeholders.
+    - It is based on the idea of _breaking down complex projects_ into smaller, more manageable pieces and iterating on them over time.
+    - It promotes the idea of _iterative and incremental development_, with each iteration adding new features and functionality.
+    - It emphasizes the importance of _self-organizing teams_, where team members are empowered to make decisions and take ownership of their work.
+    - It promotes _transparency_ by encouraging regular communication and collaboration between team members and stakeholders.
 - It divides the entire project into small incremental builds, with each iteration lasting from one to three weeks.
 - It is often used in conjunction with other Agile methodologies, such as Kanban, to create a more comprehensive approach to software development.
 - Scrum ceremonies
@@ -237,13 +238,13 @@ alias: Software Development Lifecycle
     - Optimize performance.
     - Prepare for deployment.
 
-- Throughout this process, the team maintains flexibility. 
+- Throughout this process, the team maintains flexibility.
 - If market conditions change or user feedback suggests different priorities, the Product Owner can adjust the product backlog, and the team can adapt in the next sprint.
 
 ---
+
 ## Further
 
 ### Videos 🎥
 
 ![What does larger scale software development look like?](https://www.youtube.com/watch?v=Dl-BdxNRUqs)
-

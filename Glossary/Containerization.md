@@ -12,9 +12,9 @@ alias: Containers
     - Agility
 - **Use Cases**:
     - Microservices Architecture
-        - Containerization aligns well with microservices, where applications are broken down into smaller, independently deployable services. 
+        - Containerization aligns well with microservices, where applications are broken down into smaller, independently deployable services.
         - Each microservice can run in its own container, simplifying deployment and management.
-    - Cloud Migration    
+    - Cloud Migration
         - Legacy applications can be encapsulated in containers, facilitating smoother transitions to cloud environments without extensive rewrites.
     - DevOps Practices
         - Containers enable consistent environments for development, testing, and production, which enhances collaboration between development and operations teams.
@@ -22,6 +22,7 @@ alias: Containers
 ![[Containers vs. VMs]]
 
 ---
+
 ## Further
 
 ### Videos 🎥

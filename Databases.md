@@ -4,7 +4,7 @@ alias: DB
 
 ## Introduction
 
-- Databases 
+- Databases
     - are structured digital information stores
     - build indices to efficiently query data
     - define relationships between datasets
@@ -18,7 +18,7 @@ alias: DB
 ## Relational Databases
 
 - Organize data in tabular form with columns (categories / attributes) and rows (entries)
-- Uses a structure that allows us to identify and access data in relation to another piece of data in the database. 
+- Uses a structure that allows us to identify and access data in relation to another piece of data in the database.
 - Often, data is organized into tables.
 - Highly structured
 - Strict data types
@@ -29,7 +29,7 @@ alias: DB
 
 ### Key Aspects
 
-- **Row** / **Record** 
+- **Row** / **Record**
     - A single entry in a table.
 - **Column** / **Field**
     - The smallest entity of a table.
@@ -39,7 +39,7 @@ alias: DB
     - **Primary Key**
         - A field which uniquely identifies each row/record in a database table.
     - **Foreign Key**
-        - aka *referencing key*.
+        - aka _referencing key_.
         - Used to link two tables together.
         - A column or combination of columns whose values match a primary key in a different table.
 
@@ -54,7 +54,7 @@ alias: DB
 - **Handling of Unstructured Data**
     - RDBMSs are not suitable for handling unstructured data like multimedia files, social media posts, and sensor data, as their relational structure is optimized for structured data.
 - **Horizontal Scalability**
-    - Unlike NoSQL databases, RDBMSs are not as easily horizontally scalable. 
+    - Unlike NoSQL databases, RDBMSs are not as easily horizontally scalable.
     - Adding more machines to the system can be both costly and complex.
 
 ### Database Design
@@ -98,7 +98,7 @@ WHERE u.user_id = 1;
 - One record in a table can be associated with multiple records in another table.
 - Foreign key always goes in the "many" side table.
 - No `UNIQUE` constraint on foreign key (allows duplicates).
-- The most common type of relationship. 
+- The most common type of relationship.
 - e.g. One user can place many orders.
 
 ```sql
@@ -127,7 +127,7 @@ ORDER BY o.order_date DESC;
 
 ##### Many-to-Many (M:N)
 
-- Multiple records in one table are related to multiple records in another table. 
+- Multiple records in one table are related to multiple records in another table.
 - Requires a junction table that has a foreign key to both tables.
 - e.g. Many products can belong to many categories, and vice versa.
 
@@ -164,7 +164,7 @@ ORDER BY p.price ASC;
 
 ##### Self-Referencing Relationship
 
-- Occurs when a table has a foreign key that references its own primary key. 
+- Occurs when a table has a foreign key that references its own primary key.
 - e.g. Employees with managers (who are also employees).
 
 ```sql
@@ -185,9 +185,9 @@ LEFT JOIN employees m ON e.manager_id = m.employee_id;
 
 > [!quote]- Cardinality (Simple Example)
 > ![Cardinality](databases.erd-cardinality.png)
-> 
+>
 > ![Example](assets/images/databases.erd-example.png)
-> 
+>
 > **Source**: Lucid Software
 
 > [!quote]- ERD (Example)
@@ -198,34 +198,34 @@ LEFT JOIN employees m ON e.manager_id = m.employee_id;
 
 ![[Normalization]]
 
-##### First Normal Form (1NF) 
+##### First Normal Form (1NF)
 
 - Each table cell should contain a single value (and not a list of values).
 - Each record needs to be unique.
 - Conclusive of a relational database.
 - For a database to be considered relational, all relations in the database are in 1NF.
-    - A database is considered relational if all the fields in the tables are atomic, every column is a unique attribute, and a unique identifier or primary key is used. 
+    - A database is considered relational if all the fields in the tables are atomic, every column is a unique attribute, and a unique identifier or primary key is used.
 
 ##### Second Normal Form (2NF)
 
-- Deals with the elimination of circular dependencies from a relation. 
+- Deals with the elimination of circular dependencies from a relation.
 - A relation is in 2NF if it is in 1NF and if every non-key attribute is completely dependent only on the Primary Key.
 - e.g. A single table with `OrderID`, `ProductID`, `ProductName`, `CustomerID` and `CustomerName` fields violates 2NF because `CustomerName` depends on `CustomerID`, not the full primary key (`OrderID`, `ProductID`).
-    - The table can be split into two: 
+    - The table can be split into two:
         - Orders (`OrderID`, `ProductID` and `CustomerID`)
         - Customers (`CustomerID` and `CustomerName`)
- 
+
 > [!note]
 > A non-key attribute is any column that cannot be used to uniquely identify the table.
 
 ##### Third Normal Form (3NF)
 
-- Deals with the elimination of non-key attributes that do not describe the Primary Key. 
+- Deals with the elimination of non-key attributes that do not describe the Primary Key.
 - For a relation to be in 3NF, the relationship between any two non-key attributes, or groups of non-key attributes, must not be in a one-to-one relation.
-- Attributes should be mutually independent which means, none of the attributes should be functionally dependent on any combination of attributes. 
+- Attributes should be mutually independent which means, none of the attributes should be functionally dependent on any combination of attributes.
     - This ensures that any update on the individual attribute will not affect other attributes in a row.
 - e.g. A table that contains `EmployeeID`, `DepartmentID`, `DepartmentName` and `ManagerID` violates 3NF because `DepartmentName` is transitively dependent on `EmployeeID` through `DepartmentID`.
-    - The table can be split into two: 
+    - The table can be split into two:
         - Employees (`EmployeeID` and `DepartmentID`)
         - Departments (`DepartmentID`, `DepartmentName` and `ManagerID`)
 
@@ -243,9 +243,9 @@ LEFT JOIN employees m ON e.manager_id = m.employee_id;
 #### Data Integrity
 
 - **Entity Integrity**
-    - Ensures that each row in a table is uniquely identifiable. 
-    - Typically achieved through the use of primary keys. 
-    - e.g., In an employee database, each employee record might have a unique "Employee ID" as the primary key. 
+    - Ensures that each row in a table is uniquely identifiable.
+    - Typically achieved through the use of primary keys.
+    - e.g., In an employee database, each employee record might have a unique "Employee ID" as the primary key.
         - This prevents duplicate entries and ensures each employee can be distinctly identified.
 
 - **Referential Integrity**
@@ -255,7 +255,7 @@ LEFT JOIN employees m ON e.manager_id = m.employee_id;
         - e.g., if an "Orders" table has a customer ID foreign key, that ID must exist in the "Customers" table.
     - Helps prevent orphaned records (records with foreign key values that don't match any primary key).
     - In such relationships, typically, the table with a Primary key is considered as a parent table and the table with a foreign key is considered a child table.
-    - Updating and Deletion in primary key table and Insertion and Updating in the foreign key table could violate the referential integrity. 
+    - Updating and Deletion in primary key table and Insertion and Updating in the foreign key table could violate the referential integrity.
     - Actions on violation:
         - Prevents deletion of referenced data.
         - Deletes or updates related records automatically.
@@ -263,12 +263,12 @@ LEFT JOIN employees m ON e.manager_id = m.employee_id;
     - To avoid violating Referential Integrity, `ON DELETE CASCADE`, set the foreign key to NULL, or set foreign key to default are implemented.
 
 - **Domain Integrity**
-    - Enforces valid entries for a given column by specifying acceptable values or data types. 
+    - Enforces valid entries for a given column by specifying acceptable values or data types.
     - e.g., A "Date of Birth" column might be restricted to accept only valid dates within a reasonable range, preventing entries like "February 30" or future dates.
 
 - **Physical Integrity**
-    - Safeguards data against physical issues during storage and retrieval. 
-    - Ensures that data remains intact despite hardware failures or environmental factors. 
+    - Safeguards data against physical issues during storage and retrieval.
+    - Ensures that data remains intact despite hardware failures or environmental factors.
     - e.g., Implementing redundant storage systems like RAID
 
 ### Performance
@@ -283,16 +283,16 @@ LEFT JOIN employees m ON e.manager_id = m.employee_id;
     - DML operations can be slower because indexes need to be updated along with the data.
         - Indexes should be limited on frequently updated tables.
     - Indexes also consume additional space.
-- A covering index includes all columns needed for a query so that SQL can retrieve data directly from the index without accessing the underlying table. 
+- A covering index includes all columns needed for a query so that SQL can retrieve data directly from the index without accessing the underlying table.
     - e.g. a composite index with the required columns in the query.
 
 ```postgresql
 -- Non-Clustered Index on 'Users'
-CREATE INDEX idx_UserID ON Users(user_id); 
+CREATE INDEX idx_UserID ON Users(user_id);
 -- Useful if users are frequently queried by their id.
 
 -- Composite Index on 'Users'
-CREATE INDEX idx_City_Balance ON Users(city, balance); 
+CREATE INDEX idx_City_Balance ON Users(city, balance);
 
 -- Clustered Index on 'Accounts'
 CREATE INDEX idx_AccountID ON Accounts(account_id);
@@ -339,21 +339,21 @@ END CATCH
 
 ```js
 // Using Node.js
-const { Pool } = require('pg')
-const pool = new Pool()
- 
-const client = await pool.connect()
- 
+const { Pool } = require("pg");
+const pool = new Pool();
+
+const client = await pool.connect();
+
 try {
-  await client.query('BEGIN');
-  const queryText = 'INSERT INTO users(name) VALUES($1) RETURNING id';
-  const res = await client.query(queryText, ['brianc']);
-  await client.query('COMMIT');
+	await client.query("BEGIN");
+	const queryText = "INSERT INTO users(name) VALUES($1) RETURNING id";
+	const res = await client.query(queryText, ["brianc"]);
+	await client.query("COMMIT");
 } catch (e) {
-  await client.query('ROLLBACK');
-  throw e;
+	await client.query("ROLLBACK");
+	throw e;
 } finally {
-  client.release();
+	client.release();
 }
 ```
 
@@ -412,9 +412,10 @@ COMMIT;
 ```
 
 > [!note]- Related Terminology
-> - *Dirty Read* - Reading data that has been modified by another transaction but not yet committed.
-> - *Non-repeatable Read* - Getting different results when reading the same data multiple times within a transaction due to updates by other transactions.
-> - *Phantom Read* - When a transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows has changed due to another recently committed transaction.
+>
+> - _Dirty Read_ - Reading data that has been modified by another transaction but not yet committed.
+> - _Non-repeatable Read_ - Getting different results when reading the same data multiple times within a transaction due to updates by other transactions.
+> - _Phantom Read_ - When a transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows has changed due to another recently committed transaction.
 
 ### OLTP vs. OLAP
 
@@ -455,14 +456,14 @@ COMMIT;
 ### Sharding
 
 - Enhances the scalability and performance of databases by distributing data across multiple servers or nodes.
-- Involves partitioning a large database into smaller, more manageable pieces called "shards," which can be stored on different machines. 
+- Involves partitioning a large database into smaller, more manageable pieces called "shards," which can be stored on different machines.
     - Each shard contains a subset of the data, allowing for parallel processing and improved response times.
 - **Horizontal Sharding**
     - Divides a database table into smaller tables (shards) where each shard contains unique rows but shares the same schema.
         - It could be implemented alphabetically, geographically, etc.
     - e.g. customer records could be split based on geographic regions.
 - **Vertical Sharding**
-    - A table's columns are divided into different tables. 
+    - A table's columns are divided into different tables.
     - It is useful when certain queries only require specific columns, allowing for more efficient data retrieval.
 
 ## Security
@@ -487,8 +488,8 @@ CREATE POLICY user_data_policy ON users
 -- Allow managers to see data for their department
 CREATE POLICY dept_data_policy ON employees
     USING (department_id IN (
-        SELECT department_id 
-        FROM managers 
+        SELECT department_id
+        FROM managers
         WHERE manager_id = current_user
     ));
 ```
@@ -610,6 +611,7 @@ FROM users;
 - Use SSL/TLS for encrypted connections to the database.
 
 ---
+
 ## Further
 
 ### Books 📚

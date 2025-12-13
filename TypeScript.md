@@ -33,22 +33,22 @@ tsc --target ES5 --module commonjs
 
 ```json
 {
-    /* Recommended Compiler Options: */
-    "compilerOptions": {
-        "skipLibCheck": true,
-        "target": "es2022",
-        "esModuleInterop": true,
-        "allowJs": true,
-        "resolveJsonModule": true,
-        "moduleDetection": "force",
-        "isolatedModules": true,
-        "strict": true,
-        "noUncheckedIndexedAccess": true,
-        "outDir": "./dist",
-        "rootDir": "./src"
-    },
-    "include": ["src"],
-    "exclude": ["node_modules"]
+	/* Recommended Compiler Options: */
+	"compilerOptions": {
+		"skipLibCheck": true,
+		"target": "es2022",
+		"esModuleInterop": true,
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"moduleDetection": "force",
+		"isolatedModules": true,
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"outDir": "./dist",
+		"rootDir": "./src"
+	},
+	"include": ["src"],
+	"exclude": ["node_modules"]
 }
 ```
 
@@ -82,7 +82,7 @@ tsc --target ES5 --module commonjs
 
 ```ts
 function printCoordinates(pt: { x: number; y?: number }) {
-    console.log(`(x: ${pt.x}, y: ${pt.y})`)
+	console.log(`(x: ${pt.x}, y: ${pt.y})`);
 }
 ```
 
@@ -94,16 +94,16 @@ function printCoordinates(pt: { x: number; y?: number }) {
 - Instead of using object and union types directly in type annotations, we can use type aliases to provide a name for any type, and reuse them.
 
 ```ts
-type Coord = number | string; 
+type Coord = number | string;
 
 type Point = {
-    /** Attached Docs for Tooling */
-    x: Coord; 
-    y?: Coord;
-}
+	/** Attached Docs for Tooling */
+	x: Coord;
+	y?: Coord;
+};
 
 function printCoordinates(pt: Point) {
-    console.log(`(x: ${pt.x}, y: ${pt.y})`)
+	console.log(`(x: ${pt.x}, y: ${pt.y})`);
 }
 ```
 
@@ -111,7 +111,7 @@ function printCoordinates(pt: Point) {
 
 ```ts
 type ColorShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-type Color = "amber" | "rose" | "emerald" | "indigo" ;
+type Color = "amber" | "rose" | "emerald" | "indigo";
 
 type ColorPalette = `bg-${Color}-${ColorShade}`;
 
@@ -125,67 +125,63 @@ let mySecondColor: ColorPalette = "bg-rose-900"; // OK
 
 ```ts
 interface User {
-    username: string;
-    isAdmin: boolean;
-    subscribe(plan: string): string;
-    // OR
-    // subscribe: (plan: string) => string
+	username: string;
+	isAdmin: boolean;
+	subscribe(plan: string): string;
+	// OR
+	// subscribe: (plan: string) => string
 }
 ```
 
 - Any JS class created using `class` is also a valid interface.
 
 > [!question] Interface vs. Type Alias
+>
 > - Unlike type aliases, interfaces support declaration merging. An interface can be defined multiple times and the compiler merges these definitions automatically into a single interface definition.
-> 
 > - Interfaces can also be extended either from `type` aliases or from another `interface`, and vice versa.
-> 
 > - Union types can't be extended by an interface.
-> 
-> - When extending types, duplicate property keys are merged into one with their types becoming a union type. 
-> 
+> - When extending types, duplicate property keys are merged into one with their types becoming a union type.
 > - Interfaces don't allow duplicate keys.
->   
 > - `interface extends` provides better errors when merging incompatible types and better performance compared to `type` intersections with `&`.
 
 ```ts
 // Declaration Merging
 interface Coordinates2D {
-    x: number
+	x: number;
 }
 
 interface Coordinates2D {
-    y: number
+	y: number;
 }
 
 const coords: Coordinates2D = {
-    x: 1,
-    y: 5
-}
+	x: 1,
+	y: 5,
+};
 ```
 
 ```ts
 // Extending
 interface Coordinates2D {
-    x: number
-    y: number
+	x: number;
+	y: number;
 }
 
 interface Coordinates3D extends Coordinates2D {
-    z: number
+	z: number;
 }
 
 const coords3D: Coordinates3D = {
-    x: 1,
-    y: 5,
-    z: 2
-}
+	x: 1,
+	y: 5,
+	z: 2,
+};
 
-type User = { name: string }
+type User = { name: string };
 
 // Interface extending a type
 interface Admin extends User {
-    extraPermissions: string[]
+	extraPermissions: string[];
 }
 
 // Extending a type (using an intersection operator)
@@ -195,7 +191,7 @@ type Admin = User & { extraPermissions: string[] };
 type Coords3D = Coordinates2D & { z: number };
 ```
 
-- ==Declaration merging== allows the compiler to merge two or more separate declarations declared with the same name into a single definition. 
+- ==Declaration merging== allows the compiler to merge two or more separate declarations declared with the same name into a single definition.
     - When multiple `interface`s are created in the same scope using the same name, TypeScript automatically merges them.
     - The merged definition will have the features of all the original declarations.
     - `type` throws an error in such cases.
@@ -224,11 +220,12 @@ aUser.greet = function() => {}
 
 > [!example] A Real-World Use Case of Declaration Merging
 > Extending existing or third-party objects
+>
 > ```ts
 > interface Window {
->     MY_GLOBAL_VAR: string;
+> 	MY_GLOBAL_VAR: string;
 > }
-> 
+>
 > const myVar = window.MY_GLOBAL_VAR;
 > ```
 
@@ -247,8 +244,8 @@ enum UserResponse {
 */
 
 enum UserResponse {
-  No = 1,
-  Yes,    // Value - 2
+	No = 1,
+	Yes, // Value - 2
 }
 
 const choice = UserResponse.Yes;
@@ -258,8 +255,8 @@ const choice = UserResponse.Yes;
 
 ```ts
 enum Choice {
-    Yes = "YES",
-    No = "NO",
+	Yes = "YES",
+	No = "NO",
 }
 ```
 
@@ -288,14 +285,14 @@ const fn = (pair: readonly [string, number]) => { ... }
 
 ```ts
 class Point {
-    x: number;
-    y: number;
-    z: number = 0;
+	x: number;
+	y: number;
+	z: number = 0;
 
-    move(x: number, y: number): void {
-        this.x += x;
-        this.y += y;
-    }
+	move(x: number, y: number): void {
+		this.x += x;
+		this.y += y;
+	}
 }
 ```
 
@@ -320,10 +317,10 @@ let arr: string[] = ["Hello", "TypeScript"]
 - `object` - any value that isn’t a primitive.
 - `any` - used to avoid typechecking errors.
     - A way of opting out of type-checking.
-- `unknown` - the type-safe counterpart of `any`. 
+- `unknown` - the type-safe counterpart of `any`.
     - The widest type in TS.
     - It's not legal to perform any operations on an `unknown` value. e.g. `toUpperCase()`
-- `void` - the return value of functions which don’t return a value. 
+- `void` - the return value of functions which don’t return a value.
     - It’s the inferred type of a function with no or empty `return` statements.
 - `never` - the return type for a function expression that always throws an exception or never returns.
     - The narrowest type in TS.
@@ -342,8 +339,8 @@ let list1: (string | number)[] = [1, 2, "3"];
 let list2: string[] | number[] = [1, 2, 3];
 
 let canVote: "yes" | "no";
-canVote = "yes"     // ✅
-canVote = "maybe"   // ⛔
+canVote = "yes"; // ✅
+canVote = "maybe"; // ⛔
 ```
 
 > [!important]
@@ -357,7 +354,7 @@ canVote = "maybe"   // ⛔
 - Types can be 'extended' from other types or interfaces using an intersection (`&`) operator.
 
 ```ts
-type User = { name: string }
+type User = { name: string };
 
 type Admin = User & { extraPermissions: string[] };
 ```
@@ -370,8 +367,8 @@ type Admin = User & { extraPermissions: string[] };
 type UserAttributes = keyof User;
 
 const getVal = (obj: User, prop: UserAttributes) => {
-    return obj[prop]
-}
+	return obj[prop];
+};
 ```
 
 ##### `typeof`
@@ -400,10 +397,10 @@ function anotherFn(data: FnType) { ... }
 
 ```ts
 type User = {
-    id: string;
-    name: string;
-    age: number;
-}
+	id: string;
+	name: string;
+	age: number;
+};
 
 type UserId = User["id"];
 ```
@@ -412,15 +409,15 @@ type UserId = User["id"];
 
 ```ts
 type User = {
-    name: string;
-    age: number;
-}
+	name: string;
+	age: number;
+};
 
 type Subscriber<Type> = {
-    [Prop in keyof Type]: (val: Type[Prop]) => void
-}
+	[Prop in keyof Type]: (val: Type[Prop]) => void;
+};
 
-type UserSub = Subscriber<User>
+type UserSub = Subscriber<User>;
 /*
 type UserSub = {
     name: (val: string) => void
@@ -435,13 +432,13 @@ type UserSub = {
 
 ```js
 /**
- *
- * @param {string} greeting
- * @param {string} name
- * @returns {string}
- */
+ *
+ * @param {string} greeting
+ * @param {string} name
+ * @returns {string}
+ */
 export default function logGreeting(greeting, name) {
-    return `${greeting}, ${name}!`;
+	return `${greeting}, ${name}!`;
 }
 ```
 
@@ -449,33 +446,33 @@ export default function logGreeting(greeting, name) {
 
 ```typescript
 // Explicitly typed variables
-let str1: string = "Hello, Typescript!"
-let arr: number[] = [1, 2, 3]
+let str1: string = "Hello, Typescript!";
+let arr: number[] = [1, 2, 3];
 // OR let arr: Array<number> = [1, 2, 3]
 let rgbColors: number[][] = [
-    [255, 0, 0],
-    [0, 255, 0],
-    [0, 0, 255],
-]
+	[255, 0, 0],
+	[0, 255, 0],
+	[0, 0, 255],
+];
 ```
 
 - Wherever possible, TypeScript automatically _[[Type Inference|infers]]_ types of a value.
 
 ```typescript
 // Implicitly typed variables
-let str2 = "Hello, Typescript!"
+let str2 = "Hello, Typescript!";
 
 // Loosely typed variables
-let str3: any = "Hello, Typescript!"
+let str3: any = "Hello, Typescript!";
 ```
 
 > [!important]
 > If there's a chance that a variable could be updated (e.g. `let`), TS infers it's type more widely.
-> 
+>
 > TS will infer the type more narrowly when using `const` than when using `let`, because primitive variables declared using `const` are immutable.
-> 
+>
 > When not explicitly typed, object declarations are widely inferred.
-> 
+>
 > > Read more 📄 - [Mutability (Total TypeScript)](https://www.totaltypescript.com/books/total-typescript-essentials/mutability)
 
 ### Functions
@@ -484,15 +481,15 @@ let str3: any = "Hello, Typescript!"
 // Typed functions & parameters
 // void return type
 function printError(err: string): void {
-    console.error(err);
+	console.error(err);
 }
 
 // object return type with optional properties (?)
-function createUser(name: string, age?: number):{name: string, age: number} {
-    return {
-        name: name,
-        age: age
-    }
+function createUser(name: string, age?: number): { name: string; age: number } {
+	return {
+		name: name,
+		age: age,
+	};
 }
 
 // Rest parameters
@@ -500,16 +497,16 @@ function getDetails(person: Person, ...extraDetails: string[]) {}
 
 // Arrow functions with return type
 const add = (a: number, b: number): number => {
-    return a + b;
-}
+	return a + b;
+};
 
-arr.map((item):string => item.toUpperCase());
+arr.map((item): string => item.toUpperCase());
 
 // Union Types
 function printId(id: number | string) {
-  console.log(id.toUpperCase());
-  // Error - operations must be valid on every type of the union
-  // toUpperCase is valid just for string
+	console.log(id.toUpperCase());
+	// Error - operations must be valid on every type of the union
+	// toUpperCase is valid just for string
 }
 ```
 
@@ -529,20 +526,20 @@ function createUser(user: User) { ... }
 
 > [!note]
 > `readonly` properties won't change any behavior during runtime. They are useful to signal intent during development.
-> 
+>
 > They also work similar to variable declarations using `const`. A `readonly` array property can still have its elements updated e.g. using `push()`, but can't be reassigned.
 
 ```ts
 type Users = {
-    readonly names: string[];  // Read-only
-    count?: number;            // Optional
-}
+	readonly names: string[]; // Read-only
+	count?: number; // Optional
+};
 
 type UserIds = {
-    [ids: number]: string;     // Index Signatures
-}
+	[ids: number]: string; // Index Signatures
+};
 
-let users: Users = { names: ["Jane", "John"], count: 2 };
+let users: Users = { names: ["Jane", "John"], count: 2 };
 
 users.names.push("Bob");
 users.count++;
@@ -551,7 +548,7 @@ users.count++;
 
 #### Function Overloading
 
-- In TypeScript, multiple functions can be defined that using the same name but with different number and/or type of parameters. 
+- In TypeScript, multiple functions can be defined that using the same name but with different number and/or type of parameters.
     - The correct function to call is determined based on the number, type, and order of the arguments passed to the function at runtime.
 
 ```ts
@@ -560,21 +557,21 @@ function createDate(timestamp: number): Date;
 function createDate(m: number, d: number, y: number): Date;
 // Implementation Signature
 function createDate(mOrTimestamp: number, d?: number, y?: number): Date {
-    if (d !== undefined && y !== undefined) {
-        return new Date(y, mOrTimestamp, d);
-    } else {
-        return new Date(mOrTimestamp);
-    }
+	if (d !== undefined && y !== undefined) {
+		return new Date(y, mOrTimestamp, d);
+	} else {
+		return new Date(mOrTimestamp);
+	}
 }
-        
+
 const d1 = createDate(12345678); // ✅
-const d2 = createDate(5, 5, 5);  // ✅
-const d3 = createDate(1, 3);     // ⛔ No overloads expecting 2 arguments
+const d2 = createDate(5, 5, 5); // ✅
+const d3 = createDate(1, 3); // ⛔ No overloads expecting 2 arguments
 ```
 
 ## Type Assertions
 
-- A way to tell the TypeScript compiler to treat a value as a specific type, regardless of its inferred type. 
+- A way to tell the TypeScript compiler to treat a value as a specific type, regardless of its inferred type.
 - They are a way of indicating that the developer knows more about the type than the compiler, thus providing a way to override the type inference performed by the compiler.
 - It can be done in two ways: `<[type]>value` or `value as [type]`
 
@@ -611,7 +608,7 @@ let userInputLength = userInput!.length;
 
 ```ts
 function getValue<T>(obj: T, prop: keyof T) {
-    return obj[prop]
+	return obj[prop];
 }
 ```
 
@@ -619,13 +616,13 @@ function getValue<T>(obj: T, prop: keyof T) {
 
 ```ts
 interface Point {
-    x: number;
-    y: number;
+	x: number;
+	y: number;
 }
 
 // Instead of writing this
 function clone(src: Point): Point {
-    return JSON.parse(JSON.stringify(src));
+	return JSON.parse(JSON.stringify(src));
 }
 
 let pt1: Point = { x: 5, y: 7 };
@@ -633,7 +630,7 @@ let pt2 = clone(pt1);
 
 // We can do this
 function clone<T>(src: T): T {
-    return JSON.parse(JSON.stringify(src));
+	return JSON.parse(JSON.stringify(src));
 }
 
 let pt1: Point = { x: 5, y: 7 };
@@ -644,7 +641,7 @@ let pt2 = clone(pt1);
 
 ```ts
 function clone<T1, T2>(src: T1): T2 {
-    return JSON.parse(JSON.stringify(src));
+	return JSON.parse(JSON.stringify(src));
 }
 
 let pt1: Point = { x: 5, y: 7 };
@@ -658,25 +655,25 @@ let pt2 = clone<Point, Point>(pt1);
 
 ## Type Guards / Narrowing
 
-- Type guards are useful for when our code does something different depending on the type of variable. 
+- Type guards are useful for when our code does something different depending on the type of variable.
 - We can use `typeof`, `instanceof`, equality of values (using equality operators) and truthiness of values (using logical operators) to ensure we are performing the right actions on the right types.
 
 ```ts
 const padRight = (padding: number | string, input: string) => {
-    if (typeof padding === "number") {
-        return input + " ".repeat(padding);
-    }
-    
-    return input + padding;
-}
+	if (typeof padding === "number") {
+		return input + " ".repeat(padding);
+	}
+
+	return input + padding;
+};
 
 const logDate = (x: Date | string) => {
-    if (x instanceof Date) {
-        console.log(x.toUTCString());
-    } else {
-        console.log(x.toUpperCase());
-    }
-}
+	if (x instanceof Date) {
+		console.log(x.toUTCString());
+	} else {
+		console.log(x.toUpperCase());
+	}
+};
 ```
 
 ## Miscellany
@@ -694,39 +691,39 @@ type ToArray<T> = T extends any[] ? T : T[];
 
 ```ts
 type Coords =
-    | string
-    | {
-        lat: number;
-        lon: number;
-    };
+	| string
+	| {
+			lat: number;
+			lon: number;
+	  };
 
 const locations: Record<string, Coords> = {
-    sanFrancisco: {
-        lat: 37.7749,
-        lon: -122.4194
-    },
-    newYork: {
-        lat: 40.7128,
-        lon: -74.0060
-    },
-    london: "51.5074,-0.1278"
+	sanFrancisco: {
+		lat: 37.7749,
+		lon: -122.4194,
+	},
+	newYork: {
+		lat: 40.7128,
+		lon: -74.006,
+	},
+	london: "51.5074,-0.1278",
 };
 ```
 
-- TypeScript will forget about a value's type after it verifies it matches the value passed. 
-    - Therefore, when trying to access a nested property (e.g. `locations.newYork.lat`), TS get confused. 
+- TypeScript will forget about a value's type after it verifies it matches the value passed.
+    - Therefore, when trying to access a nested property (e.g. `locations.newYork.lat`), TS get confused.
 
 ```ts
 const locations = {
-    sanFrancisco: {
-        lat: 37.7749,
-        lon: -122.4194
-    },
-    newYork: {
-        lat: 40.7128,
-        lon: -74.0060
-    },
-    london: "51.5074,-0.1278"
+	sanFrancisco: {
+		lat: 37.7749,
+		lon: -122.4194,
+	},
+	newYork: {
+		lat: 40.7128,
+		lon: -74.006,
+	},
+	london: "51.5074,-0.1278",
 } satisfies Record<string, Coords>;
 ```
 
@@ -736,20 +733,20 @@ const locations = {
 
 ```ts
 interface User {
-    name: string;
-    age: number;
+	name: string;
+	age: number;
 }
 
 let Users: Record<number, User> = {
-    0: {
-        name: "Jane Doe",
-        age: 32
-    },
-    1: {
-        name: "John Doe",
-        age: 39
-    }
-}
+	0: {
+		name: "Jane Doe",
+		age: 32,
+	},
+	1: {
+		name: "John Doe",
+		age: 39,
+	},
+};
 ```
 
 #### `Partial`
@@ -832,7 +829,9 @@ type TodosResolved = Awaited<TodosPromise>;
     - Won't make properties read-only recursively.
 
 ```ts
-const readOnlyUser: Readonly<User> = { /* ... */ }
+const readOnlyUser: Readonly<User> = {
+	/* ... */
+};
 ```
 
 #### `ReadonlyArray`
@@ -841,9 +840,13 @@ const readOnlyUser: Readonly<User> = { /* ... */ }
 - Disallow use of array mutation methods, such as `push()` & `pop()`.
 
 ```ts
-const readOnlyUsers: readonly User[] = [ /*...*/ ];
+const readOnlyUsers: readonly User[] = [
+	/*...*/
+];
 
-const readOnlyUsers: ReadonlyArray<User> = [ /*...*/ ];
+const readOnlyUsers: ReadonlyArray<User> = [
+	/*...*/
+];
 ```
 
 > [!note]
@@ -860,16 +863,16 @@ const readOnlyUsers: ReadonlyArray<User> = [ /*...*/ ];
 - `@ts-nocheck`
     - Completely removes type checking for a file.
 
-> [!tip] 
+> [!tip]
 > Error suppressing directives are too broad. Since they target the entire line of code, it can lead to accidentally suppressing errors that we didn't mean to.
-> 
+>
 > `as any` can be used as an alternative for directives as a way to disable types checking.
 
 ### Declaration Files
 
-- Files in TypeScript with a special extension: `.d.ts`. 
-- Used for: 
-    - describing JavaScript code, and 
+- Files in TypeScript with a special extension: `.d.ts`.
+- Used for:
+    - describing JavaScript code, and
     - adding types to the global scope.
         - Types defined within declaration files are available globally and can be used in any TypeScript file without the need to import them.
             - They can't contain any implementations.
@@ -880,12 +883,12 @@ const readOnlyUsers: ReadonlyArray<User> = [ /*...*/ ];
 
 > [!example]
 > Assume a web app that uses a third-party library called "SimpleStorage", which is loaded via a script tag inside an HTML file and exposes global functions `setItem` and `getItem`.
-> 
+>
 > Using `declare`, we can tell TypeScript about the existence and structure of the functions without implementing them, which allows autocompletion, and type checking.
-> 
+>
 > ```ts
 > // simple-storage.d.ts
-> declare function setItem(key: string, value: string): void; 
+> declare function setItem(key: string, value: string): void;
 > declare function getItem(key: string): string | null;
 > ```
 
@@ -899,10 +902,10 @@ const foo = (window as any).bar();
 const foo = window.bar();
 
 declare global {
-    // Declaration Merging
-    interface Window {
-        bar: () => string;
-    }
+	// Declaration Merging
+	interface Window {
+		bar: () => string;
+	}
 }
 ```
 
@@ -924,12 +927,12 @@ import { z } from "zod";
 // create schemas
 const strSchema = z.string();
 const UserSchema = z.object({
-    username: z.string(),
+	username: z.string(),
 });
 
 // parse
-strSchema.parse("tuna");  // "tuna"
-strSchema.parse(12);      // throws ZodError
+strSchema.parse("tuna"); // "tuna"
+strSchema.parse(12); // throws ZodError
 UserSchema.parse({ username: "johndoe" });
 ```
 

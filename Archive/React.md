@@ -7,18 +7,18 @@ alias: Re
 - React is a [[JavaScript|JS]] library for building UIs.
 - Components are reusable building blocks for UIs, and they are at the core of React's architecture.
 - JSX syntax is used to include HTML tags inside JS code. A build tool like Babel is used to convert JSX into JS.
-- React re-executes and re-evaluates component functions on every state change. 
-    - That doesn't necessarily mean a re-render. 
+- React re-executes and re-evaluates component functions on every state change.
+    - That doesn't necessarily mean a re-render.
     - Since rendering on every state change might be a potentially expensive operation, React uses the [[virtual DOM]] to render elements which are only affected by the change.
     - Whenever a state changes, the virtual DOM gets updated. React then compares the current snapshot of the virtual DOM to a one taken just before the update, determines which element was affected by the change, and makes updates only to that element on the real DOM.
 
 > [!note]
-> We can prevent unnecessary re-evaluations/re-renders of *functional components* using `React.memo()`. 
+> We can prevent unnecessary re-evaluations/re-renders of _functional components_ using `React.memo()`.
 >
 > `React.memo()` takes in a functional component as an argument and returns a new component that will only re-render if its props change.
-> 
-> It does this by keeping track of current & previous props for each component, and performing strict equality checks on them whenever state changes. For that reason, state values that are only primitive types are likely to pass this check. 
-> 
+>
+> It does this by keeping track of current & previous props for each component, and performing strict equality checks on them whenever state changes. For that reason, state values that are only primitive types are likely to pass this check.
+>
 > `React.memo()` method comes with its own performance costs.
 
 ```jsx
@@ -37,17 +37,15 @@ const Button = React.memo((props) => {
 export default Button;
 ```
 
-- In React, components are just functions that are written in *PascalCase* and return markup or a markup template. 
-    - Only one root element can be returned from a component, just as in Vue. 
+- In React, components are just functions that are written in _PascalCase_ and return markup or a markup template.
+    - Only one root element can be returned from a component, just as in Vue.
     - Conventionally, they are written in and exported as default from a single file with the same name as the component.
 - Inside markup, curly braces (`{ }`) can be used to escape into JavaScript syntax.
     - Similar to double curly braces (`{{ }}`) in [[Vue]].
 
 ```jsx
 function Component() {
-    return (
-        <p>Current Year: { new Date().getFullYear() }</p>
-    )
+	return <p>Current Year: {new Date().getFullYear()}</p>;
 }
 ```
 
@@ -61,11 +59,11 @@ function Component() {
 
 ```jsx
 import React from "react";
-import ReactDOM from "react-dom/client"
-import App from "./App.jsx"  // Root component
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx"; // Root component
 
 const rootEl = ReactDOM.createRoot(document.querySelector("#root"));
-rootEl.render(<App />)
+rootEl.render(<App />);
 ```
 
 - `App.js` or `App.jsx` - Root component
@@ -74,10 +72,8 @@ rootEl.render(<App />)
 
 ```jsx
 function App() {
-    // Some component logic
-    return (
-        <h1>Hello, React!</h1>
-    )
+	// Some component logic
+	return <h1>Hello, React!</h1>;
 }
 ```
 
@@ -88,50 +84,54 @@ function App() {
 
 ```jsx
 const App = () => {
-    return [
-        <SubmitButton key="submitButton" />,
-        <CancelButton key="cancelButton" />
-    ]
-}
+	return [
+		<SubmitButton key="submitButton" />,
+		<CancelButton key="cancelButton" />,
+	];
+};
 ```
 
 - Another way to work around this pattern is to use a helper function that serves as a wrapper component.
 
 ```jsx
-{/* ~/helpers/wrapper.js */}
+{
+	/* ~/helpers/wrapper.js */
+}
 export default function Wrapper(props) {
-    return props.children;
+	return props.children;
 }
 ```
 
 ```jsx
-{/* App.jsx */}
+{
+	/* App.jsx */
+}
 import wrapper from "~/helpers/wrapper";
 
 const App = () => {
-    return (
-        <Wrapper>
-            <SubmitButton />,
-            <CancelButton />
-        </Wrapper>
-    )
-}
+	return (
+		<Wrapper>
+			<SubmitButton />,
+			<CancelButton />
+		</Wrapper>
+	);
+};
 ```
 
-- React provides an official wrapper ability for such cases called a *Fragment* 
+- React provides an official wrapper ability for such cases called a _Fragment_
     - `<React.Fragment></React.Fragment>` or `<></>` (empty tags)
 
 ```jsx
 import React from "react";
 
 const App = () => {
-    return (
-        <React.Fragment>
-            <SubmitButton />,
-            <CancelButton />
-        </React.Fragment>
-    )
-}
+	return (
+		<React.Fragment>
+			<SubmitButton />,
+			<CancelButton />
+		</React.Fragment>
+	);
+};
 ```
 
 ## Rendering
@@ -142,7 +142,7 @@ const App = () => {
 
 > [!important]
 > A re-render occurs only when the state of a component changes.
-> 
+>
 > A component will NOT re-render because its props change.
 
 - When an event handler is invoked, if that event handler contains an invocation of `useState`'s setter/updater function, our component state changes. React notices that there is a new state that is different from the one in the snapshot, and triggers a re-render, which creates a new snapshot and updates the view.
@@ -150,28 +150,32 @@ const App = () => {
 > [!important]
 > React will only re-render **once** per event handler, even if multiple pieces of state have been updated.
 
-- It's important to note that a re-render occurs only after React has taken into account every state-updating function invocation inside an event handler, and it's sure of the final state value. 
+- It's important to note that a re-render occurs only after React has taken into account every state-updating function invocation inside an event handler, and it's sure of the final state value.
 - When React comes across multiple invocations of the same state-updating function, it will use the result of the last invocation as the new state.
     - To use the values of the previous invocation in the current invocation, we can pass a callback function to our state-updating function.
 
 ```js
-{/* For this event handler, React will re-render once per click */}
-const handleClick = () => {
-    setCounter(count + 1) // 1
-    setCounter(count + 1) // 1
-    setCounter(count + 1) // 1
+{
+	/* For this event handler, React will re-render once per click */
 }
+const handleClick = () => {
+	setCounter(count + 1); // 1
+	setCounter(count + 1); // 1
+	setCounter(count + 1); // 1
+};
 
-{/* Passing the previous state */}
-const handleClick = () => {
-    setCounter(1)          // 1
-    setCounter(c => c + 1) // 2
-    setCounter(c => c + 3) // 5
+{
+	/* Passing the previous state */
 }
+const handleClick = () => {
+	setCounter(1); // 1
+	setCounter((c) => c + 1); // 2
+	setCounter((c) => c + 3); // 5
+};
 ```
 
 - It's also important to note that whenever state changes, React will re-render the component that owns that state and all of its child components - regardless of whether or not those child components accept any props from their parent.
-    - To ensure a child component renders only when its own props change, we can use `React.memo()`. 
+    - To ensure a child component renders only when its own props change, we can use `React.memo()`.
 
 - Read More - [The Interactive Guide to Rendering in React](https://ui.dev/why-react-renders) 📄
 
@@ -181,24 +185,22 @@ const handleClick = () => {
 
 ```jsx
 const App = (props) => {
-    return (
-        <section>
-            {[<Header />, <Article />, <Footer />]}
-        </section>
-    )
-}
+	return <section>{[<Header />, <Article />, <Footer />]}</section>;
+};
 ```
 
 - This same logic is used to render a list of components using a loop.
 
 ```jsx
 const TodoList = (props) => {
-    return (
-        <ul>
-            { props.todos.map((todo) => (<Todo data={todo} key={todo.id} />)) }
-        </ul>
-    )
-}
+	return (
+		<ul>
+			{props.todos.map((todo) => (
+				<Todo data={todo} key={todo.id} />
+			))}
+		</ul>
+	);
+};
 ```
 
 ### Conditional Rendering
@@ -206,64 +208,70 @@ const TodoList = (props) => {
 - Components can be rendering conditionally in several ways.
 
 ```jsx
-{/* (1) */}
-const App = (props) => {
-    return (<>
-        { props.todos.length > 0 ? (<TodoList />) : (<p>No Items Found.</p>) }
-    </>)
+{
+	/* (1) */
 }
-
-{/* (2) */}
 const App = (props) => {
-    return (
-        <>
-            { props.todos.length > 0 && (<TodoList />) }
-            { props.todos.length == 0 && (<p>No Items Found.</p>) }
-        </>
-    )
-}
+	return (
+		<>{props.todos.length > 0 ? <TodoList /> : <p>No Items Found.</p>}</>
+	);
+};
 
-{/* (3) */}
+{
+	/* (2) */
+}
 const App = (props) => {
-    let myList = (<p>No Items Found.</p>)
+	return (
+		<>
+			{props.todos.length > 0 && <TodoList />}
+			{props.todos.length == 0 && <p>No Items Found.</p>}
+		</>
+	);
+};
 
-    if (props.todos.length > 0) {
-        myList = (<TodoList />)
-    }
-
-    return myList
+{
+	/* (3) */
 }
+const App = (props) => {
+	let myList = <p>No Items Found.</p>;
+
+	if (props.todos.length > 0) {
+		myList = <TodoList />;
+	}
+
+	return myList;
+};
 ```
 
 ## Events
 
 - Events in React are similar to props.
-    - DOM events on native elements such as `click` and `submit` have a React attribute that emit the same event (`onClick` and `onSubmit`). 
-    - These event props take a reference to a pre-defined function as their value. 
+    - DOM events on native elements such as `click` and `submit` have a React attribute that emit the same event (`onClick` and `onSubmit`).
+    - These event props take a reference to a pre-defined function as their value.
     - Triggering such an event calls the referenced function with the event object passed by default.
 
 ```jsx
-{/* MyButton.jsx */}
-const MyButton = () => {
-    const handleClick = () => console.log("Clicked!");
-
-    return (
-        <button onClick={handleClick}>Click</button>
-    )
+{
+	/* MyButton.jsx */
 }
+const MyButton = () => {
+	const handleClick = () => console.log("Clicked!");
+
+	return <button onClick={handleClick}>Click</button>;
+};
 ```
 
 - To pass arguments to a function, we need to reference an anonymous inline function that evokes the function we want to call with the arguments we want.
 
 ```jsx
-{/* MyButton.jsx */}
-const MyButton = () => {
-    const handleClick = (msg) => console.log(msg);
-
-    return (
-        <button onClick={(e) => handleClick("Clicked!")}>Click</button>
-    )
+{
+	/* MyButton.jsx */
 }
+const MyButton = () => {
+	const handleClick = (msg) => console.log(msg);
+
+	return <button onClick={(e) => handleClick("Clicked!")}>Click</button>;
+};
 ```
 
 ### Passing Data to Parent
@@ -271,25 +279,25 @@ const MyButton = () => {
 - Data can be passed from a parent to a child component using props. Custom events can be used to pass data from child to a parent.
 
 ```jsx
-{/* Parent.jsx */}
+{
+	/* Parent.jsx */
+}
 const Parent = () => {
-    const handleSendData = childData => console.log(childData)
+	const handleSendData = (childData) => console.log(childData);
 
-    return (
-        <Child onSendData={handleSendData} />
-    );
+	return <Child onSendData={handleSendData} />;
+};
+
+{
+	/* Child.jsx */
 }
-
-{/* Child.jsx */}
 const Child = (props) => {
-    const localData = { a: 1, b: 2 };
+	const localData = { a: 1, b: 2 };
 
-    const sendData = (data) => props.onSendData(data)
+	const sendData = (data) => props.onSendData(data);
 
-    return (
-        <button onClick={() => sendData(localData)}>Send</button>
-    );
-}
+	return <button onClick={() => sendData(localData)}>Send</button>;
+};
 ```
 
 ## Hooks
@@ -299,29 +307,29 @@ const Child = (props) => {
 ### `useState`
 
 ```jsx
-import { useState } from "react"
+import { useState } from "react";
 
 export default function Counter() {
-    const [currCount, setCount] = useState(0);
+	const [currCount, setCount] = useState(0);
 
-    return (
-        <button onClick={() => setCount(prevCount => prevCount+1)}>
-            Count: { currCount }
-        </button>
-    )
+	return (
+		<button onClick={() => setCount((prevCount) => prevCount + 1)}>
+			Count: {currCount}
+		</button>
+	);
 }
 ```
 
 > [!note]
 > `useState` is scoped to each component instance, and state-setter functions are asynchronous.
 
-- `useState` has *lazy initialization*, which is a performance optimization. 
+- `useState` has _lazy initialization_, which is a performance optimization.
     - If a function is passed to `useState`, React will only call `useState` when it needs the initial value (or when the component initially renders).
 
 ```jsx
 const [count, setCount] = useState(() => {
-    return Number(window.localStorage.getItem('count')) || 0;
-})
+	return Number(window.localStorage.getItem("count")) || 0;
+});
 ```
 
 ### `useRef`
@@ -335,35 +343,41 @@ const [count, setCount] = useState(() => {
 > [!important]
 > Changing a ref doesn't trigger a re-render, and stored information in a ref doesn't reset on every render.
 >
-> Don't *write* or *read* `ref.current` during rendering. This should instead be done from event handlers or `useEffect`.
-> 
+> Don't _write_ or _read_ `ref.current` during rendering. This should instead be done from event handlers or `useEffect`.
+>
 > Adding a ref to a `useEffect` dependency array doesn't have any effect.
 
 #### `forwardRef`
 
-- Using `ref` on a custom component results in an error. 
+- Using `ref` on a custom component results in an error.
 - A component doesn't have access to the DOM nodes of other components by default.
 - `forwardRef`s can be used by components that want to expose their DOM nodes.
     - i.e. A component can receive a ref and pass it down to one of its children.
 
 ```jsx
-{/* Form.jsx */}
+{
+	/* Form.jsx */
+}
 export default function MyForm() {
-    const inputRef = useRef(null);
+	const inputRef = useRef(null);
 
-    function handleClick() {
-        inputRef.current.focus();
-    }
+	function handleClick() {
+		inputRef.current.focus();
+	}
 
-    return (<>
-        <Input ref={inputRef} />
-        <button onClick={handleClick}>Focus</button>
-    </>);
+	return (
+		<>
+			<Input ref={inputRef} />
+			<button onClick={handleClick}>Focus</button>
+		</>
+	);
 }
 
-{/* Input.jsx */}
+{
+	/* Input.jsx */
+}
 const Input = forwardRef((props, ref) => {
-    return <input {...props} ref={ref} />;
+	return <input {...props} ref={ref} />;
 });
 ```
 
@@ -373,13 +387,13 @@ const Input = forwardRef((props, ref) => {
 - The function passed into `useMemo()` should be a pure function with no arguments, and should return a value.
 
 ```jsx
-const cachedValue = useMemo(fn, dependencies)
+const cachedValue = useMemo(fn, dependencies);
 ```
 
 ```jsx
 const sortedItems = useMemo(() => {
-    return props.items.sort((a, b) => a - b)
-}, [props.items])
+	return props.items.sort((a, b) => a - b);
+}, [props.items]);
 ```
 
 - It is generally considered a good idea to memoize state inside context providers.
@@ -387,19 +401,17 @@ const sortedItems = useMemo(() => {
 ```jsx
 const AuthCtx = createContext({});
 
-function AuthProvider({ user, status, children }){
-    const memoizedValue = useMemo(() => {
-        return {
-            user,
-            status,
-        };
-    }, [user, status]);
+function AuthProvider({ user, status, children }) {
+	const memoizedValue = useMemo(() => {
+		return {
+			user,
+			status,
+		};
+	}, [user, status]);
 
-    return (
-        <AuthCtx.Provider value={memoizedValue}>
-            {children}
-        </AuthCtx.Provider>
-    );
+	return (
+		<AuthCtx.Provider value={memoizedValue}>{children}</AuthCtx.Provider>
+	);
 }
 ```
 
@@ -413,36 +425,38 @@ function AuthProvider({ user, status, children }){
     - Might cause a brief flicker if it changes what's on screen.
 
 ```jsx
-{/* Inside Component */}
+{
+	/* Inside Component */
+}
 useEffect(() => {
-    /* Code Block */
-}, [])
+	/* Code Block */
+}, []);
 ```
 
-- The first argument of `useEffect()` (setup function) may optionally return a =="clean up"== function. 
+- The first argument of `useEffect()` (setup function) may optionally return a =="clean up"== function.
     - The clean up function is executed when the component unmounts. It's also executed before the main callback whenever dependencies change.
-    - Every re-render with changed dependencies is preceded by the cleanup function running (if provided) using the old values. 
+    - Every re-render with changed dependencies is preceded by the cleanup function running (if provided) using the old values.
     - The rest of the logic inside the setup function runs after the "clean up" with the new values.
 - The second argument (dependency array), `[]`, means the code is executed only once on render. To re-execute on each render, the array needs to include the state we need to track. If any of the provided states change, the code inside the function is executed.
 
 > [!note]
 > State-updating functions derived from `useState()` are guaranteed to not change on re-render. Thus, it's not necessary to add them to the dependency array.
 
-- Using `await` inside the `useEffect` callback can be tricky, even if the callback function is prefixed with the `async` keyword. 
+- Using `await` inside the `useEffect` callback can be tricky, even if the callback function is prefixed with the `async` keyword.
     - `useEffect(async () => {})` doesn't work.
     - To achieve this effect, we need to declare a separate `async` function inside our callback.
 
 ```jsx
 useEffect(() => {
-    async function runEffect() {
-        // Effect logic
-    }
-    
-    runEffect();
+	async function runEffect() {
+		// Effect logic
+	}
 
-    return () => {
-        // Cleanup logic here
-    }
+	runEffect();
+
+	return () => {
+		// Cleanup logic here
+	};
 }, [dependency]);
 ```
 
@@ -460,15 +474,15 @@ useEffect(() => {
 - Particularly useful when passing callbacks to child components that rely on reference equality to prevent unnecessary renders.
 
 ```js
-const cachedFn = useCallback(fn, dependencies)
+const cachedFn = useCallback(fn, dependencies);
 ```
 
 ```jsx
-useCallback(function handleClick(){}, []);
+useCallback(function handleClick() {}, []);
 
 // ...Is syntactic sugar for:
 
-useMemo(() => function handleClick(){}, []);
+useMemo(() => function handleClick() {}, []);
 ```
 
 - In a scenario where a parent component passes a function down to a child component, the child component would re-render every time the parent re-renders because a new function instance is created each time.
@@ -476,7 +490,7 @@ useMemo(() => function handleClick(){}, []);
 
 > [!note]
 > The more specific the state we pass into `useEffect` & `useCallback`, the better the performance. e.g. If we have an object state, passing a specific property instead of the whole object would be more optimal.
-> 
+>
 > Every state that is referenced inside a `useCallback` & `useEffect` callback should be added as a dependency.
 
 ### `useReducer`
@@ -485,43 +499,45 @@ useMemo(() => function handleClick(){}, []);
 - A reducer function takes the current state and an action, then returns a new state based on that action.
 
 ```js
-const initialState = {}
+const initialState = {};
 
 function reducerFunction(prevState, action) {
-    switch (action.type) {
-        case "CLICK": {
-            console.log(action.payload)
-            return action.payload
-        }
-        case "SUBMIT": {
-            console.log(action.formData)
-            return action.formData
-        }
-    }
+	switch (action.type) {
+		case "CLICK": {
+			console.log(action.payload);
+			return action.payload;
+		}
+		case "SUBMIT": {
+			console.log(action.formData);
+			return action.formData;
+		}
+	}
 }
 ```
 
 ```jsx
-{/* Inside Component */}
+{
+	/* Inside Component */
+}
 const [state, dispatch] = useReducer(
-    reducerFunction,
-    initialState,
-    initialFunction
+	reducerFunction,
+	initialState,
+	initialFunction,
 );
 
 const handleClick = () => {
-    dispatch({
-        type: "CLICK",
-        payload: "Clicked!"
-    });
-}
+	dispatch({
+		type: "CLICK",
+		payload: "Clicked!",
+	});
+};
 
 const handleSubmit = (formData) => {
-    dispatch({
-        type: "SUBMIT",
-        formData: formData
-    });
-}
+	dispatch({
+		type: "SUBMIT",
+		formData: formData,
+	});
+};
 ```
 
 ### Custom Hooks
@@ -533,23 +549,23 @@ const handleSubmit = (formData) => {
 
 ```js
 // ~/src/hooks/use-ctr.js
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 const useCounter = () => {
-    const [ctr, setCtr] = useState(0)
+	const [ctr, setCtr] = useState(0);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCtr((prevCtr) => prevCtr + 1)
-        }, 1000)
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCtr((prevCtr) => prevCtr + 1);
+		}, 1000);
 
-        return () => clearInterval(interval)
-    }, [])
+		return () => clearInterval(interval);
+	}, []);
 
-    return ctr
-}
+	return ctr;
+};
 
-export default useCounter
+export default useCounter;
 ```
 
 ```jsx
@@ -568,24 +584,26 @@ return <p>{ ctr }</p>
     - Alternatively, we can extract the data fetching function outside the component to make an async request before the component is rendered.
 
 ```jsx
-{/* Data Fetching using fetch & useEffect */}
+{
+	/* Data Fetching using fetch & useEffect */
+}
 function Users() {
-    const [usersList, setUsersList] = useState(null)
-    const [isLoading, setLoading] = useState(true)
- 
-    useEffect(() => {
-        fetch('/api/users')
-            .then((res) => res.json())
-            .then((data) => {
-                setUsersList(data)
-                setLoading(false)
-            })
-    }, [])
+	const [usersList, setUsersList] = useState(null);
+	const [isLoading, setLoading] = useState(true);
 
-    if (isLoading) return <p>Loading Users...</p>
-    if (!usersList) return <p>No Users Found.</p>
-    
-    return <UsersList data={usersList} />
+	useEffect(() => {
+		fetch("/api/users")
+			.then((res) => res.json())
+			.then((data) => {
+				setUsersList(data);
+				setLoading(false);
+			});
+	}, []);
+
+	if (isLoading) return <p>Loading Users...</p>;
+	if (!usersList) return <p>No Users Found.</p>;
+
+	return <UsersList data={usersList} />;
 }
 ```
 
@@ -593,49 +611,51 @@ function Users() {
 
 ```js
 const useFetch = (url) => {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
+	const [data, setData] = useState(null);
+	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const res = await axios.get(url);
-                setData(res.data);
-            } catch (err) {
-                console.error(`Error: ${err}`);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        getData();
-    }, []);
+	useEffect(() => {
+		const getData = async () => {
+			try {
+				const res = await axios.get(url);
+				setData(res.data);
+			} catch (err) {
+				console.error(`Error: ${err}`);
+				setError(err);
+			} finally {
+				setLoading(false);
+			}
+		};
+		getData();
+	}, []);
 
-    return {
-        data,
-        loading,
-        error,
-    };
+	return {
+		data,
+		loading,
+		error,
+	};
 };
 ```
 
-- Popular libraries such as SWR and Tanstack Query provide powerful features fetching data on the client-side. 
+- Popular libraries such as SWR and Tanstack Query provide powerful features fetching data on the client-side.
     - Caching, revalidation, and interval-based re-fetching are among some of the features of SWR.
 
 ```jsx
-{/* Data Fetching using SWR */}
-import useSWR from 'swr'
- 
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
- 
+{
+	/* Data Fetching using SWR */
+}
+import useSWR from "swr";
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 function Users() {
-    const { data, error, isLoading } = useSWR('/api/users', fetcher)
- 
-    if (error) return <div>Failed to Load Users.</div>
-    if (isLoading) return <p>Loading Users...</p>
-    
-    return <UsersList data={data} />
+	const { data, error, isLoading } = useSWR("/api/users", fetcher);
+
+	if (error) return <div>Failed to Load Users.</div>;
+	if (isLoading) return <p>Loading Users...</p>;
+
+	return <UsersList data={data} />;
 }
 ```
 
@@ -643,39 +663,41 @@ function Users() {
 
 ## State Management
 
-- ==State scheduling== is the process of determining when to update the state of a component. 
+- ==State scheduling== is the process of determining when to update the state of a component.
     - React provides methods that allow developers to schedule state updates, which can be processed either synchronously or asynchronously.
     - These can be `setState` in class components and the state updater function in functional components.
-- ==Batching== is the process of grouping multiple state updates into a single re-render for better performance. 
-    - In React versions 17 and prior, updates inside React event handlers were batched, but updates inside of promises, `setTimeout`, native event handlers, or any other event were not batched by default. 
+- ==Batching== is the process of grouping multiple state updates into a single re-render for better performance.
+    - In React versions 17 and prior, updates inside React event handlers were batched, but updates inside of promises, `setTimeout`, native event handlers, or any other event were not batched by default.
     - In React 18, a new feature called Automatic Batching was introduced, which enables batching of all the state updates regardless of where they are called.
-    - Automatic batching ensures that state updates invoked from any location, such as simple functions containing multiple state updates, web APIs, and interfaces like `setTimeout`, fetch, or promises containing multiple state updates, will be batched by default. 
+    - Automatic batching ensures that state updates invoked from any location, such as simple functions containing multiple state updates, web APIs, and interfaces like `setTimeout`, fetch, or promises containing multiple state updates, will be batched by default.
         - This can significantly improve the performance of React applications, especially for larger applications with many state updates.
 
 ```jsx
 const Counter = () => {
-    const [count, setCount] = useState(0)
+	const [count, setCount] = useState(0);
 
-    const incrementByOne = () => {
-        // These updates are batched.
-        setCount(count + 1)
-        setCount(count + 1)
-        setCount(count + 1)
-    }
-    
-    const incrementByFive = () => {
-        setCount(count + 1)
-        setCount(count => count + 1)
-        setCount(count + 2)
-        setCount(count => count + 3)
-    }
-    
-    return (<>
-        <p>Count: {count}</p>
-        <button onClick={incrementByOne}>Increment by 1</button>
-        <button onClick={incrementByFive}>Increment by 5</button>
-    </>)
-}
+	const incrementByOne = () => {
+		// These updates are batched.
+		setCount(count + 1);
+		setCount(count + 1);
+		setCount(count + 1);
+	};
+
+	const incrementByFive = () => {
+		setCount(count + 1);
+		setCount((count) => count + 1);
+		setCount(count + 2);
+		setCount((count) => count + 3);
+	};
+
+	return (
+		<>
+			<p>Count: {count}</p>
+			<button onClick={incrementByOne}>Increment by 1</button>
+			<button onClick={incrementByFive}>Increment by 5</button>
+		</>
+	);
+};
 ```
 
 - In the snippet below, both updates to `count` in `setTimeout` will be batched into a single re-render, and both updates to `name` in `fetch` will be batched into a single re-render.
@@ -683,30 +705,30 @@ const Counter = () => {
 
 ```jsx
 const Example = () => {
-    const [count, setCount] = useState(0);
-    const [name, setName] = useState('');
+	const [count, setCount] = useState(0);
+	const [name, setName] = useState("");
 
-    useEffect(() => {
-        setTimeout(() => {
-            setCount(count + 1);
-            setCount(count + 1);
-        }, 1000);
-        
-        fetch('https://api.example.com/user')
-            .then(response => response.json())
-            .then(data => {
-                setName(data.name);
-                setName(data.name + '!');
-            });
-    }, []);
+	useEffect(() => {
+		setTimeout(() => {
+			setCount(count + 1);
+			setCount(count + 1);
+		}, 1000);
 
-    return (
-        <div>
-            <p>Count: {count}</p>
-            <p>Name: {name}</p>
-        </div>
-    );
-}
+		fetch("https://api.example.com/user")
+			.then((response) => response.json())
+			.then((data) => {
+				setName(data.name);
+				setName(data.name + "!");
+			});
+	}, []);
+
+	return (
+		<div>
+			<p>Count: {count}</p>
+			<p>Name: {name}</p>
+		</div>
+	);
+};
 ```
 
 ### Props
@@ -836,7 +858,7 @@ return <Header val={ctx} />
 
 > [!note]
 > The Context API is not optimal for high frequency changes.
-> 
+>
 > As application grows in complexity, using the Context API can get messy and complex.
 
 ### Redux
@@ -845,56 +867,58 @@ return <Header val={ctx} />
 
 ```js
 // ~/src/store/index.js
-import { createStore } from "redux"
+import { createStore } from "redux";
 
-const initState = { counter: 0, visible: true }
+const initState = { counter: 0, visible: true };
 
-const ctrReducer = (state=initState, action) => {
-    if (action.type === "increment") {
-        return {
-            counter: state.counter + 1,
-            visible: state.visible
-        }
-    }
-    if (action.type === "decrement") {
-        return {
-            counter: state.counter - 1,
-            visible: state.visible
-        }
-    }
-    if (action.type === "incrementby") {
-        return {
-            counter: state.counter + action.amount,
-            visible: state.visible
-        }
-    }
-    if (action.type === "togglevisibility") {
-        return {
-            visible: !state.visible,
-            counter: state.counter
-        }
-    }
+const ctrReducer = (state = initState, action) => {
+	if (action.type === "increment") {
+		return {
+			counter: state.counter + 1,
+			visible: state.visible,
+		};
+	}
+	if (action.type === "decrement") {
+		return {
+			counter: state.counter - 1,
+			visible: state.visible,
+		};
+	}
+	if (action.type === "incrementby") {
+		return {
+			counter: state.counter + action.amount,
+			visible: state.visible,
+		};
+	}
+	if (action.type === "togglevisibility") {
+		return {
+			visible: !state.visible,
+			counter: state.counter,
+		};
+	}
 
-    return state;   
-}
+	return state;
+};
 
-const store = createStore(ctrReducer)
+const store = createStore(ctrReducer);
 
 const ctrSubscriber = () => {
-    const latestState = store.getState()
-}
+	const latestState = store.getState();
+};
 
-store.subscribe(ctrSubscriber)
+store.subscribe(ctrSubscriber);
 
-export default store
+export default store;
 ```
 
-- In a React application, `redux` is used with `react-redux`. 
+- In a React application, `redux` is used with `react-redux`.
     - Root application component needs to be wrapped with the `<Provider>` component from `react-redux` and passed a prop of `store` with the value of our store.
     - `useSelector` and `useDispatch` hooks can be used to get latest values and dispatch actions respectively.
 
 ```jsx
-{/* ~/src/index.jsx */}
+{
+	/* ~/src/index.jsx */
+}
 import { Provider } from "react-redux";
 import store from "./store/index";
 import App from "./App";
@@ -902,9 +926,9 @@ import App from "./App";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-    <Provider store={store}>
-        <App />
-    </Provider>
+	<Provider store={store}>
+		<App />
+	</Provider>,
 );
 ```
 
@@ -912,35 +936,35 @@ root.render(
 import { useSelector, useDispatch } from "react-redux";
 
 const Counter = () => {
-    const dispatch = useDispatch();
-    const ctr = useSelector((state) => state.counter);    
-    const ctrVisible = useSelector((state) => state.visible);    
-    
-    const decrementHandler = () => {
-        dispatch({ type: "decrement" });
-    };
-        
-    const incrementHandler = () => {
-        dispatch({ type: "increment" });
-    };
+	const dispatch = useDispatch();
+	const ctr = useSelector((state) => state.counter);
+	const ctrVisible = useSelector((state) => state.visible);
 
-    const incrementByHandler = () => {
-        dispatch({ type: "incrementby", amount: 5 });
-    };
+	const decrementHandler = () => {
+		dispatch({ type: "decrement" });
+	};
 
-    const toggleCtrHandler = () => {
-        dispatch({ type: "togglevisibility" });
-    };
+	const incrementHandler = () => {
+		dispatch({ type: "increment" });
+	};
 
-    return (
-        <>
-            {ctrVisible && <div>{ctr}</div>}
-            <button onClick={incrementHandler}>+</button>
-            <button onClick={incrementByHandler}>+5</button>
-            <button onClick={decrementHandler}>-</button>
-            <button onClick={toggleCtrHandler}>Toggle Counter</button>
-        </>
-    )
+	const incrementByHandler = () => {
+		dispatch({ type: "incrementby", amount: 5 });
+	};
+
+	const toggleCtrHandler = () => {
+		dispatch({ type: "togglevisibility" });
+	};
+
+	return (
+		<>
+			{ctrVisible && <div>{ctr}</div>}
+			<button onClick={incrementHandler}>+</button>
+			<button onClick={incrementByHandler}>+5</button>
+			<button onClick={decrementHandler}>-</button>
+			<button onClick={toggleCtrHandler}>Toggle Counter</button>
+		</>
+	);
 };
 ```
 
@@ -951,124 +975,128 @@ const Counter = () => {
 
 ```ts
 const addTaskAction = {
-    type: "backlog/taskCreated",
-    payload: "Create design system"
-}
+	type: "backlog/taskCreated",
+	payload: "Create design system",
+};
 ```
 
 - **Action Creator** creates and returns an action object.
 
 ```ts
-const addTask = task => {
-    return {
-        type: "backlog/taskCreated",
-        payload: task
-    }
-}
+const addTask = (task) => {
+	return {
+		type: "backlog/taskCreated",
+		payload: task,
+	};
+};
 ```
 
-- **Reducers** take the current state and an action object, decides how to update the state (if necessary), and returns the new state. 
+- **Reducers** take the current state and an action object, decides how to update the state (if necessary), and returns the new state.
     - It acts as an event listener that handles events based on the a received event type.
-    - It doesn't modify existing state. 
+    - It doesn't modify existing state.
 
 ```ts
-const initialState = { backlog: [] }
+const initialState = { backlog: [] };
 
 const taskReducer = (state = initialState, action) => {
-    if (action.type === "backlog/taskCreated") {
-        return {
-            ...state,
-            backlog: [
-                ...state.backlog,
-                {
-                    id: action.payload.id,
-                    task: action.payload.task,
-                    completed: false,
-                }
-            ]
-        }
-    }
-    return state;
-}
+	if (action.type === "backlog/taskCreated") {
+		return {
+			...state,
+			backlog: [
+				...state.backlog,
+				{
+					id: action.payload.id,
+					task: action.payload.task,
+					completed: false,
+				},
+			],
+		};
+	}
+	return state;
+};
 ```
 
 - **Store** is where the current state of a Redux application lives.
     - It takes in a reducer as an argument, and allows access to the current state via the `getState` method.
 
 ```ts
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 
-const store = configureStore({ reducer: taskReducer })
+const store = configureStore({ reducer: taskReducer });
 ```
 
 - **Dispatch** is a method of the Redux store that is used to update the state.
     - It typically takes in action creator calls or a plain action object as an argument.
 
 ```ts
-const addTask = () => ({ type: "backlog/taskCreated" })
+const addTask = () => ({ type: "backlog/taskCreated" });
 
-store.dispatch({ type: "backlog/taskCreated" })
+store.dispatch({ type: "backlog/taskCreated" });
 // OR
-store.dispatch(addTask())
+store.dispatch(addTask());
 ```
 
 > [!important]
-> In Redux, it's important that we never mutate the original state object; instead, we return a new state object with updated properties. 
-> 
-> Old state is *not merged* when an action is dispatched. It must be overwritten. So, it's important that all non-changing state is returned along with changing state. e.g. `{ visible: !state.visible, counter: state.counter }` in the above example.
+> In Redux, it's important that we never mutate the original state object; instead, we return a new state object with updated properties.
+>
+> Old state is _not merged_ when an action is dispatched. It must be overwritten. So, it's important that all non-changing state is returned along with changing state. e.g. `{ visible: !state.visible, counter: state.counter }` in the above example.
 
 #### Redux Toolkit
 
-- The above way of using Redux leads to complex code. 
+- The above way of using Redux leads to complex code.
 - Redux Toolkit provides a simpler and more modern way of managing state with Redux.
 - Our store can be simplified as below:
 
 ```js
 // ~/src/store/index.js
-import { createSlice, configureStore } from "@reduxjs/toolkit"
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const initCtrState = { counter: 0, visible: true }
+const initCtrState = { counter: 0, visible: true };
 
 const ctrSlice = createSlice({
-    name: "counter",
-    initialState: initCtrState,
-    reducers: {
-        increment(state) {
-            state.counter++
-        },
-        decrement(state) {
-            state.counter--
-        },
-        incrementby(state, action) {
-            state.counter += action.payload
-        },
-        togglevisibility(state) {
-            state.visible = !state.visible
-        },
-    }
-})
+	name: "counter",
+	initialState: initCtrState,
+	reducers: {
+		increment(state) {
+			state.counter++;
+		},
+		decrement(state) {
+			state.counter--;
+		},
+		incrementby(state, action) {
+			state.counter += action.payload;
+		},
+		togglevisibility(state) {
+			state.visible = !state.visible;
+		},
+	},
+});
 
 const authSlice = createSlice({
-    name: "auth",
-    initialState: { isAuth: false },
-    reducers: {
-        login(state) { state.isAuth = true },
-        logout(state) { state.isAuth = false }
-    }
-})
+	name: "auth",
+	initialState: { isAuth: false },
+	reducers: {
+		login(state) {
+			state.isAuth = true;
+		},
+		logout(state) {
+			state.isAuth = false;
+		},
+	},
+});
 
 const store = configureStore({
-    // for a single slice
-    // reducer: ctrSlice.reducer 
-    /* =========================== */
-    // multiple slices
-    reducer: { ctr: ctrSlice.reducer, auth: authSlice.reducer }
-})
+	// for a single slice
+	// reducer: ctrSlice.reducer
+	/* =========================== */
+	// multiple slices
+	reducer: { ctr: ctrSlice.reducer, auth: authSlice.reducer },
+});
 
-export const ctrActions = ctrSlice.actions
-export const authActions = authSlice.actions
+export const ctrActions = ctrSlice.actions;
+export const authActions = authSlice.actions;
 
-export default store
+export default store;
 ```
 
 ```jsx
@@ -1077,37 +1105,37 @@ import { useSelector, useDispatch } from "react-redux";
 import { ctrActions } from "~/src/store/index.js";
 
 const Counter = () => {
-    const dispatch = useDispatch();
-    const ctr = useSelector((state) => state.ctr.counter);
-    const ctrVisible = useSelector((state) => state.ctr.visible);
-    
-    const isAuth = useSelector((state) => state.auth.isAuth);
+	const dispatch = useDispatch();
+	const ctr = useSelector((state) => state.ctr.counter);
+	const ctrVisible = useSelector((state) => state.ctr.visible);
 
-    const decrementHandler = () => {
-        dispatch(ctrActions.decrement());
-    };
-        
-    const incrementHandler = () => {
-        dispatch(ctrActions.increment());
-    };
+	const isAuth = useSelector((state) => state.auth.isAuth);
 
-    const incrementByHandler = () => {
-        dispatch(ctrActions.incrementBy(10));
-    };
+	const decrementHandler = () => {
+		dispatch(ctrActions.decrement());
+	};
 
-    const toggleCtrHandler = () => {
-        dispatch(ctrActions.toggleCtr());
-    };
+	const incrementHandler = () => {
+		dispatch(ctrActions.increment());
+	};
 
-    return (
-        <>
-            {ctrVisible && <div>{ctr}</div>}
-            <button onClick={incrementHandler}>+</button>
-            <button onClick={incrementByHandler}>+5</button>
-            <button onClick={decrementHandler}>-</button>
-            <button onClick={toggleCtrHandler}>Toggle Counter</button>
-        </>
-    )
+	const incrementByHandler = () => {
+		dispatch(ctrActions.incrementBy(10));
+	};
+
+	const toggleCtrHandler = () => {
+		dispatch(ctrActions.toggleCtr());
+	};
+
+	return (
+		<>
+			{ctrVisible && <div>{ctr}</div>}
+			<button onClick={incrementHandler}>+</button>
+			<button onClick={incrementByHandler}>+5</button>
+			<button onClick={decrementHandler}>-</button>
+			<button onClick={toggleCtrHandler}>Toggle Counter</button>
+		</>
+	);
 };
 ```
 
@@ -1117,7 +1145,7 @@ const Counter = () => {
 
 ```jsx
 // App.jsx
-import "./App.css" // or "./App.scss"
+import "./App.css"; // or "./App.scss"
 ```
 
 > [!important]
@@ -1127,19 +1155,19 @@ import "./App.css" // or "./App.scss"
 
 ### CSS Modules
 
-- CSS Modules are a common way of scoping styles to a component. 
+- CSS Modules are a common way of scoping styles to a component.
 - A CSS Module is a CSS file which declares styles that are scoped by default.
-- Tools like `create-react-app` and `vite` support CSS Modules out of the box. 
+- Tools like `create-react-app` and `vite` support CSS Modules out of the box.
     - They basically attach a unique identifier to each component and list the styles with the unique ID as a selector.
 
 ```css
 /* Button.module.css */
 .btn {
-    background: "red";
+	background: "red";
 }
 
 .btn-clicked {
-    background: "crimson";
+	background: "crimson";
 }
 ```
 
@@ -1162,17 +1190,15 @@ const Button = () => {
 - Inline styles can be applied to a component using the `style` attribute/prop and a set of [[CSS]] properties as a [[JavaScript]] object.
 
 ```jsx
-<section style={{ height: '50%', borderColor: 'lightcoral' }}>
-    { props.children }
+<section style={{ height: "50%", borderColor: "lightcoral" }}>
+	{props.children}
 </section>
 ```
 
 - Since the syntax is all [[JavaScript]], we can apply styles conditionally.
 
 ```jsx
-<button style={{ background: isClicked ? "gray" : "goldenrod" }}>
-    Submit
-</button>
+<button style={{ background: isClicked ? "gray" : "goldenrod" }}>Submit</button>
 ```
 
 ### CSS-in-JS
@@ -1181,19 +1207,17 @@ const Button = () => {
 - `styled-components` provide features such as deferred/lazy CSS injection.
 
 ```jsx
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Title = styled.h1`
-    font-size: 1.5rem;
-    color: grey;
-    text-align: center;
+	font-size: 1.5rem;
+	color: grey;
+	text-align: center;
 `;
 
 const App = () => {
-    return (
-        <Title>Hello, React!</Title>
-    )
-}
+	return <Title>Hello, React!</Title>;
+};
 
 export default App;
 ```
@@ -1202,20 +1226,21 @@ export default App;
     - `emotion` even provides a similar syntax as `styled-components` via `@emotion/styled`.
 
 ```jsx
-import { css } from '@emotion/react'
+import { css } from "@emotion/react";
 
-const color = 'grey'
+const color = "grey";
 
 render(
-    <h1
-        css={css`
-            font-size: 1.5rem;
-            color: ${color};
-            text-align: center;
-        `}>
-        Hello, React!
-    </h1>
-)
+	<h1
+		css={css`
+			font-size: 1.5rem;
+			color: ${color};
+			text-align: center;
+		`}
+	>
+		Hello, React!
+	</h1>,
+);
 ```
 
 ### Utility-First
@@ -1245,30 +1270,30 @@ render(
 
 ```jsx
 const Form = () => {
-    const inputRef = useRef()
+	const inputRef = useRef();
 
-    const submit = (e) => {
-        e.preventDefault()
-        const text = inputRef.current.value
-        console.log(text)
-        inputRef.current.value = ""
-    }
+	const submit = (e) => {
+		e.preventDefault();
+		const text = inputRef.current.value;
+		console.log(text);
+		inputRef.current.value = "";
+	};
 
-    return (
-        <form onSubmit={submit}>
-            <input ref={inputRef} />
-            <button>Submit</button>
-        </form>
-    )
-}
+	return (
+		<form onSubmit={submit}>
+			<input ref={inputRef} />
+			<button>Submit</button>
+		</form>
+	);
+};
 ```
 
-- This pattern moves away from React's declarative way of doing things. 
-- The `Form` component above is referred to as an *uncontrolled component* because it uses the DOM to store form state.
+- This pattern moves away from React's declarative way of doing things.
+- The `Form` component above is referred to as an _uncontrolled component_ because it uses the DOM to store form state.
 
 ### Controlled Components
 
-- In a *controlled component*, form state is managed by React.
+- In a _controlled component_, form state is managed by React.
 - The imperative approach above can be re-written declaratively using `useState`. This approach creates two-way data binding.
 
 > [!note]
@@ -1276,58 +1301,58 @@ const Form = () => {
 
 ```jsx
 const Form = () => {
-    const [text, setText] = useState("")
+	const [text, setText] = useState("");
 
-    const submit = (e) => {
-        e.preventDefault()
-        console.log(text)
-        setText("")
-    }
+	const submit = (e) => {
+		e.preventDefault();
+		console.log(text);
+		setText("");
+	};
 
-    return (
-        <form onSubmit={submit}>
-            <input value={text} onChange={e => setText(e.target.value)} />
-            <button>Submit</button>
-        </form>
-    )
-}
+	return (
+		<form onSubmit={submit}>
+			<input value={text} onChange={(e) => setText(e.target.value)} />
+			<button>Submit</button>
+		</form>
+	);
+};
 ```
 
 - We can abstract away this process using custom hooks for reuse on other input elements.
 
 ```jsx
-const useInput = initValue => {
-    const [value, setValue] = useState(initValue)
+const useInput = (initValue) => {
+	const [value, setValue] = useState(initValue);
 
-    return [
-        {
-            value,
-            onChange: e => setValue(e.target.value)
-        },
-        () => setValue(initValue)
-    ]
-}
+	return [
+		{
+			value,
+			onChange: (e) => setValue(e.target.value),
+		},
+		() => setValue(initValue),
+	];
+};
 
 const Form = () => {
-    const [textProps, resetText] = useInput("")
+	const [textProps, resetText] = useInput("");
 
-    const submit = (e) => {
-        e.preventDefault()
-        console.log(textProps.value)
-        resetText()
-    }
+	const submit = (e) => {
+		e.preventDefault();
+		console.log(textProps.value);
+		resetText();
+	};
 
-    return (
-        <form onSubmit={submit}>
-            <input {...textProps} />
-            <button>Submit</button>
-        </form>
-    )
-}
+	return (
+		<form onSubmit={submit}>
+			<input {...textProps} />
+			<button>Submit</button>
+		</form>
+	);
+};
 ```
 
 > [!important]
-> When using this approach with text input fields (`<input />` and `<textarea>`), setting an initial state (`""`) is important. 
+> When using this approach with text input fields (`<input />` and `<textarea>`), setting an initial state (`""`) is important.
 
 ### Form Controls
 
@@ -1337,99 +1362,98 @@ const Form = () => {
 
 ```jsx
 const RadioForm = () => {
-    const [selectedOption, setSelectedOption] = useState('');
+	const [selectedOption, setSelectedOption] = useState("");
 
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
-    };
+	const handleOptionChange = (event) => {
+		setSelectedOption(event.target.value);
+	};
 
-    return (
-        <form>
-            <label>
-                <input
-                    type="radio"
-                    value="option1"
-                    checked={selectedOption === 'option1'}
-                    onChange={handleOptionChange}
-                />
-                Option 1
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    value="option2"
-                    checked={selectedOption === 'option2'}
-                    onChange={handleOptionChange}
-                />
-                Option 2
-            </label>
-        </form>
-    );
-}
+	return (
+		<form>
+			<label>
+				<input
+					type="radio"
+					value="option1"
+					checked={selectedOption === "option1"}
+					onChange={handleOptionChange}
+				/>
+				Option 1
+			</label>
+			<label>
+				<input
+					type="radio"
+					value="option2"
+					checked={selectedOption === "option2"}
+					onChange={handleOptionChange}
+				/>
+				Option 2
+			</label>
+		</form>
+	);
+};
 ```
 
 #### Checkboxes
 
 ```jsx
 function CheckboxForm() {
-    const [checkedItems, setCheckedItems] = useState({
-        option1: false,
-        option2: false
-    });
+	const [checkedItems, setCheckedItems] = useState({
+		option1: false,
+		option2: false,
+	});
 
-    const handleCheckboxChange = (event) => {
-        setCheckedItems({
-            ...checkedItems,
-            [event.target.name]: event.target.checked
-        });
-    };
+	const handleCheckboxChange = (event) => {
+		setCheckedItems({
+			...checkedItems,
+			[event.target.name]: event.target.checked,
+		});
+	};
 
-    return (
-        <form>
-            <label>
-                <input
-                    type="checkbox"
-                    name="option1"
-                    checked={checkedItems.option1}
-                    onChange={handleCheckboxChange}
-                />
-                Option 1
-            </label>
-            <label>
-                <input
-                    type="checkbox"
-                    name="option2"
-                    checked={checkedItems.option2}
-                    onChange={handleCheckboxChange}
-                />
-                Option 2
-            </label>
-        </form>
-    );
+	return (
+		<form>
+			<label>
+				<input
+					type="checkbox"
+					name="option1"
+					checked={checkedItems.option1}
+					onChange={handleCheckboxChange}
+				/>
+				Option 1
+			</label>
+			<label>
+				<input
+					type="checkbox"
+					name="option2"
+					checked={checkedItems.option2}
+					onChange={handleCheckboxChange}
+				/>
+				Option 2
+			</label>
+		</form>
+	);
 }
-
 ```
 
 #### Select
 
 ```jsx
 const SelectForm = () => {
-    const [selectedValue, setSelectedValue] = useState('');
+	const [selectedValue, setSelectedValue] = useState("");
 
-    const handleSelectChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
+	const handleSelectChange = (event) => {
+		setSelectedValue(event.target.value);
+	};
 
-    return (
-        <form>
-            <select value={selectedValue} onChange={handleSelectChange}>
-                <option value="">Choose an option</option>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-            </select>
-        </form>
-    );
-}
+	return (
+		<form>
+			<select value={selectedValue} onChange={handleSelectChange}>
+				<option value="">Choose an option</option>
+				<option value="option1">Option 1</option>
+				<option value="option2">Option 2</option>
+			</select>
+		</form>
+	);
+};
 ```
 
 ### Multiple Inputs & Validation
@@ -1438,175 +1462,168 @@ const SelectForm = () => {
 
 ```jsx
 const MultipleInputForm = () => {
-    const [formData, setFormData] = useState({
-        email: "",
-        message: "",
-        radioOption: "",
-        selectValue: "",
-        checkboxes: {
-            option1: false,
-            option2: false
-        }
-    });
-    
-    const [errors, setErrors] = useState({});
+	const [formData, setFormData] = useState({
+		email: "",
+		message: "",
+		radioOption: "",
+		selectValue: "",
+		checkboxes: {
+			option1: false,
+			option2: false,
+		},
+	});
 
-    const validateForm = () => {
-        let newErrors = {};
+	const [errors, setErrors] = useState({});
 
-        if (!formData.email.trim()) {
-            newErrors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = 'Email address is invalid';
-        }
+	const validateForm = () => {
+		let newErrors = {};
 
-        if (!formData.message.trim()) {
-            newErrors.message = 'Message is required';
-        } else if (formData.message.length < 10) {
-            newErrors.message = 'Message must be at least 10 characters long';
-        }
-        
-        if (!formData.radioOption) {
-            newErrors.radioOption = 'Please select an option';
-        }
+		if (!formData.email.trim()) {
+			newErrors.email = "Email is required";
+		} else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+			newErrors.email = "Email address is invalid";
+		}
 
-        if (!formData.selectValue) {
-            newErrors.selectValue = 'Please choose an option from the dropdown';
-        }
+		if (!formData.message.trim()) {
+			newErrors.message = "Message is required";
+		} else if (formData.message.length < 10) {
+			newErrors.message = "Message must be at least 10 characters long";
+		}
 
-        if (!formData.checkboxes.option1 && !formData.checkboxes.option2) {
-            newErrors.checkboxes = 'Please select at least one option';
-        }
+		if (!formData.radioOption) {
+			newErrors.radioOption = "Please select an option";
+		}
 
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
+		if (!formData.selectValue) {
+			newErrors.selectValue = "Please choose an option from the dropdown";
+		}
 
-    const handleInputChange = (event) => {
-        const { name, value, type, checked } = event.target;
-        setFormData(prevData => {
-            if (type === "checkbox") {
-                return {
-                    ...prevData,
-                    checkboxes: { 
-                        ...prevData.checkboxes, 
-                        [name]: checked
-                    }
-                }
-            } else {
-                return { ...prevData, [name]: value }
-            }
-        });
-    };
+		if (!formData.checkboxes.option1 && !formData.checkboxes.option2) {
+			newErrors.checkboxes = "Please select at least one option";
+		}
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (validateForm()) {
-            console.log('Form is valid. Submitting...', formData);
-        } else {
-            console.log('Form is invalid. Please correct the errors.');
-        }
-    };
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	};
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="email">
-                <input
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                {
-                    errors.email && 
-                    <p style={{ color: 'red' }}>{errors.email}</p>
-                }
-            </label>
-            <label htmlFor="message">
-                <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                />
-                {
-                    errors.message && 
-                    <p style={{ color: 'red' }}>{errors.message}</p>
-                }
-            </label>
+	const handleInputChange = (event) => {
+		const { name, value, type, checked } = event.target;
+		setFormData((prevData) => {
+			if (type === "checkbox") {
+				return {
+					...prevData,
+					checkboxes: {
+						...prevData.checkboxes,
+						[name]: checked,
+					},
+				};
+			} else {
+				return { ...prevData, [name]: value };
+			}
+		});
+	};
 
-            <fieldset>
-                <label>
-                    <input
-                        type="radio"
-                        name="radioOption"
-                        value="option1"
-                        checked={formData.radioOption === 'option1'}
-                        onChange={handleInputChange}
-                    />
-                    Option 1
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        name="radioOption"
-                        value="option2"
-                        checked={formData.radioOption === 'option2'}
-                        onChange={handleInputChange}
-                    />
-                    Option 2
-                </label>
-                {
-                    errors.radioOption && 
-                    <p style={{ color: 'red' }}>{errors.radioOption}</p>
-                }
-            </fieldset>
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		if (validateForm()) {
+			console.log("Form is valid. Submitting...", formData);
+		} else {
+			console.log("Form is invalid. Please correct the errors.");
+		}
+	};
 
-            <fieldset>
-                <select
-                    name="selectValue"
-                    value={formData.selectValue}
-                    onChange={handleInputChange}
-                >
-                    <option value="">Select...</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                </select>
-                {
-                    errors.selectValue && 
-                    <p style={{ color: 'red' }}>{errors.selectValue}</p>
-                }
-            </fieldset>
-            
-            <fieldset>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="option1"
-                        checked={formData.checkboxes.option1}
-                        onChange={handleInputChange}
-                    />
-                    Checkbox 1
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="option2"
-                        checked={formData.checkboxes.option2}
-                        onChange={handleInputChange}
-                    />
-                    Checkbox 2
-                </label>
-                {
-                    errors.checkboxes && 
-                    <p style={{ color: 'red' }}>{errors.checkboxes}</p>
-                }
-            </fieldset>
-            
-            <button type="submit">Submit</button>
-        </form>
-    );
-}
+	return (
+		<form onSubmit={handleSubmit}>
+			<label htmlFor="email">
+				<input
+					id="email"
+					name="email"
+					value={formData.email}
+					onChange={handleChange}
+				/>
+				{errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+			</label>
+			<label htmlFor="message">
+				<textarea
+					id="message"
+					name="message"
+					value={formData.message}
+					onChange={handleChange}
+				/>
+				{errors.message && (
+					<p style={{ color: "red" }}>{errors.message}</p>
+				)}
+			</label>
+
+			<fieldset>
+				<label>
+					<input
+						type="radio"
+						name="radioOption"
+						value="option1"
+						checked={formData.radioOption === "option1"}
+						onChange={handleInputChange}
+					/>
+					Option 1
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="radioOption"
+						value="option2"
+						checked={formData.radioOption === "option2"}
+						onChange={handleInputChange}
+					/>
+					Option 2
+				</label>
+				{errors.radioOption && (
+					<p style={{ color: "red" }}>{errors.radioOption}</p>
+				)}
+			</fieldset>
+
+			<fieldset>
+				<select
+					name="selectValue"
+					value={formData.selectValue}
+					onChange={handleInputChange}
+				>
+					<option value="">Select...</option>
+					<option value="option1">Option 1</option>
+					<option value="option2">Option 2</option>
+				</select>
+				{errors.selectValue && (
+					<p style={{ color: "red" }}>{errors.selectValue}</p>
+				)}
+			</fieldset>
+
+			<fieldset>
+				<label>
+					<input
+						type="checkbox"
+						name="option1"
+						checked={formData.checkboxes.option1}
+						onChange={handleInputChange}
+					/>
+					Checkbox 1
+				</label>
+				<label>
+					<input
+						type="checkbox"
+						name="option2"
+						checked={formData.checkboxes.option2}
+						onChange={handleInputChange}
+					/>
+					Checkbox 2
+				</label>
+				{errors.checkboxes && (
+					<p style={{ color: "red" }}>{errors.checkboxes}</p>
+				)}
+			</fieldset>
+
+			<button type="submit">Submit</button>
+		</form>
+	);
+};
 ```
 
 - Popular Form Libraries:
@@ -1641,25 +1658,27 @@ export default App
 ```
 
 ```jsx
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
-    return (
-        <>
-            <h1>Home</h1>
-            <p>Go to <Link to="/users">to the users page</Link>.</p>
-        </>
-    )
-}
+	return (
+		<>
+			<h1>Home</h1>
+			<p>
+				Go to <Link to="/users">to the users page</Link>.
+			</p>
+		</>
+	);
+};
 
-export default HomePage
+export default HomePage;
 ```
 
 - Meta-frameworks such as [[Next.js]] use a file-based routing system.
 
 ## Accessibility
 
-- [[Accessibility|Accessibility]] is a universal and library-agnostic principle. 
+- [[Accessibility|Accessibility]] is a universal and library-agnostic principle.
 - Following A11y best practices such as using the right element for the right job and using semantic elements helps make the web accessible for everyone.
 - There are popular component libraries that provide tools to help build accessible React apps: React Aria, Radix UI, Hero UI, etc. These libraries use best practices under the hood to ensure accessibility.
     - Adobe's React Aria provides a set of well-tested, unstyled React components and hooks to build accessible UI components. It provides components for common UI patterns such as switches and calendars.
@@ -1680,16 +1699,18 @@ export default HomePage
 
 ```tsx
 test("Renders 'hello, react' content", () => {
-    render(<Message message={"Hello, React!"} />);
-    
-    const contentElement = screen.getByText(/hello, react/i);
-    expect(contentElement).toBeInTheDocument();
-    
-    {/* OR */}
-    
-    const contentElement = screen.getByRole("contentinfo");
-    expect(contentElement).toHaveTextContent("Hello, React!");
-    expect(contentElement).toHaveAttribute("role", "contentinfo");
+	render(<Message message={"Hello, React!"} />);
+
+	const contentElement = screen.getByText(/hello, react/i);
+	expect(contentElement).toBeInTheDocument();
+
+	{
+		/* OR */
+	}
+
+	const contentElement = screen.getByRole("contentinfo");
+	expect(contentElement).toHaveTextContent("Hello, React!");
+	expect(contentElement).toHaveAttribute("role", "contentinfo");
 });
 ```
 
@@ -1697,14 +1718,14 @@ test("Renders 'hello, react' content", () => {
 
 ```tsx
 test("Handles onClick", () => {
-    const onClick = jest.fn();
-    
-    render(<MyButton onClick={onClick} label="Submit" />);
-    
-    const buttonElement = screen.getByText("Submit");
-    fireEvent.click(buttonElement);
-    
-    expect(onClick).toHaveBeenCalledTimes(1);
+	const onClick = jest.fn();
+
+	render(<MyButton onClick={onClick} label="Submit" />);
+
+	const buttonElement = screen.getByText("Submit");
+	fireEvent.click(buttonElement);
+
+	expect(onClick).toHaveBeenCalledTimes(1);
 });
 ```
 
@@ -1712,13 +1733,13 @@ test("Handles onClick", () => {
 
 ```tsx
 test("Handles state updates", () => {
-    render(<MyCounter />);
-    
-    const contentElement = screen.getByRole("contentinfo");
-    const buttonElement = screen.getByText("Increment");
-    fireEvent.click(buttonElement);
-    
-    expect(contentElement).toHaveTextContent("Count: 1");
+	render(<MyCounter />);
+
+	const contentElement = screen.getByRole("contentinfo");
+	const buttonElement = screen.getByText("Increment");
+	fireEvent.click(buttonElement);
+
+	expect(contentElement).toHaveTextContent("Count: 1");
 });
 ```
 
@@ -1728,13 +1749,13 @@ test("Handles state updates", () => {
 import { renderHook, act } from "@testing-library/react-hooks";
 
 test("Should decrement", () => {
-    const { result } = renderHook(() => useCounter());
-    
-    act(() => {
-        result.current.decrement();
-    });
-    
-    expect(result.current.count).toBe(-1);
+	const { result } = renderHook(() => useCounter());
+
+	act(() => {
+		result.current.decrement();
+	});
+
+	expect(result.current.count).toBe(-1);
 });
 ```
 
@@ -1745,9 +1766,9 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 
 const server = setupServer(
-    rest.get("/api", (req, res, ctx) => {
-        return res(ctx.json({ message: "Hello, React!" }));
-    })
+	rest.get("/api", (req, res, ctx) => {
+		return res(ctx.json({ message: "Hello, React!" }));
+	}),
 );
 
 beforeAll(() => server.listen());
@@ -1755,11 +1776,11 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test("Gets async data", async () => {
-    render(<AsyncComponent />);
-    
-    const output = await waitFor(() => screen.getByRole("contentinfo"));
-    
-    expect(output).toHaveTextContent("Hello, React!");
+	render(<AsyncComponent />);
+
+	const output = await waitFor(() => screen.getByRole("contentinfo"));
+
+	expect(output).toHaveTextContent("Hello, React!");
 });
 ```
 
@@ -1767,9 +1788,9 @@ test("Gets async data", async () => {
 
 ```ts
 const server = setupServer(
-    rest.get("/api", (req, res, ctx) => {
-        return res(ctx.json({ message: "Hello, React!" }));
-    })
+	rest.get("/api", (req, res, ctx) => {
+		return res(ctx.json({ message: "Hello, React!" }));
+	}),
 );
 
 beforeAll(() => server.listen());
@@ -1777,11 +1798,11 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test("Gets async data", async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useAPI());
+	const { result, waitForNextUpdate } = renderHook(() => useAPI());
 
-    await waitForNextUpdate();
-    
-    expect(result.current).toEqual({ message: "Hello, React!" });
+	await waitForNextUpdate();
+
+	expect(result.current).toEqual({ message: "Hello, React!" });
 });
 ```
 
@@ -1789,27 +1810,27 @@ test("Gets async data", async () => {
 
 ```js
 // e2e.test.js
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('counter increments when the button is clicked', async ({ page }) => {
-    // Navigate to the app
-    await page.goto('http://localhost:3000');
-    
-    // Check the initial count
-    const countElement = page.locator('[data-testid="count"]');
-    await expect(countElement).toHaveText('Count: 0');
-    
-    // Click the increment button
-    await page.click('text=Increment');
-    
-    // Check if the count has been incremented
-    await expect(countElement).toHaveText('Count: 1');
-    
-    // Click the increment button again
-    await page.click('text=Increment');
-    
-    // Check if the count has been incremented again
-    await expect(countElement).toHaveText('Count: 2');
+test("counter increments when the button is clicked", async ({ page }) => {
+	// Navigate to the app
+	await page.goto("http://localhost:3000");
+
+	// Check the initial count
+	const countElement = page.locator('[data-testid="count"]');
+	await expect(countElement).toHaveText("Count: 0");
+
+	// Click the increment button
+	await page.click("text=Increment");
+
+	// Check if the count has been incremented
+	await expect(countElement).toHaveText("Count: 1");
+
+	// Click the increment button again
+	await page.click("text=Increment");
+
+	// Check if the count has been incremented again
+	await expect(countElement).toHaveText("Count: 2");
 });
 ```
 
@@ -1818,38 +1839,40 @@ test('counter increments when the button is clicked', async ({ page }) => {
 ```jsx
 // UserProfile.jsx
 const UserProfile = ({ userId }) => {
-    const [user, setUser] = useState(null);
-    const [error, setError] = useState(null);
+	const [user, setUser] = useState(null);
+	const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const loadUser = async () => {
-            try {
-                const data = await fetchUserData(userId);
-                setUser(data);
-            } catch (err) {
-                setError("Fetch Failed");
-            }
-        };
-        loadUser();
-    }, [userId]);
+	useEffect(() => {
+		const loadUser = async () => {
+			try {
+				const data = await fetchUserData(userId);
+				setUser(data);
+			} catch (err) {
+				setError("Fetch Failed");
+			}
+		};
+		loadUser();
+	}, [userId]);
 
-    if (!user || error) return <div>{error}</div>;
+	if (!user || error) return <div>{error}</div>;
 
-    return <div>
-        <h2>{user.name}</h2>
-        <p>Email: {user.email}</p>
-    </div>
+	return (
+		<div>
+			<h2>{user.name}</h2>
+			<p>Email: {user.email}</p>
+		</div>
+	);
 };
 ```
 
 ```ts
 /* api.ts */
 export const fetchUserData = async (userId) => {
-    const response = await fetch(`https://api.example.com/users/${userId}`);
-    if (!response.ok) {
-        throw new Error("Fetch Failed");
-    }
-    return response.json();
+	const response = await fetch(`https://api.example.com/users/${userId}`);
+	if (!response.ok) {
+		throw new Error("Fetch Failed");
+	}
+	return response.json();
 };
 ```
 
@@ -1861,33 +1884,34 @@ import { render, screen, waitFor } from "@testing-library/react";
 jest.mock("./api");
 
 describe("UserProfile", () => {
-    it("renders user on successful fetch", async () => {
-        const userName = "John";
-        const userEmail = "jd@email.com";
+	it("renders user on successful fetch", async () => {
+		const userName = "John";
+		const userEmail = "jd@email.com";
 
-        fetchUserData.mockResolvedValue({
-            name: userName, email: userEmail
-        });
+		fetchUserData.mockResolvedValue({
+			name: userName,
+			email: userEmail,
+		});
 
-        render(<UserProfile userId={1} />);
+		render(<UserProfile userId={1} />);
 
-        await waitFor(() => {
-            expect(screen.getByText(userName)).toBeInTheDocument();
-            expect(screen.getByText(`Email: ${userEmail}`)).toBeInTheDocument();
-        });
+		await waitFor(() => {
+			expect(screen.getByText(userName)).toBeInTheDocument();
+			expect(screen.getByText(`Email: ${userEmail}`)).toBeInTheDocument();
+		});
 
-        expect(fetchUserData).toHaveBeenCalledWith(1);
-    });
+		expect(fetchUserData).toHaveBeenCalledWith(1);
+	});
 
-    it("renders error message when fetch fails", async () => {
-        fetchUserData.mockRejectedValue(new Error("API error"));
+	it("renders error message when fetch fails", async () => {
+		fetchUserData.mockRejectedValue(new Error("API error"));
 
-        render(<UserProfile userId={1} />);
+		render(<UserProfile userId={1} />);
 
-        await waitFor(() => {
-            expect(screen.getByText("Fetch Failed")).toBeInTheDocument();
-        });
-    });
+		await waitFor(() => {
+			expect(screen.getByText("Fetch Failed")).toBeInTheDocument();
+		});
+	});
 });
 ```
 
@@ -1895,30 +1919,30 @@ describe("UserProfile", () => {
 
 #### PropTypes
 
-- Older versions of React had a built-in typechecking library `PropTypes`, which was part of the core library. 
+- Older versions of React had a built-in typechecking library `PropTypes`, which was part of the core library.
     - It has since been separated from React, and published as an independent library that works in both class-based components and functional components.
 
 ```jsx
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const User = ({ name, age }) => {
-    return (
-        <section>
-            <h1>Name: { name }</h1>
-            <h1>Age: { age }</h1>
-        </section>
-    );
-}
+	return (
+		<section>
+			<h1>Name: {name}</h1>
+			<h1>Age: {age}</h1>
+		</section>
+	);
+};
 
 User.propTypes = {
-    name: PropTypes.string.isRequired,
-    age: PropTypes.number
+	name: PropTypes.string.isRequired,
+	age: PropTypes.number,
 };
 ```
 
 #### TypeScript
 
-- [[TypeScript]] is a superset of [[JavaScript]] that offers typechecking. 
+- [[TypeScript]] is a superset of [[JavaScript]] that offers typechecking.
 - Benefits:
     - Type Safety
     - Improved Developer Experience
@@ -1932,39 +1956,35 @@ npm install --save-dev typescript @types/react @types/react-dom
 
 ```tsx
 interface AppProps {
-  title: string;
-  children: React.ReactNode;
+	title: string;
+	children: React.ReactNode;
 }
 
 const App: React.FC<AppProps> = ({ title }) => {
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);    
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const handleOpenModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-        /* Handle Button Click */
-    };
+	const handleOpenModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+		/* Handle Button Click */
+	};
 
-    return (
-      <Layout title={title}>
-        { children }      
-      </Layout>
-    );
+	return <Layout title={title}>{children}</Layout>;
 };
 ```
 
-- `ComponentProps` helps extract properties from imported components or HTML elements. 
+- `ComponentProps` helps extract properties from imported components or HTML elements.
     - Useful for reusing prop types from existing components, extending native HTML element props, and creating type-safe wrappers around components.
 
 ```tsx
-import { ComponentProps } from 'react';
+import { ComponentProps } from "react";
 
-type ButtonProps = ComponentProps<'button'>;
+type ButtonProps = ComponentProps<"button">;
 
 const CustomButton = (props: ButtonProps) => {
-    return <button {...props} />;
+	return <button {...props} />;
 };
 ```
 
-#### Flow 
+#### Flow
 
 - Flow is another static typechecking tool that's built by Facebook and offers a similar functionality to TypeScript.
 
@@ -1980,10 +2000,11 @@ const CustomButton = (props: ButtonProps) => {
     - **unmounting** - gets removed from the screen
 
 ![React Component Lifecycle Methods](assets/images/react.component-lifecycle.png)
+
 - **Credit** - [Dan Abramov](https://twitter.com/dan_abramov/status/981712092611989509)
 
-- The ==`componentDidMount()`== method is executed on initial render. 
-- The ==`componentDidUpdate()`== lifecycle method is called on every re-render. 
+- The ==`componentDidMount()`== method is executed on initial render.
+- The ==`componentDidUpdate()`== lifecycle method is called on every re-render.
 - The ==`componentWillUnmount()`== method is called right before a component is removed from the DOM.
 
 > [!note]
@@ -2004,46 +2025,46 @@ const CustomButton = (props: ButtonProps) => {
 - `React.memo()` is an HOC that can wrap functional components to optimize their rendering performance.
 
 ```jsx
-{/* An HOC that handles the loading state for data fetching */}
-const withLoader = (Element, url) => {
-    return (props) => {
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        async function getData() {
-            const res = await fetch(url);
-            const data = await res.json();
-            
-            setData(data);
-        }
-
-        getData();
-    }, []);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
-
-    return <Element {...props} data={data} />;
-  };
+{
+	/* An HOC that handles the loading state for data fetching */
 }
+const withLoader = (Element, url) => {
+	return (props) => {
+		const [data, setData] = useState(null);
+
+		useEffect(() => {
+			async function getData() {
+				const res = await fetch(url);
+				const data = await res.json();
+
+				setData(data);
+			}
+
+			getData();
+		}, []);
+
+		if (!data) {
+			return <div>Loading...</div>;
+		}
+
+		return <Element {...props} data={data} />;
+	};
+};
 ```
 
 ```jsx
-export const withThemeContext = Component => (
-  props => (
-    <ThemeContext.Consumer>
-      {context => <Component themeContext={context} {...props} />}
-    </ThemeContext.Consumer>
-  )
-)
+export const withThemeContext = (Component) => (props) => (
+	<ThemeContext.Consumer>
+		{(context) => <Component themeContext={context} {...props} />}
+	</ThemeContext.Consumer>
+);
 
 const MyComponent = ({ themeContext, ...props }) => {
-  themeContext.someFunction()
-  return (<div>Hello, React!</div>)
-}
+	themeContext.someFunction();
+	return <div>Hello, React!</div>;
+};
 
-export default withThemeContext(MyComponent)
+export default withThemeContext(MyComponent);
 ```
 
 #### Effects
@@ -2066,22 +2087,18 @@ import { createContext } from "react";
 const Ctx = createContext({});
 
 function User() {
-    return (
-        <Ctx.Consumer>
-            {({ name }) => (<p>{ name }</p>)}
-        </Ctx.Consumer>
-    );
+	return <Ctx.Consumer>{({ name }) => <p>{name}</p>}</Ctx.Consumer>;
 }
 
 export default function App() {
-    return (
-        <Ctx.Provider value={{ name: "John Doe" }}>
-            <h1>
-                Welcome
-                <User />
-            </h1>
-        </Ctx.Provider>
-    );
+	return (
+		<Ctx.Provider value={{ name: "John Doe" }}>
+			<h1>
+				Welcome
+				<User />
+			</h1>
+		</Ctx.Provider>
+	);
 }
 ```
 
@@ -2093,14 +2110,14 @@ export default function App() {
 - They are used to increase reusability in async components.
 
 ```jsx
-function TodoList({ todos=[], render }) {
-    if (!todos.length) return render();
+function TodoList({ todos = [], render }) {
+	if (!todos.length) return render();
 
-    return <p>{ todos.length } Todos</p>;
+	return <p>{todos.length} Todos</p>;
 }
 
 export default function App() {
-    return <TodoList render={() => <p>No Todos.</p>} />;
+	return <TodoList render={() => <p>No Todos.</p>} />;
 }
 ```
 
@@ -2108,9 +2125,9 @@ export default function App() {
 
 ![[Composition vs. Inheritance]]
 
-- React recommends using composition over inheritance to reuse code between components. 
-- Components in React are just objects, so they can be passed as props like any other data. 
-    - This approach similar to '*slots*' in other libraries such as [[Vue]], but there are no limitations on what can be passed as props in React.
+- React recommends using composition over inheritance to reuse code between components.
+- Components in React are just objects, so they can be passed as props like any other data.
+    - This approach similar to '_slots_' in other libraries such as [[Vue]], but there are no limitations on what can be passed as props in React.
 
 ### Modern React
 
@@ -2125,11 +2142,11 @@ export default function App() {
 
 ```jsx
 export default function App() {
-    return (
-        <React.Suspense fallback={<p>Loading Todos...</p>}>
-            <TodoList />
-        </React.Suspense>
-    )
+	return (
+		<React.Suspense fallback={<p>Loading Todos...</p>}>
+			<TodoList />
+		</React.Suspense>
+	);
 }
 ```
 
@@ -2157,9 +2174,9 @@ export default function App() {
 "use server";
 
 export async function createTask(formData) {
-  const task = formData.get("task");
-  // Server-side logic to add task
-  return { success: true, message: "Task added" };
+	const task = formData.get("task");
+	// Server-side logic to add task
+	return { success: true, message: "Task added" };
 }
 ```
 
@@ -2169,12 +2186,12 @@ export async function createTask(formData) {
 import { createTask } from "./actions";
 
 export default function TaskInput() {
-  return (
-    <form action={createTask}>
-      <input name="task" />
-      <button type="submit">Add</button>
-    </form>
-  );
+	return (
+		<form action={createTask}>
+			<input name="task" />
+			<button type="submit">Add</button>
+		</form>
+	);
 }
 ```
 
@@ -2188,7 +2205,7 @@ export default function Home() {
     const formAction = async (formData: FormData) => {
         "use server";
         const searchQuery = formData.get("query");
-        
+
         console.log(searchQuery);
     };
 
@@ -2210,16 +2227,16 @@ export default function Home() {
 
 > [!quote] From the React Docs
 > Unlike React Hooks, use can be called within loops and conditional statements like if. Like React Hooks, the function that calls use must be a Component or Hook.
-> 
-> When called with a Promise, the `use` API integrates with `Suspense` and error boundaries. The component calling `use` suspends while the Promise passed to `use` is pending. If the component that calls `use` is wrapped in a `Suspense` boundary, the fallback will be displayed.  Once the Promise is resolved, the `Suspense` fallback is replaced by the rendered components using the data returned by the `use` API. If the Promise passed to use is rejected, the fallback of the nearest Error Boundary will be displayed. 
+>
+> When called with a Promise, the `use` API integrates with `Suspense` and error boundaries. The component calling `use` suspends while the Promise passed to `use` is pending. If the component that calls `use` is wrapped in a `Suspense` boundary, the fallback will be displayed. Once the Promise is resolved, the `Suspense` fallback is replaced by the rendered components using the data returned by the `use` API. If the Promise passed to use is rejected, the fallback of the nearest Error Boundary will be displayed.
 
 ```jsx
-import { use } from 'react';
+import { use } from "react";
 
 function ProductComponent({ productPromise }) {
-    const product = use(productPromise);
-    const theme = use(ThemeContext);
-    // ...
+	const product = use(productPromise);
+	const theme = use(ThemeContext);
+	// ...
 }
 ```
 
@@ -2292,7 +2309,7 @@ import { createPortal } from "react-dom";
 ### Hooks
 
 - Hooks must be called in the same order on every render.
-    - Calling them conditionally (inside loops, conditions, or nested functions) can lead to bugs because it disrupts the expected order of hook calls. 
+    - Calling them conditionally (inside loops, conditions, or nested functions) can lead to bugs because it disrupts the expected order of hook calls.
     - Always invoke hooks at the top level of your function component.
 - Consider using the `useRef` hook instead of `useState` for values that do not affect the rendering of the component.
 - Properly managing dependencies in `useEffect` is crucial to prevent infinite loops or missed updates.
@@ -2310,7 +2327,7 @@ import { createPortal } from "react-dom";
 ```jsx
 export default function App() {
     let [color, setColor] = useState('limegreen');
-    
+
     return (<>
         <input value={color} onChange={(e) => setColor(e.target.value)} />
         <p style={{ color }}>Hello, world!</p>
@@ -2325,10 +2342,10 @@ export default function App() {
         <ExpensiveComponent />
     </>);
 }
- 
+
 function ColofulText() {
     let [color, setColor] = useState('limegreen');
-    
+
     return (<>
         <input value={color} onChange={(e) => setColor(e.target.value)} />
         <p style={{ color }}>Hello, world!</p>
@@ -2349,12 +2366,12 @@ const TodoList = React.lazy(() => import("./TodoList"));
 
 ### Data Fetching
 
-- Running effects on every render without proper dependency management can cause excessive API calls. 
+- Running effects on every render without proper dependency management can cause excessive API calls.
     - Ensure that `useEffect` is only used for side effects that impact the outside world, such as data fetching, and not for every state change.
-- Attempting to access properties of fetched data before it is available can lead to runtime errors. 
-    - If the initial state is set to `null` or an empty array, trying to access properties before the data is fetched will result in errors. 
+- Attempting to access properties of fetched data before it is available can lead to runtime errors.
+    - If the initial state is set to `null` or an empty array, trying to access properties before the data is fetched will result in errors.
     - Set appropriate initial states and check for data availability before rendering components.
-- Fetching data in child components and passing it to parent components can lead to unnecessary complexity. 
+- Fetching data in child components and passing it to parent components can lead to unnecessary complexity.
     - Consider lifting state up or using a centralized data fetching approach to streamline data management.
 
 ### Security
@@ -2372,16 +2389,16 @@ const TodoList = React.lazy(() => import("./TodoList"));
 
 ```js
 const TodoList = React.createClass({
-    displayName: "TodoList",
-    render() {
-        return React.createElement(
-            "ul",
-            { className: "todos" },
-            this.props.items.map((todo, i) => {
-                return React.createElement("li", { key: i }, todo)
-            })
-        );
-    }
+	displayName: "TodoList",
+	render() {
+		return React.createElement(
+			"ul",
+			{ className: "todos" },
+			this.props.items.map((todo, i) => {
+				return React.createElement("li", { key: i }, todo);
+			}),
+		);
+	},
 });
 ```
 
@@ -2400,7 +2417,7 @@ class Todos extends React.Component {
                     title: "Learn React",
                     completed: true
                 }
-            ]    
+            ]
         };
     }
 
@@ -2419,19 +2436,20 @@ class Todos extends React.Component {
 ```
 
 > [!important]
-> - State in class-based components is a property set in the constructor using `this.state`. The component inherits the `setState` method from React that allows changing state. 
-> - When setting an object state, React only modifies the key-value pair passed, while keeping other properties unchanged. 
-> 
+>
+> - State in class-based components is a property set in the constructor using `this.state`. The component inherits the `setState` method from React that allows changing state.
+> - When setting an object state, React only modifies the key-value pair passed, while keeping other properties unchanged.
+>
 > ```js
-> this.setState({ isValid: false })
+> this.setState({ isValid: false });
 > // OR
 > this.setState((prevState) => {
->     return { isValid: !prevState.isValid }
-> })
+> 	return { isValid: !prevState.isValid };
+> });
 > ```
-> 
+>
 > - It's also important to note that event handlers need to bind `this` to work.
-> 
+>
 > ```jsx
 > <button onClick={this.handleClick.bind(this)}>Submit</button>
 > ```
@@ -2453,57 +2471,63 @@ componentDidUpdate(prevProps, prevState) {
 
 ```js
 useEffect(() => {
-    // Logic
-}, [val])
+	// Logic
+}, [val]);
 ```
 
 - The ==`componentDidMount()`== method is executed on initial render. In functional components, it is equivalent to using `useEffect()` without passing any dependencies.
 
 ```js
 useEffect(() => {
-    // Logic
-}, [])
+	// Logic
+}, []);
 ```
 
 - The ==`componentWillUnmount()`== method is called right before a component is removed from the DOM. In functional components, it is equivalent to returning a cleanup function in `useEffect()`.
 
 ```js
 useEffect(() => {
-    return () => { /* Logic */ }
-}, [])
+	return () => {
+		/* Logic */
+	};
+}, []);
 ```
 
 #### Error Boundaries
 
-- React components that allow JavaScript error handling in their child component tree. 
+- React components that allow JavaScript error handling in their child component tree.
 - They catch errors during rendering, in lifecycle methods, and in constructors of all child components.
 
 ```jsx
-{/* ErrorBoundary.jsx */}
+{
+	/* ErrorBoundary.jsx */
+}
 class ErrorBoundary extends React.Component {
-    constructor () {
-        super();
-        this.state = {
-            caughtError: false    
-        };
-    }
+	constructor() {
+		super();
+		this.state = {
+			caughtError: false,
+		};
+	}
 
-    componentDidCatch(error) {
-        this.setState({ caughtError: true });
-    }
+	componentDidCatch(error) {
+		this.setState({ caughtError: true });
+	}
 
-    render() {
-        if (this.state.caughtError) {
-            return <p>An Error Has Occured!</p>;
-        }
-        return this.props.children;
-    }
+	render() {
+		if (this.state.caughtError) {
+			return <p>An Error Has Occured!</p>;
+		}
+		return this.props.children;
+	}
 }
 
-{/* SomeComponent.jsx */}
+{
+	/* SomeComponent.jsx */
+}
 <ErrorBoundary>
-    <SomeChildComponent />
-</ErrorBoundary>
+	<SomeChildComponent />
+</ErrorBoundary>;
 ```
 
 - Any errors thrown from `<SomeChildComponent />` are caught and handled by the `<ErrorBoundary>` component.
@@ -2514,33 +2538,36 @@ class ErrorBoundary extends React.Component {
 #### Typechecking
 
 ```jsx
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 class User extends React.Component {
-    render() {
-        return (
-            <section>
-                <h1>Name: {this.props.name}</h1>
-                <h1>Age: {this.props.age}</h1>
-            </section>
-        );
-    }
+	render() {
+		return (
+			<section>
+				<h1>Name: {this.props.name}</h1>
+				<h1>Age: {this.props.age}</h1>
+			</section>
+		);
+	}
 }
 
 User.propTypes = {
-    name: PropTypes.string.isRequired,
-    age: PropTypes.number
+	name: PropTypes.string.isRequired,
+	age: PropTypes.number,
 };
 ```
 
 ---
 
 > [!question]- Interview Emphasis Points
+>
 > > Concepts / sections to focus on when reading
+>
 > - Patterns
->    - HOCs
+>     - HOCs
 
 ---
+
 ## Further
 
 ### Books 📚
@@ -2574,4 +2601,3 @@ User.propTypes = {
 ![Don't Make This Data Fetching Mistake In React! - YouTube](https://www.youtube.com/watch?v=PeaDEbfYKz4)
 
 ![React Testing: Components, Hooks, Custom Hooks, Redux and Zustand (YouTube)](https://www.youtube.com/watch?v=bvdHVxqjv80)
-

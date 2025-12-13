@@ -6,18 +6,18 @@
 
 ```js
 // server.js
-const crypto = require('crypto');
-const nonce = crypto.randomBytes(16).toString('base64');
+const crypto = require("crypto");
+const nonce = crypto.randomBytes(16).toString("base64");
 
 /* ... */
 res.setHeader(
-    'Content-Security-Policy',
-    `script-src 'nonce-${nonce}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`
+	"Content-Security-Policy",
+	`script-src 'nonce-${nonce}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`,
 );
 ```
 
 ```html
 <script nonce="<%= nonce %>">
-    console.log("This inline script is allowed to execute");
+	console.log("This inline script is allowed to execute");
 </script>
 ```

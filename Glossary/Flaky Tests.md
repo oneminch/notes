@@ -1,7 +1,7 @@
 - Tests that can produce different results when run multiple times under the same conditions.
 - Unreliable and can pass or fail without any changes to the codebase
 - Commonly caused by:
-	* **Timing Issues**: Tests dependent on timing or asynchronous processes may fail if they execute too quickly or slowly.
-	* **Environment Dependence**: Tests that rely on external services, databases, or APIs may fail due to network issues or service availability.
-	* **State Leakage**: Tests that do not properly isolate their state may affect each other, leading to inconsistent results.
-	* **Randomness**: Tests that use random data or behaviors may yield different outcomes on different runs.
+    - **Timing Issues**: Tests dependent on timing or asynchronous processes may fail if they execute too quickly or slowly.
+    - **Environment Dependence**: Tests that rely on external services, databases, or APIs may fail due to network issues or service availability.
+    - **State Leakage**: Tests that do not properly isolate their state may affect each other, leading to inconsistent results.
+    - **Randomness**: Tests that use random data or behaviors may yield different outcomes on different runs.

@@ -1,4 +1,4 @@
-- Provide a structured outline of a website's content. 
+- Provide a structured outline of a website's content.
 - Facilitate both user navigation and search engine indexing, ensuring that all pages are easily accessible.
 
 - **Benefits**
@@ -10,12 +10,12 @@
     - **SEO**
         - Sitemaps help search engines discover and index pages more efficiently.
     - **Identification of Issues**
-        - A well-structured sitemap allows website owners to spot potential issues such as broken links or orphan pages (pages without links). 
+        - A well-structured sitemap allows website owners to spot potential issues such as broken links or orphan pages (pages without links).
         - This proactive approach helps maintain the health of the website.
 
 - **Types**
     - **HTML Sitemaps**
-        - Designed for human visitors and typically appear as a webpage containing links to all major sections and pages of the site. 
+        - Designed for human visitors and typically appear as a webpage containing links to all major sections and pages of the site.
         - Help users navigate the site more easily.
     - **XML Sitemaps**
         - Intended for search engines.
@@ -24,8 +24,8 @@
 
 ## sitemap.xml
 
-- An XML file that lists the URLs for a site which are available for crawling. 
-- Can include extra information about each URL: last updated date and time, frequency of updates, and rate of importance/priority. 
+- An XML file that lists the URLs for a site which are available for crawling.
+- Can include extra information about each URL: last updated date and time, frequency of updates, and rate of importance/priority.
 - A _URL inclusion protocol_ and complements `robots.txt`.
 - Example `sitemap.xml` file:
 

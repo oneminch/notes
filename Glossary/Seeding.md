@@ -1,2 +1,2 @@
-- In the context of databases, seeding is populating a database with an initial set of data. 
+- In the context of databases, seeding is populating a database with an initial set of data.
 - This is useful when an application is being built and some data is needed.

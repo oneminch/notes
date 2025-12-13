@@ -6,7 +6,7 @@
 - GitHub Actions supports multiple operating systems and languages within the same workflow.
 - It offers native CI/CD functionality, but can also automate any webhook.
 - It integrates seamlessly with GitHub's existing features.
-- Benefits of GitHub Actions include: 
+- Benefits of GitHub Actions include:
     - Automating workflows across issues, pull requests, and more.
     - Adding preferred tools and services to a project.
     - Multi-container testing and "matrix builds."
@@ -15,6 +15,7 @@
 ## Example
 
 > [!example] Deploying a Vite App to GitHub Pages
+
 ```yml
 # .github/workflows/deploy.yml
 name: Deploy
@@ -69,4 +70,3 @@ jobs:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./dist
 ```
-

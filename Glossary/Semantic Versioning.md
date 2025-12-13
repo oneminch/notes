@@ -2,7 +2,7 @@
 alias: SemVer
 ---
 
-- Semantic Versioning (SemVer) is a versioning scheme for software that conveys meaning about the underlying changes through version numbers. 
+- Semantic Versioning (SemVer) is a versioning scheme for software that conveys meaning about the underlying changes through version numbers.
 - It helps developers and users understand the nature and impact of changes in a release.
 - It follows the format:
 
@@ -34,6 +34,7 @@ MAJOR.MINOR.PATCH
         - Ignored when determining version precedence.
 
 > [!example]
+>
 > - Initial Release: `1.0.0`
 > - Adding a New Feature: `1.1.0`
 > - Fixing a Bug: `1.1.1`

@@ -31,11 +31,11 @@ public interface EmployeeDao{
 
 public class EmployeeDaoImpl implements EmployeeDao {
     /* ... */
-    
+
     @Override
     public Employee findEmployeeByEmail(String email) {
         String sql = "SELECT * FROM employees WHERE email = ?";
-        
+
         try(Connection conn = ConnectionFactory.getConnectionFactory().getConnection()){
 
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -43,7 +43,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
-            
+
             if(!rs.next()){
                 throw new InvalidUserInputException("Employee Not Found");
             }
@@ -58,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         } catch (SQLException e){
             e.printStackTrace();
         }
-        
+
         return null;
     }
 

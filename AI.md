@@ -3,6 +3,7 @@ alias: ML
 ---
 
 > [!example]- Tools
+>
 > - Langflow
 > - LangGraph
 > - OpenRouter
@@ -12,11 +13,14 @@ alias: ML
 > - Jan.ai / Ollama
 
 > [!example]- Learn + Content
+>
 > - [LLM Fundamentals](https://www.aihero.dev/llm-fundamentals)
 > - [Foundations: Overview](https://ai-sdk.dev/docs/foundations/overview)
 > - [AI Agents for Beginners](https://www.youtube.com/watch?v=OhI005_aJkA&list=PLlrxD0HtieHgKcRjd5-8DT9TbwdlDO-OC&index=12)
 > - [MCP for Beginners](https://www.youtube.com/watch?v=VfZlglOWWZw)
+>
 > ---
+>
 > - [The AI Cloud (Vercel Ship Keynote)](https://www.youtube.com/watch?v=lNmO7fDiyuE)
 > - [The no-nonsense approach to AI agent development](https://vercel.com/ship/session/ai-at-vercel)
 > - [Engineering your site for answer engine optimization](https://vercel.com/ship/session/engineering-your-site-for-answer-engine-optimization-aeo)
@@ -24,13 +28,14 @@ alias: ML
 > - [AI Agents and MCP Server - Estéban Soubiran (Series)](https://soubiran.dev/series/ai-agents-and-mcp-server-teaming-up-for-the-agentic-web)
 
 ---
+
 ## Retrieval-Augmented Generation (RAG)
 
 - Primarily used to enhance language models' ability to access and utilize external knowledge.
 - Combines information retrieval with text generation.
 - Retrieves relevant information from a large corpus of documents or a knowledge base, which it then uses to augment the input to a language model.
 - Ideal for question-answering systems, chatbots, and other applications where up-to-date or specific factual information is crucial.
-- **Data Flow**: 
+- **Data Flow**:
     - Query → Retrieval System → Retrieved Documents → Language Model → Generated Response
 
 ## Model Context Protocol (MCP)
@@ -47,6 +52,7 @@ alias: ML
 > ![Build ANYTHING with MCP Servers (YouTube)](https://www.youtube.com/watch?v=sMqlObpNz64)
 
 ---
+
 ## Further
 
 ### Learn 🧠
@@ -78,4 +84,3 @@ alias: ML
 ![Let's build a RAG App with Llama2 (Cloudflare Workers AI, Vectorize) - YouTube](https://www.youtube.com/watch?v=zTNV_ryF0Hk)
 
 ![Machine Learning vs. Deep Learning vs. Foundation Models - YouTube](https://www.youtube.com/watch?v=Beh13Cd_QbY)
-

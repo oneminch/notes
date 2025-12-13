@@ -7,9 +7,9 @@ alias: FP
 - Key principles of FP
     - **Data Immutability** - Functions don't mutate data.
     - **[[Pure Functions|Purity]]** - Functions don't change global state.
-    - **Data Transformation** - Functions produce *transformed* copies of data.
+    - **Data Transformation** - Functions produce _transformed_ copies of data.
     - **[[Higher-Order Functions]]**
     - **[[Currying]]**
     - **[[Recursion]]**
-    - **Composition** - Functional programs are *composed* of small, pure functions that perform a specific task.
+    - **Composition** - Functional programs are _composed_ of small, pure functions that perform a specific task.
         - e.g. Chaining in JS

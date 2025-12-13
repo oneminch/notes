@@ -22,10 +22,12 @@
 	rel="search"
 	type="application/opensearchdescription+xml"
 	title="searchTitle"
-	href="pluginURL" />
+	href="pluginURL"
+/>
 ```
 
 > [!NOTE]
+>
 > - `searchTitle` - must match the content of `<ShortName>` in the XML file.
 > - `pluginURL` - URL to the XML search plugin / file.
 > - The `xmlns` attribute is important. The plugin can't be downloaded without it.

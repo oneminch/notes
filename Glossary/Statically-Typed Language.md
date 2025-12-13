@@ -1,5 +1,5 @@
 ---
-aliases: 
+aliases:
     - Static Typing
     - Static Type System
 ---

@@ -7,7 +7,7 @@ alias: CRP
 - CRP refers to the sequence of steps browsers take to convert HTML, CSS, and JavaScript into pixels on the screen.
 - It involves several main steps:
     1. **Constructing the DOM**
-        - The browser downloads and parses the [[HTML]] document to create the [[DOM]]. 
+        - The browser downloads and parses the [[HTML]] document to create the [[DOM]].
     2. **Building the CSSOM**
         - The browser processes [[CSS]] files to construct the [[CSSOM]].
     3. **Executing JavaScript**

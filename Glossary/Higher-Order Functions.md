@@ -6,9 +6,9 @@ alias: HOF
 - Common [[JavaScript]] array methods such as `filter()`, `reduce()` and `forEach()` are higher-order functions.
 
 ```js
-const nums = [1, 2, 3, 4, 5, 6]
+const nums = [1, 2, 3, 4, 5, 6];
 
-const oddNums = numbers.filter((number) => number % 2 !== 0)
+const oddNums = numbers.filter((number) => number % 2 !== 0);
 
 // oddNums: [1, 3, 5]
 ```

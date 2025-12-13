@@ -1,2 +1,2 @@
-- [WebContainers](https://blog.stackblitz.com/posts/introducing-webcontainers/) allow for Node.js environments to be run natively inside the browser. 
-- This tech is fast and secure due to the fact that code execution is done locally in the browser. It powers the online IDE service StackBlitz. 
+- [WebContainers](https://blog.stackblitz.com/posts/introducing-webcontainers/) allow for Node.js environments to be run natively inside the browser.
+- This tech is fast and secure due to the fact that code execution is done locally in the browser. It powers the online IDE service StackBlitz.
