@@ -6,10 +6,10 @@ alias: Workers
 - Utilize the V8 JavaScript engine and operate similar to Node.js.
 - Used to build and deploy code closer to users for better speed and reliability.
 - Common use cases for Cloudflare Workers:
-    - edge caching, 
-    - image optimization, 
-    - redirects, and
-    - rate limiting.
+	- edge caching, 
+	- image optimization, 
+	- redirects, and
+	- rate limiting.
 
 ## Bindings
 
@@ -148,12 +148,12 @@ export default {
 
 ```typescript
 export default {
-  async fetch(request, env, ctx) {
-    // request: incoming HTTP request
-    // env: bindings to platform resources
-    // ctx: execution context for waitUntil, passThroughOnException
-    return new Response('Hello World!');
-  }
+	async fetch(request, env, ctx) {
+		// request: incoming HTTP request
+		// env: bindings to platform resources
+		// ctx: execution context for waitUntil, passThroughOnException
+		return new Response('Hello World!');
+	}
 }
 ```
 
@@ -185,20 +185,20 @@ export default {
 
 ```ts
 export default {
-    fetch(request: Request) {
-        const html = `<!DOCTYPE html>
-            <html>
-                <body>
-                    <h1>Hello, World!</h1>
-                </body>
-            </html>`;
-
-        return new Response(html, {
-            headers: {
-                "content-type": "text/html;charset=UTF-8",
-            },
-        });
-    },
+	fetch(request: Request) {
+		const html = `<!DOCTYPE html>
+			<html>
+					<body>
+							<h1>Hello, World!</h1>
+					</body>
+			</html>`;
+	
+		return new Response(html, {
+			headers: {
+					"content-type": "text/html;charset=UTF-8",
+			},
+		});
+	},
 } satisfies ExportedHandler;
 ```
 
@@ -206,11 +206,11 @@ export default {
 
 ```ts
 export default {
-    fetch(request: Request) {
-        const to = "https://minch.dev";
-        
-        return Response.redirect(to, 301);
-    },
+	fetch(request: Request) {
+		const to = "https://minch.dev";
+		
+		return Response.redirect(to, 301);
+	},
 } satisfies ExportedHandler;
 ```
 
@@ -220,34 +220,34 @@ export default {
 import { Ai } from "@cloudflare/ai";
 
 export interface Env {
-  AI: Ai;
+	AI: Ai;
 }
 
 export default {
-    async fetch(request: Request, env: Env) {
-        const ai = new Ai(env.AI);
-        const genAiModel = "@cf/meta/llama-2-7b-chat-fp16";
-        
-        const url = new URL(request.url);
-        const input = url.searchParams.get("query");
+	async fetch(request: Request, env: Env) {
+		const ai = new Ai(env.AI);
+		const genAiModel = "@cf/meta/llama-2-7b-chat-fp16";
+		
+		const url = new URL(request.url);
+		const input = url.searchParams.get("query");
 
-        if (!input.trim()) {
-            input = "What is Cloudflare Workers?";
-        }
-        
-        const messages = [
-            { role: "system", content: "You are a friendly assistant" },
-            { role: "user", content: input },
-        ];
-        
-        const stream = await ai.run(genAiModel, {
-            messages,
-            stream: true,
-        });
-        
-        return new Response(stream, {
-            headers: { "content-type": "text/event-stream" },
-        });
-    },
+		if (!input.trim()) {
+			input = "What is Cloudflare Workers?";
+		}
+		
+		const messages = [
+			{ role: "system", content: "You are a friendly assistant" },
+			{ role: "user", content: input },
+		];
+		
+		const stream = await ai.run(genAiModel, {
+			messages,
+			stream: true,
+		});
+		
+		return new Response(stream, {
+			headers: { "content-type": "text/event-stream" },
+		});
+	}
 };
 ```
