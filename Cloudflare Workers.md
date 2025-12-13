@@ -21,7 +21,7 @@ alias: Workers
 	- **Compute**: Service bindings, Workers AI, Browser Rendering
 	- **Data**: Vectorize, Analytics Engine, Queues, Workflows
 	- **Infrastructure**: Hyperdrive, Assets, mTLS, Rate Limiting
-- Configuration in `wrangler.toml`:
+- Configuration in `wrangler.toml` / `wrangler.jsonc`:
 
 ```toml
 [[r2_buckets]]
@@ -185,7 +185,7 @@ export default {
 
 ```ts
 export default {
-    async fetch(request: Request) {
+    fetch(request: Request) {
         const html = `<!DOCTYPE html>
             <html>
                 <body>
@@ -206,7 +206,7 @@ export default {
 
 ```ts
 export default {
-    async fetch(request: Request) {
+    fetch(request: Request) {
         const to = "https://minch.dev";
         
         return Response.redirect(to, 301);
