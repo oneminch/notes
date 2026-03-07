@@ -459,6 +459,10 @@ RENAME TO new_table_name;
 ALTER TABLE table_name
 ADD column_name INT;
 
+-- SQLite - Rename Column
+ALTER TABLE table_name
+RENAME COLUMN old_name TO new_name;
+
 -- MySQL - Modify a column.
 ALTER TABLE table_name
 MODIFY COLUMN column_name TEXT;
