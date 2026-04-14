@@ -1,5 +1,6 @@
 ---
-alias: CRP
+aliases:
+    - CRP
 ---
 
 ![Rendering Process](rendering.png)

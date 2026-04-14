@@ -1,5 +1,6 @@
 ---
-alias: SemVer
+aliases:
+    - SemVer
 ---
 
 - Semantic Versioning (SemVer) is a versioning scheme for software that conveys meaning about the underlying changes through version numbers.

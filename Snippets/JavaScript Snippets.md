@@ -1,5 +1,6 @@
 ---
-alias: JS Snippets
+aliases:
+    - JS Snippets
 ---
 
 ## Arrays

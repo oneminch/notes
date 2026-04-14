@@ -1,5 +1,6 @@
 ---
-alias: Workers
+aliases:
+    - Workers
 ---
 
 - Serverless functions that run on Cloudflare's global edge network.

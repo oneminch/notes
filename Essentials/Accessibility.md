@@ -1,5 +1,6 @@
 ---
-alias: A11y
+aliases:
+    - A11y
 ---
 
 > [!quote] MDN

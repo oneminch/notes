@@ -1,5 +1,6 @@
 ---
-alias: RWD
+aliases:
+    - RWD
 ---
 
 > A set of practices that allows web pages to alter their layout and appearance to suit different screen widths, resolutions, etc.

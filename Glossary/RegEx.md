@@ -1,5 +1,6 @@
 ---
-alias: Regular Expressions
+aliases:
+    - Regular Expressions
 ---
 
 - A Regular Expression (RegEx) is a syntax that specifies a certain search pattern for a piece of string.

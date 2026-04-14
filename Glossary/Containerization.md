@@ -1,5 +1,6 @@
 ---
-alias: Containers
+aliases:
+    - Containers
 ---
 
 - A lightweight alternative to traditional [[virtualization]].

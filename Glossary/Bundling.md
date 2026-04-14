@@ -22,9 +22,8 @@ aliases:
         - development server setup, and
         - hot module replacement (HMR).
     - Provide a more integrated development experience, sometimes using multiple bundlers under the hood for different tasks.
-        - e.g. Vite uses esbuild for fast development and Rollup for production builds, while also providing a dev server, HMR, and plugin system.
-    - Vite, Parcel, Turbopack for web development
-    - tsup / tsdown, unbuild for library development
+        - e.g. [[Vite]] uses esbuild for fast development and Rollup for production builds, while also providing a dev server, HMR, and plugin system.
+    - Examples include Vite, Parcel, Turbopack for web development, and tsup / tsdown, unbuild for library development
 
 ---
 

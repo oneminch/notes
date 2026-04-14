@@ -1,5 +1,6 @@
 ---
-alias: SEO
+aliases:
+    - SEO
 ---
 
 - Google's Ranking Factors

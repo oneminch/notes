@@ -1,5 +1,6 @@
 ---
-alias: Why are global variables considered a bad practice?
+aliases:
+    - Why are global variables considered a bad practice?
 ---
 
 > [!question] Why are global variables considered a bad practice?

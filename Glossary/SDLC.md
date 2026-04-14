@@ -1,5 +1,6 @@
 ---
-alias: Software Development Lifecycle
+aliases:
+    - Software Development Lifecycle
 ---
 
 - SDLC (Software Development Life Cycle) is a systematic approach to software development that aims to minimize project risks and ensure that software meets customer expectations during delivery

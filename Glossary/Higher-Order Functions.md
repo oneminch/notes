@@ -1,5 +1,6 @@
 ---
-alias: HOF
+aliases:
+    - HOF
 ---
 
 - Higher-Order Functions take one or more functions as arguments and/or return a function as a result. They perform operations on other functions.

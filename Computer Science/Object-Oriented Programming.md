@@ -1,5 +1,6 @@
 ---
-alias: OOP
+aliases:
+    - OOP
 ---
 
 - **Object-Oriented Programming**

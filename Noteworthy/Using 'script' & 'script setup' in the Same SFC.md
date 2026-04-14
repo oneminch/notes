@@ -1,5 +1,6 @@
 ---
-alias: "<script> & <script setup>"
+aliases:
+    - "<script> & <script setup>"
 ---
 
 - **Module Scope Execution**: The regular `<script>` block is executed in the module scope, allowing for side effects or object creation that should only occur once.

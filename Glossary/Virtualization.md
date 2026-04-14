@@ -1,5 +1,6 @@
 ---
-alias: VM
+aliases:
+    - VM
 ---
 
 - Allows for the creation of virtual representations of physical computing resources, including servers, desktops, storage devices, and networks.

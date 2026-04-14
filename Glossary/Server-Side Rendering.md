@@ -1,5 +1,6 @@
 ---
-alias: SSR
+aliases:
+    - SSR
 ---
 
 - **Context**

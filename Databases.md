@@ -1,5 +1,6 @@
 ---
-alias: DB
+aliases:
+    - DB
 ---
 
 ## Introduction

@@ -1,5 +1,6 @@
 ---
-alias: Document Object Model
+aliases:
+    - Document Object Model
 ---
 
 - The Document Object Model (DOM) of a page has a tree-like structure, where each element, attribute, and piece of text in the markup language becomes a DOM node in the tree structure.

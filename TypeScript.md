@@ -1,5 +1,6 @@
 ---
-alias: TS
+aliases:
+    - TS
 ---
 
 ## Introduction

@@ -1,5 +1,6 @@
 ---
-alias: Data Access Object
+aliases:
+    - Data Access Object
 ---
 
 - Data Access Objects (DAOs) are a design pattern commonly used in [[Java]] programs to manage the interaction between the application logic and the data persistence layer.

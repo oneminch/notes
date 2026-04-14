@@ -1,5 +1,6 @@
 ---
-alias: JS
+aliases:
+    - JS
 ---
 
 ## Introduction
@@ -305,18 +306,55 @@ alert("1" + 2 + 2); // "122" and not "14"
 
 ### Symbols
 
-- Used to create unique identifiers for objects.
-- Can be used to create hidden object properties.
-- Ignored by `Object.keys()` & `for...in` loops.
+- Unique primitive values 
+- Primarily used as private-ish object keys to hide internal state.
+    - Ignored by `Object.keys()` & `for...in` loops.
+    - Copied by `Object.assign()`. 
+- Other use cases:
+    - Create unique identifiers for objects
+        - Avoid property collisions in code when extending third-party code.
+    - Implementing iterators (`Symbol.iterator`)
+    - Customize object behavior in different contexts (e.g. converting objects to primitives using `Symbol.toPrimitive`)
 
 ```js
 let id = Symbol("id");	// symbol with optional description "id"
 
 let obj = {
-  [id]: 1
+  [internalId]: 1
   name: "Jane"
 }
 ```
+
+```js
+const user = {
+    name: 'Jane Doe',
+    age: 33,
+    [Symbol.toPrimitive](hint) {
+        if (hint === 'number') {
+            return this.age;
+        } else if (hint === 'string') {
+            return this.name;
+        } else {
+            return null;
+        }
+    }
+};
+
+console.log(+user);     // 33 (number conversion)
+console.log(`${user}`); // 'Jane Doe' (string conversion)
+console.log(user + 10); // 43 (default to number conversion)
+```
+
+> [!note]
+> Symbols can be created and accessed later using `Symbol.for(key)`. On initial call, the symbol is added to the global symbol registry. Subsequent calls with the same key return the same symbol.
+> 
+> ```javascript
+> let id = Symbol.for("id");
+> 
+> let idAgain = Symbol.for("id");
+> 
+> console.log( id === idAgain ); // true
+> ```
 
 ### Type Casting vs Coercion
 
@@ -494,6 +532,73 @@ delete w[2];
 - _Array-likes_ have indices and a `length`.
 - `Array.from()` creates a real array from an array-like or an iterable value.
 - [Read more 📄](https://javascript.info/iterable)
+
+```javascript
+let range = {
+    from: 1,
+    to: 10,
+
+    // for..of calls this method once in the very beginning
+    [Symbol.iterator]() {
+        // ...which returns an iterator object:
+        // onward, for..of works only with that object, calling next()
+        return {
+            current: this.from,
+            last: this.to,
+            
+            // next() is called on each iteration by for..of
+            next() {
+                // it should return the value as an object 
+                // { done: ..., value: ... }
+                if (this.current <= this.last) {
+                    return { done: false, value: this.current++ };
+                } else {
+                    return { done: true };
+                }
+            }
+        };
+    }
+};
+
+console.log([...range]); // [1,2,3,4,5,...]
+
+for (let num of range) {
+    console.log(num);    // 1,2,3,4,5,...
+}
+```
+
+- When values come asynchronously, async iteration is needed. In that case, `Symbol.asyncIterator` is used instead of `Symbol.iterator`, and `next()` returns a promise to be fulfilled with the next value.
+    - To iterate over such objects, `for await (let item of iterable)` is used.
+    - Regular synchronous features like the spread operator and `for...of` don't work asynchronously.
+
+```js
+const LIMIT = 10;
+
+const range = {
+    [Symbol.asyncIterator]() {
+        let i = 1;
+        
+        return {
+            next() {  // can be an async function
+                const done = i > LIMIT;
+                const value = done ? undefined : i++;
+                
+                return Promise.resolve({ value, done });
+            },
+            return() {
+                // Reached if 'break' or 'return' called early in the loop.
+                return { done: true };
+            }
+        };
+    }
+};
+
+(async () => {
+    for await (const num of range) {
+        console.log(num);
+    }
+})(); // 1,2,3,4,5,...
+```
 
 ### Maps
 
@@ -1722,6 +1827,68 @@ canvas.addEventListener("click", (e) => {
 
 - **_REST APIs_**
     - Standard database functions are performed by making [[HTTP]] requests to specific URLs, that include data like search terms encoded in the URL as parameters; these actions can be _CRUD_ operations: creating, reading, updating, or deleting records within a resource.
+
+## Miscellaneous
+
+### Typed Arrays
+
+- A way to work with **raw binary data** in JavaScript using a fixed-size, numeric view over memory.
+- Consist of two parts:
+    - `ArrayBuffer` - raw sequence of memory
+    - Views - how that memory block is read / manipulated (`Uint8Array`, `Float32Array`, etc.)
+        - Like the "eyeglasses" that give an interpretation of the bytes stored in an `ArrayBuffer`.
+        - DataView -  a special *untyped* view over `ArrayBuffer`.
+
+```js
+const buffer = new ArrayBuffer(8);
+
+const bytes = new Uint8Array(buffer);
+const dv = new DataView(buffer);
+```
+
+### Generators
+
+- When generator functions are called, their code is not executed. Instead it returns a special object, called "generator object".
+    - `next()` can be called on this object which runs the execution until the nearest `yield` statement; a `value` can be added, otherwise it’s `undefined`.
+    - The function is then paused and the yielded value is returned.
+- Can be used to implement iterables, which can be consumed by various language mechanisms: `for-of` loop, spread operator (`...`), etc.
+- Objects returned by generators are iterable, where each `yield` contributes to the sequence of iterated values. 
+- Do not have arrow function counterparts.
+
+```js
+function* oneToThree() { // OR function *oneToThree()
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+console.log([...oneToThree()]); // Outputs: 1, 2, 3
+
+for (let num of oneToThree()) {
+    console.log(num); 
+}
+// Outputs: 1, 2, 3
+```
+
+- The `range` example in the [[JavaScript#Iterables|Iterables]] section can be reimplemented simply using a generator function.
+
+```javascript
+let range = {
+    from: 1,
+    to: 10,
+
+    *[Symbol.iterator]() { // OR [Symbol.iterator]: function*()
+        for(let value = this.from; value <= this.to; value++) {
+            yield value;
+        }
+    }
+};
+
+console.log([...range]); // [1,2,3,4,5,...]
+```
+
+> [!note]
+> `next()` always returns an object with the `value` (yielded value) and `done` (whether or not the function code has finished) properties.
 
 ## Best Practices
 

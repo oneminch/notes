@@ -1,5 +1,6 @@
 ---
-alias: Mutators
+aliases:
+    - Mutators
 ---
 
 - Setters (mutators) set or update the value of an object property.

@@ -1,5 +1,6 @@
 ---
-alias: Vue.js
+aliases:
+    - Vue.js
 ---
 
 > [!question]- Vue / Nuxt Questions

@@ -1,5 +1,6 @@
 ---
-alias: ML
+aliases:
+    - ML
 ---
 
 > [!example]- Tools

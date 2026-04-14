@@ -1,5 +1,6 @@
 ---
-alias: I18n
+aliases:
+    - I18n
 ---
 
 - Prepares a website or application for [[localization]] to different languages and regions.

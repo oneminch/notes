@@ -1,5 +1,6 @@
 ---
-alias: VDOM
+aliases:
+    - VDOM
 ---
 
 - The virtual DOM is a lighter copy of the real [[DOM]] stored in memory as an object.

@@ -1,5 +1,6 @@
 ---
-alias: SSG
+aliases:
+    - SSG
 ---
 
 - Static site generators take raw data and a set of templates to generate a fully static HTML website.

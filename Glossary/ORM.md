@@ -1,5 +1,6 @@
 ---
-alias: Object-Relational Mapping
+aliases:
+    - Object-Relational Mapping
 ---
 
 - Object-Relational Mapping is a technique for interacting with a database using the object-oriented paradigm of a programming language.

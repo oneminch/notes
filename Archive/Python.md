@@ -1,5 +1,6 @@
 ---
-alias: Py
+aliases:
+    - Py
 ---
 
 ## Introduction

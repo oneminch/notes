@@ -1,5 +1,6 @@
 ---
-alias: Structured Query Language
+aliases:
+    - Structured Query Language
 ---
 
 > [!quote]- SQL Architecture (Diagram)

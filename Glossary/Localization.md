@@ -1,5 +1,6 @@
 ---
-alias: L10n
+aliases:
+    - L10n
 ---
 
 - Website localization is the process of adapting a website to suit the linguistic, cultural, and technical preferences of a specific target audience or market.

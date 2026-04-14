@@ -1,5 +1,6 @@
 ---
-alias: Authentication
+aliases:
+    - Authentication
 ---
 
 - **Authentication** (AuthN)

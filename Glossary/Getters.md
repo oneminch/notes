@@ -1,5 +1,6 @@
 ---
-alias: Accessors
+aliases:
+    - Accessors
 ---
 
 - Getters (accessors) get or return the value of a property in an object.

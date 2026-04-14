@@ -1,5 +1,6 @@
 ---
-alias: Re
+aliases:
+    - Re
 ---
 
 ## Introduction

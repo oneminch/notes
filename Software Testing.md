@@ -1,5 +1,6 @@
 ---
-alias: Testing
+aliases:
+    - Testing
 ---
 
 ## Concepts

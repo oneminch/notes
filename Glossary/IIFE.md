@@ -1,5 +1,6 @@
 ---
-alias: Immediately Invoked Function Expression
+aliases:
+    - Immediately Invoked Function Expression
 ---
 
 - An IIFE or an Immediately Invoked Function Expression is a function that is invoked as soon as it is defined.

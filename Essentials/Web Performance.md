@@ -1,5 +1,6 @@
 ---
-alias: WPO
+aliases:
+    - WPO
 ---
 
 > [!quote] MDN
