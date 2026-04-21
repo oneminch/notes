@@ -1496,11 +1496,13 @@ setTimeout(introduce, 1000);
 
 ### Arrow Functions
 
-- don't have their own `this`, `arguments`, `super` or `new.target`
+- don't have their own `this`, `arguments`, `super`, `new.target`, or `prototype` (can't be used with `instanceof`)
 - always anonymous
 - can't be invoked with `new`
-- shouldn't be used as methods or constructors
-- not suitable for `call`, `apply`, and `bind` due to scoping.
+- not suitable for 
+    - object methods (if access to `this` is needed)
+    - class constructors
+    - `call`, `apply`, and `bind` due to scoping.
 
 - Trying to access `this` will refer to the `this` of the closest non-arrow ancestor function.
 
@@ -1591,7 +1593,9 @@ function sum(a, b, ...nums) {}
 - A **_promise_** is an object that's returned by an asynchronous function; it represents the current state of an async operation, and it can be any of:
     - _pending_ - promise created and in the process.
     - _fulfilled_ - success; `then()` handler is called.
+        - `then()` takes an additional optional argument for handling rejected state: `then(onFulfilled[, onRejected])`.
     - _rejected_ - failure; `catch()` handler is called.
+        - `catch()` is a shortcut for `then(undefined, onRejected)`.
 - The term _settled_ is used to refer to a non-pending state: either fulfilled or rejected.
 
 > [!note]
@@ -1612,6 +1616,22 @@ function sum(a, b, ...nums) {}
 > 	/* ... */
 > });
 > ```
+
+- **Other Static Helper Methods**
+    - `Promise.resolve()` and `Promise.reject()` help in creating already settled promises quickly. They can be used to basically *promisify* a value.
+        - `Promise.resolve(value)` returns a promise that succeeds with `value`.
+            - It flattens nested layers of promise-like objects into a single layer (a promise that fulfills to a non-thenable value).
+        - `Promise.reject(error)` returns a promise that fails with `error`.
+
+```js
+Promise.resolve(123)
+    .then((value) => {
+        console.log(value); // Logs: 123
+    });
+
+Promise.reject(new Error("fail"))
+    .catch((e) => console.error('There has been an error: ', e));
+```
 
 ### Async/Await
 
@@ -1674,7 +1694,7 @@ sleep(5000).then(() => {
 function alarm(person, delay) {
 	return new Promise((resolve, reject) => {
 		if (delay < 0) {
-			throw new Error("Alarm delay must be set to a positive value");
+			reject("Alarm delay must be set to a positive value");
 		}
 
 		setTimeout(() => {
@@ -1830,20 +1850,79 @@ canvas.addEventListener("click", (e) => {
 
 ## Miscellaneous
 
+### `Proxy` & `Reflect`
+
+- **Proxy** allows intercepting and customizing operations on objects (like property access, assignment, function calls, etc.).  
+
+```js
+const proxy = new Proxy(target, handler);
+```  
+
+- `handler` is an object with *traps*—functions that override default behavior.  
+  Common traps:
+    - `get(target, prop, receiver)` – intercept property read  
+    - `set(target, prop, value, receiver)` – intercept property write  
+    - `has(target, prop)` – for `in` operator  
+    - `deleteProperty(target, prop)` – for `delete obj[prop]`  
+    - `apply(target, thisArg, args)` – for function calls  
+    - `construct(target, args, newTarget)` – for `new` operator  
+
+```js
+const user = { name: "John" };
+
+const proxy = new Proxy(user, {
+    get(t, p) {
+        console.log(`Accessed ${p}`);
+        return t[p];
+    }
+});
+
+console.log(proxy.name); // Logs: Accessed name
+```
+
+- **Reflect** is a built-in object that provides standard methods matching Proxy traps.
+    - It helps perform default operations inside custom proxy traps.
+    - It can be used to forward an operation to the original object.
+
+```js
+const proxy = new Proxy(user, {
+    set(t, p, v) {
+        console.log(`Setting ${p} to ${v}`);
+        return Reflect.set(...arguments); // preserves normal behavior
+    }
+});
+```
+
 ### Typed Arrays
 
-- A way to work with **raw binary data** in JavaScript using a fixed-size, numeric view over memory.
+- Containers for binary data
+- Away to work with **raw binary data** in JavaScript using a fixed-size, numeric view over memory.
 - Consist of two parts:
     - `ArrayBuffer` - raw sequence of memory
+        - Must be wrapped in a view object (either Typed Arrays or DataViews)
     - Views - how that memory block is read / manipulated (`Uint8Array`, `Float32Array`, etc.)
         - Like the "eyeglasses" that give an interpretation of the bytes stored in an `ArrayBuffer`.
         - DataView -  a special *untyped* view over `ArrayBuffer`.
+            - Allows interpreting data as various types (Uint8, Int16, Float32, etc.)
 
 ```js
 const buffer = new ArrayBuffer(8);
 
 const bytes = new Uint8Array(buffer);
 const dv = new DataView(buffer);
+```
+
+```js
+const file = await fetch("/assets/logo.png");
+
+const buffer = await file.arrayBuffer();
+const bytes = new Uint8Array(buffer);
+
+const isPNG =
+    bytes[0] === 0x89 &&
+    bytes[1] === 0x50 &&
+    bytes[2] === 0x4E &&
+    bytes[3] === 0x47;
 ```
 
 ### Generators
@@ -2000,6 +2079,8 @@ async function fetchData() {
 ### Books 📚
 
 - [Eloquent JavaScript (Marijn Haverbeke)](https://eloquentjavascript.net/)
+
+- [Exploring JavaScript (Dr. Axel Rauschmayer)](https://exploringjs.com/js/)
 
 ### Reads 📄
 

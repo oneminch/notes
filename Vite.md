@@ -13,10 +13,11 @@ Start dev server -> Bundle all modules (30-60+ secs) -> Parse & transform -> Ser
 
 ### Architectural Foundation
 
-- Vite operates on two distinct modes with different architectures: development and production. 
+- Vite operates on two distinct modes with different architectures: development and production.
 - This dual architecture exists because:
     - Development prioritizes **speed** (unbundled, instant transformation)
     - Production prioritizes **optimization** (bundled, tree-shaking, code-splitting)
+- Vite optimizes for each context separately.
 
 #### Development Mode
 
@@ -28,12 +29,15 @@ Start dev server -> Bundle all modules (30-60+ secs) -> Parse & transform -> Ser
 - **Key components:**
 	- **Dependency pre-bundling**: All bare imports discovered (`lodash-es`, etc.) and pre-bundled into `node_modules/.vite/deps`.
     	- [[JS Module System#CommonJS Modules|CommonJS]] / UMD dependencies (*bare imports*) converted to ESM, multiple files combined into single modules to reduce HTTP requests
+    	- Browsers need absolute or relative URLs. They can't work with bare imports.
 	- **Source transformation**: JSX/TSX/Vue transformed on-demand as browser requests files
-	- **Dev server** (Connect): Middleware-based HTTP server handling module resolution, transformation, and HMR
+	- **Dev server** (Connect): Middleware-based HTTP server handling [[module resolution]], transformation, and HMR
 
 - **What happens during a `vite dev`**?
     - Vite reads `vite.config.ts` and resolves all plugins. 
-        - `configResolved` hooks fire.
+        - Vite calls each plugin's `config` hook first (to let plugins mutate config).
+        - `configResolved` hooks fire once before server / build starts to read the final merged config.
+        - `configureServer` is called to set up the HTTP server.
     - Source files are scanned to discover all bare imports (`axios`, etc.) and are pre-bundled into `.vite/deps/`.
     - The dev server starts (a Connect middleware stack). 
         - A WebSocket server starts alongside it.
@@ -52,8 +56,10 @@ Start dev server -> Bundle all modules (30-60+ secs) -> Parse & transform -> Ser
         - **(↓)** Sends `{ type: 'update', updates: [{ path: '/src/utils.ts', ... }] }` over WebSocket.
         - **(↓)** The HMR client in the browser re-imports `/src/utils.ts?t=<timestamp>` (cache-busting query parameter).
         - Done.
+- **What happens during a `vite build`**?
+    - 
 
-> [!example] Dependency resolution example:
+> [!example] Dependency Resolution Example:
 > ```javascript
 > // Browser requests: /src/App.jsx
 > import React from 'react'  // → /node_modules/.vite/deps/react.js (pre-bundled)
@@ -110,7 +116,7 @@ Source files → Rollup (tree-shaking, code-splitting) → Optimized bundles
     handleHotUpdate(ctx) { }      // Custom HMR handling
 }
 ```
-    
+
 ```markdown
 <!-- Execution order during development: -->
 Request arrives
@@ -125,9 +131,10 @@ Response sent
 ```
 
 - **Plugin Pipeline**:
-    - `resolveId(id)` - Module Resolution
-        - Maps specifier to absolute file path (or virtual module id) (e.g. `axios` -> `/node_modules/.vite/deps/axios.js`)
-    - `load(id)` - Load Module Content
+    - `resolveId(id)` - [[Module Resolution]]
+        - Intercepts the module specifier.
+        - Maps specifier to absolute file path (or virtual module ID) (e.g. `axios` -> `/node_modules/.vite/deps/axios.js`)
+    - `load(resolvedId)` - Load Module Content
         - Read source code from disk or generate it.
         - Read operation is usually delegated to the filesystem, but plugins can intercept and return generated code.
     - `transform(code, id)` - Transform Module
@@ -149,6 +156,97 @@ export default {
         compression(),   // Gzip assets
         legacy()         // Polyfills for old browsers
     ]
+}
+```
+
+### Example
+
+```ts
+// main.ts
+import { BUILD_INFO } from 'virtual:build-info';
+
+const app = document.querySelector('#app');
+app.textContent = `v${BUILD_INFO.version} · ${BUILD_INFO.commit} · built ${BUILD_INFO.date}`;
+
+document.body.appendChild(app);
+```
+
+```ts
+// plugins/vite-plugin-build-info.ts
+import { execSync } from 'node:child_process'
+import type { Plugin } from 'vite'
+
+interface BuildInfo {
+    version: string
+    commit: string
+    date: string
+    mode: string
+}
+
+const VIRTUAL_ID = 'virtual:build-info'
+const RESOLVED_ID = '\0virtual:build-info'
+
+export default function buildInfo(): Plugin {
+    let info: BuildInfo
+
+    return {
+        name: 'vite-plugin-build-info',
+
+        // (1) Config phase — runs once, before server / build starts
+        configResolved(config) {
+            const commit = (() => {
+                try {
+                    return execSync('git rev-parse --short HEAD').toString().trim()
+                } catch {
+                    return 'no-git'
+                }
+            })()
+
+            info = {
+                version:  process.env.npm_package_version ?? '0.0.0',
+                commit,
+                date:     new Date().toISOString(),
+                mode:     config.command,  // 'serve' | 'build'
+            }
+        },
+
+        // (2) Intercept the bare specifier 'virtual:build-info'
+        resolveId(id) {
+            if (id === VIRTUAL_ID) return RESOLVED_ID
+        },
+
+        // (3) Return the module source for the resolved id
+        load(id) {
+            if (id !== RESOLVED_ID) return
+            
+            return `export const BUILD_INFO = ${JSON.stringify(info)}`
+        },
+
+        // (4) Stamp the HTML too (useful for CSP / cache-busting)
+        // Runs on every HTML request
+        // Injects <meta name="build-commit"> tag
+        transformIndexHtml() {
+            return [
+                {
+                    tag: 'meta',
+                    attrs: { name: 'build-commit', content: info.commit },
+                    injectTo: 'head',
+                },
+            ]
+        },
+    }
+}
+```
+
+```ts
+// plugins/vite-plugin-build-info.d.ts
+declare module 'virtual:build-info' {
+    export const BUILD_INFO: {
+        version: string
+        commit: string
+        date: string
+        mode: string
+    }
 }
 ```
 
@@ -240,7 +338,7 @@ Single application
 - Previously, each needed separate Vite instances or build passes.
 - The Environment API became necessary because:
     - **Framework evolution**: RSCs, Remix, Solid Start need different build targets
-    - **Edge computing**: Cloudflare Workers, Deno Deploy have different module resolution than Node.js
+    - **Edge computing**: Cloudflare Workers, Deno Deploy have different [[module resolution]] than Node.js
     - **Complexity reduction**: Previously required multiple Vite instances or complex plugin coordination
 
 ### Architecture

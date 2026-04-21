@@ -1,0 +1,4 @@
+- Module resolution is the step where a [[Bundling|bundler / build tool]] figures out **which actual file** an import points to. 
+    - Turns `import x from "pkg"` or `import y from "./foo"` into a real file path the build tool can include in the bundle.
+- It resolves **bare imports** like `vue` to the right package file.    
+- It resolves **relative imports** like `./utils` to the right source file.

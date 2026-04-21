@@ -15,7 +15,9 @@ aliases:
 
 > [!example]- Learn + Content
 >
+> - [AI Engineer Roadmap](https://www.aihero.dev/ai-engineer-roadmap)
 > - [LLM Fundamentals](https://www.aihero.dev/llm-fundamentals)
+> - https://cursor.com/learn
 > - [Foundations: Overview](https://ai-sdk.dev/docs/foundations/overview)
 > - [AI Agents for Beginners](https://www.youtube.com/watch?v=OhI005_aJkA&list=PLlrxD0HtieHgKcRjd5-8DT9TbwdlDO-OC&index=12)
 > - [MCP for Beginners](https://www.youtube.com/watch?v=VfZlglOWWZw)
@@ -51,6 +53,22 @@ aliases:
 
 > [!example]- 🎥 Build ANYTHING with MCP Servers (YouTube)
 > ![Build ANYTHING with MCP Servers (YouTube)](https://www.youtube.com/watch?v=sMqlObpNz64)
+
+## Agent Skills
+
+- Tells an agent *how to behave*.
+- Used to encode process, judgement, workflow and conventions.
+
+> [!note] **Skills vs. MCP**
+> - They both multiply whatever context an agent has access to. 
+> - Skills tell agents *how to think*, while MCP provides *what to think with*.
+>     - If an MCP server provides access to docs or searchable reference material, a skill would describe how to navigate and apply that information.
+> - **Why not just use a skill for docs?**
+>     - Because a skill is static. It cannot stay current with:
+>         - new framework versions,
+>         - changed APIs,
+>         - evolving examples,
+>         - project-specific overrides.
 
 ---
 

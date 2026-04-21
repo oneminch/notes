@@ -1,0 +1,6 @@
+- The `.well-known` folder is a standard directory on a website used to store files that need to live at a predictable path, often for verification or security-related purposes.
+- **Uses**
+    - SSL/TLS certificate validation and domain ownership checks.
+    - Security and service metadata, such as [[security.txt]] for security contact info.
+    - Other protocol-specific files that web services expect in a fixed location.
+        - e.g. `.well-known/skills` for agent skills

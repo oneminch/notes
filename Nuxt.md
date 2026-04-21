@@ -1,7 +1,3 @@
-## Lifecycle
-
-- [Nuxt Lifecycle (Documentation) 📄](https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle)
-
 ## Routing
 
 - Dynamic Routes - e.g. `~/pages/users/[id].vue` -> `/users/123`
@@ -111,3 +107,17 @@ export default defineNuxtModule({
 		- `--build` - Build module for distribution.
 		- `--stub` - Stub `dist/` instead of actually building it for development.
 		- `--prepare` - Prepare module for local development.
+
+## Miscellany
+
+### Lifecycle
+
+- [Nuxt Lifecycle (Documentation) 📄](https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle)
+
+### Performance
+
+- [Nuxt Performance (Documentation) 📄](https://nuxt.com/docs/4.x/guide/best-practices/performance)
+
+
+
+

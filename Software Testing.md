@@ -923,6 +923,10 @@ expect({ id: Math.random() }).toMatchSnapshot();
 
 ## Further
 
+### Learn 🧠
+
+- [Writing Tests (Vitest)](https://vitest.dev/guide/learn/writing-tests.html) ⭐
+
 ### Reads 📄
 
 - [Write tests. Not too many. Mostly integration. (Kent C. Dodds)](https://kentcdodds.com/blog/write-tests)
