@@ -96,6 +96,38 @@ export default defineNuxtModule({
         - The files in `src/runtime/` are injected _into the built app_ and run at runtime.
             - They cannot reference anything from `setup()`.
 
+## Commands
+
+- `nuxt build`
+	- Creates a `.output` directory with all the application, server and dependencies ready for production.
+	- Creates an entry point that launches a ready-to-run [[Node]] server.
+		- `node .output/server/index.mjs`
+
+- `nuxt generate`
+	- Builds and pre-renders an application and stores the result in plain HTML files.
+	- Uses the `Nitro` crawler.
+	- Similar to `nuxt build` with the `nitro.static` option set to `true`, or running `nuxt build --prerender`.
+	- The resulting `.output/public` directory can be deployed to any static hosting service.
+	- By default, pages that are not linked to a discoverable page can't be pre-rendered automatically.
+	- Outputs SPA mode when `ssr` is set to `false`.
+
+- `nuxt prepare`
+	- Creates a `.nuxt` directory and generates types.
+
+- `nuxt preview`
+	- Starts a server to preview a Nuxt application after `nuxt build`.
+
+- `nuxt add <ENTITY> <NAME>`
+	- Scaffold an entity into a Nuxt app.
+	- **`ENTITY`** - `api`, `app`, `app-config`, `component`, `composable`, `error`, `layer`, `layout`, `middleware`, `module`, `page`, `plugin`, `server-middleware`, `server-plugin`, `server-route`, `server-util`
+
+- `nuxt build-module`
+	- Used to build a Nuxt module before publishing.
+	- Runs `@nuxt/module-builder` to generate `dist/` directory that contains the full build for the Nuxt module.
+		- `--build` - Build module for distribution.
+		- `--stub` - Stub `dist/` instead of actually building it for development.
+		- `--prepare` - Prepare module for local development.
+
 ## Internals
 
 ### Contexts
@@ -248,7 +280,7 @@ export default defineNuxtModule({
 - Nuxt's layer system is built on top of the same config-merge mechanism that modules use. 
 - When Nuxt resolves `extends: ['some-layer']`, it merges that layer's config and virtual directory tree into the base app using `unjs/c12` (a library for config loading with inheritance).
 
-### Full Lifecycle
+### Lifecycle
 
 - Nuxt is a hook-driven pipeline. 
     - The framework itself is built upon the same hooks and Kit utilities that are used by module authors.
@@ -282,51 +314,15 @@ nuxt dev / nuxt build
 └─ 21. hook: app:mounted
 ```
 
-> [!example]- Nuxt Lifecycle
+> [!quote]- Nuxt Lifecycle
 > ![Nuxt Lifecycle](nuxt.lifecycle.png)
-
-## Commands
-
-- `nuxt build`
-	- Creates a `.output` directory with all the application, server and dependencies ready for production.
-	- Creates an entry point that launches a ready-to-run [[Node]] server.
-		- `node .output/server/index.mjs`
-	- 
-
-- `nuxt generate`
-	- Builds and pre-renders an application and stores the result in plain HTML files.
-	- Uses the `Nitro` crawler.
-	- Similar to `nuxt build` with the `nitro.static` option set to `true`, or running `nuxt build --prerender`.
-	- The resulting `.output/public` directory can be deployed to any static hosting service.
-	- By default, pages that are not linked to a discoverable page can't be pre-rendered automatically.
-	- Outputs SPA mode when `ssr` is set to `false`.
-
-- `nuxt prepare`
-	- Creates a `.nuxt` directory and generates types.
-
-- `nuxt preview`
-	- Starts a server to preview a Nuxt application after `nuxt build`.
-
-- `nuxt add <ENTITY> <NAME>`
-	- Scaffold an entity into a Nuxt app.
-	- **`ENTITY`** - `api`, `app`, `app-config`, `component`, `composable`, `error`, `layer`, `layout`, `middleware`, `module`, `page`, `plugin`, `server-middleware`, `server-plugin`, `server-route`, `server-util`
-
-- `nuxt build-module`
-	- Used to build a Nuxt module before publishing.
-	- Runs `@nuxt/module-builder` to generate `dist/` directory that contains the full build for the Nuxt module.
-		- `--build` - Build module for distribution.
-		- `--stub` - Stub `dist/` instead of actually building it for development.
-		- `--prepare` - Prepare module for local development.
-
-## Miscellany
-
-### Lifecycle
 
 - [Nuxt Lifecycle (Documentation) 📄](https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle)
 
-### Performance
+### Miscellany
 
-- [Nuxt Performance (Documentation) 📄](https://nuxt.com/docs/4.x/guide/best-practices/performance)
+- **Performance**
+    - [Nuxt Performance (Documentation) 📄](https://nuxt.com/docs/4.x/guide/best-practices/performance)
 
 
 
