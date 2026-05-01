@@ -8,7 +8,7 @@
     - Automatic code splitting & prefetching
         - Application is code split by route segments. This results in isolated pages, where an error on a certain page doesn't affect the rest of the application.
         - In production, whenever `<Link>` components appear in the viewport, the code for the linked route is automatically prefetched in the background.
-    - Support for different styling methods: CSS Modules, CSS-in-JS
+    - Support for different styling methods: [[CSS Modules]], CSS-in-JS
     - API routes for server-side processing
     - Fast Refresh on development
     - SEO features
@@ -101,7 +101,7 @@ export async function getServerSideProps(context) {
 
 - Next.js supports different styling methods out of the box:
     - Sass,
-    - CSS Modules,
+    - [[CSS Modules]],
     - CSS-in-JS.
 - Sass (`.scss` & `.sass`) imports are supported out of the box, including component-level Sass (`.module.scss` & `.module.sass`).
 - Next.js compiles CSS using PostCSS, which can be configured using a top-level `postcss.config.js` file.

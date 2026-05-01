@@ -46,6 +46,7 @@ aliases:
 > [!quote] An open protocol that standardizes how applications provide context to LLMs.
 
 - Designed to standardize how context is structured, shared, and utilized across different AI systems or components.
+- Gives AI live tool access (e.g. filesystem, web, databases, APIs).
 - Focuses on managing and transmitting contextual information.
 - Useful in complex AI systems where multiple components need to share and understand context.
 - **Data Flow**:
@@ -53,22 +54,6 @@ aliases:
 
 > [!example]- 🎥 Build ANYTHING with MCP Servers (YouTube)
 > ![Build ANYTHING with MCP Servers (YouTube)](https://www.youtube.com/watch?v=sMqlObpNz64)
-
-## Agent Skills
-
-- Tells an agent *how to behave*.
-- Used to encode process, judgement, workflow and conventions.
-
-> [!note] **Skills vs. MCP**
-> - They both multiply whatever context an agent has access to. 
-> - Skills tell agents *how to think*, while MCP provides *what to think with*.
->     - If an MCP server provides access to docs or searchable reference material, a skill would describe how to navigate and apply that information.
-> - **Why not just use a skill for docs?**
->     - Because a skill is static. It cannot stay current with:
->         - new framework versions,
->         - changed APIs,
->         - evolving examples,
->         - project-specific overrides.
 
 ---
 

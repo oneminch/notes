@@ -1,5 +1,3 @@
-## Architecture
-
 - Traditional [[Bundling|build tools]] like Webpack bundle entire applications before serving them in development. For a modest application with 1000 modules:
 
 ```
@@ -11,7 +9,9 @@ Start dev server -> Bundle all modules (30-60+ secs) -> Parse & transform -> Ser
 	- **Update speed**: [[HMR|Hot Module Replacement]] (HMR) degrades as applications grow, because [[Bundling|bundlers]] must reconstruct module graphs and rebundle.
 - Vite solves these problems by exploiting native [[JS Module System|ES modules]] in browsers.
 
-### Architectural Foundation
+### Architecture
+
+![Vite's Architecture Pipeline|1280](assets/images/vite.architecture-pipeline.svg)
 
 - Vite operates on two distinct modes with different architectures: development and production.
 - This dual architecture exists because:
@@ -31,7 +31,7 @@ Start dev server -> Bundle all modules (30-60+ secs) -> Parse & transform -> Ser
     	- [[JS Module System#CommonJS Modules|CommonJS]] / UMD dependencies (*bare imports*) converted to ESM, multiple files combined into single modules to reduce HTTP requests
     	- Browsers need absolute or relative URLs. They can't work with bare imports.
 	- **Source transformation**: JSX/TSX/Vue transformed on-demand as browser requests files
-	- **Dev server** (Connect): Middleware-based HTTP server handling [[module resolution]], transformation, and HMR
+	- **Dev server** (Connect): Middleware-based HTTP server handling [[Module Resolution]], transformation, and HMR
 
 - **What happens during a `vite dev`**?
     - Vite reads `vite.config.ts` and resolves all plugins. 
@@ -57,7 +57,16 @@ Start dev server -> Bundle all modules (30-60+ secs) -> Parse & transform -> Ser
         - **(↓)** The HMR client in the browser re-imports `/src/utils.ts?t=<timestamp>` (cache-busting query parameter).
         - Done.
 - **What happens during a `vite build`**?
-    - 
+    - Vite does a production compile. 
+        - Starting from `<root>/index.html`, Vite resolves the module graph, bundles everything for deployment, and writes optimized output to `dist/` by default.
+    - Vite reads config and build options.
+    - It uses `index.html` as the entry point unless overridden.
+    - It walks all imports to build the full dependency graph.
+    - It bundles modules for production instead of serving them separately.
+    - It applies production optimizations such as minification and asset handling.
+    - It empties `outDir` first if it is inside the project root, unless configured otherwise.
+    - It writes the final files to disk, usually `dist/`, which can be deployed to a host or CDN. 
+    - `vite build --watch` rebuilds when source files change, but config changes still require restarting the build.
 
 > [!example] Dependency Resolution Example:
 > ```javascript
@@ -71,6 +80,14 @@ Start dev server -> Bundle all modules (30-60+ secs) -> Parse & transform -> Ser
 > There are situations where certain dependencies will not be auto-detected or pre-bundled during the initial scan. For instance, linked dependencies (packages linked from the same monorepo) are treated as source code, and Vite will not attempt to bundle them.
 > 
 > `optimizeDeps.include` config can be used to force pre-bundling for specific dependencies.
+> 
+> ```ts
+> export default defineConfig({
+>     optimizeDeps: {
+>         include: ['linked-dep'],
+>     },
+> })
+> ```
 
 - **The Module Graph** 
     - Vite builds an internal graph to track dependencies between files and cache their transformation results.
@@ -90,7 +107,7 @@ Source files → Rollup (tree-shaking, code-splitting) → Optimized bundles
 
 - Vite plugins extend **Rollup's plugin interface** with Vite-specific hooks:
 
-```javascript
+```ts
 // Plugin structure
 {
     name: 'plugin-name',
@@ -109,6 +126,13 @@ Source files → Rollup (tree-shaking, code-splitting) → Optimized bundles
     //     Mutate source code. 
     //     All plugins run in order, each receives the previous output.
     transform(code, id) { }, 
+    // OR
+    transform: {
+        filter: {
+            id: /FILTER_RE$/
+        },
+        handler(code) { }
+    }, 
     
     // Vite-specific hooks
     configureServer(server) { },  // Extend dev server
@@ -132,10 +156,10 @@ Response sent
 
 - **Plugin Pipeline**:
     - `resolveId(id)` - [[Module Resolution]]
-        - Intercepts the module specifier.
+        - *Intercepts the lookup* of module specifier.
         - Maps specifier to absolute file path (or virtual module ID) (e.g. `axios` -> `/node_modules/.vite/deps/axios.js`)
     - `load(resolvedId)` - Load Module Content
-        - Read source code from disk or generate it.
+        - *Intercepts the read* of source code from disk or generate it.
         - Read operation is usually delegated to the filesystem, but plugins can intercept and return generated code.
     - `transform(code, id)` - Transform Module
         - Mutate source code. 
@@ -159,7 +183,21 @@ export default {
 }
 ```
 
-### Example
+> [!tip]
+> - `resolveId` is useful:
+>     - when the module id doesn't correspond to a real file on disk. e.g. virtual modules (`virtual:...`).
+>     - when a specifier needs to be redirected to a different path. e.g. aliases.
+>     - to conditionally externalize a module (by returning `{ id, external: true }`). 
+> - `load` uses module ID produced by `resolveId` to return the module's source code, or `null` to let Rolldown fall back to reading from disk.
+>     - It's useful for:
+>         - virtual modules where there is no content on disk.
+>         - custom binary / non-text loaders.
+>         - injecting code at load time before `transform`.
+> - `configResolved` hook is used for plugins that need to branch on config values (e.g. different behavior in `serve` vs `build`). 
+
+#### Examples
+
+##### Build Info (Virtual Module)
 
 ```ts
 // main.ts
@@ -247,6 +285,60 @@ declare module 'virtual:build-info' {
         date: string
         mode: string
     }
+}
+```
+
+##### Markdown to HTML
+
+```ts
+// src/main.ts
+import aboutHtml, { raw } from '../about.md'
+
+document.getElementById('content')!.innerHTML = readmeHtml
+```
+
+```ts
+// vite.config.ts
+import markdown from './plugins/vite-plugin-markdown'
+
+export default defineConfig({
+    plugins: [markdown()],
+})
+
+// plugins/vite-plugin-markdown.ts
+import { marked } from 'marked'
+import type { Plugin } from 'vite'
+
+export default function markdown(): Plugin {
+    return {
+        name: 'vite-plugin-markdown',
+
+        // HMR works automatically. Vite's file watcher
+        // tracks every file that passed through `transform`.
+        transform(code, id) {
+            if (!id.endsWith('.md')) return null
+
+            const html = marked.parse(code) as string
+
+            return {
+                code: `
+                    export const html = ${JSON.stringify(html)};
+                    export const raw = ${JSON.stringify(code)};
+                    export default html;
+                `,
+                map: null,
+            }
+        },
+    }
+}
+```
+
+```ts
+// src/env.d.ts
+declare module '*.md' {
+    const html: string
+    export const raw: string
+    export default html
 }
 ```
 
@@ -338,7 +430,7 @@ Single application
 - Previously, each needed separate Vite instances or build passes.
 - The Environment API became necessary because:
     - **Framework evolution**: RSCs, Remix, Solid Start need different build targets
-    - **Edge computing**: Cloudflare Workers, Deno Deploy have different [[module resolution]] than Node.js
+    - **Edge computing**: Cloudflare Workers, Deno Deploy have different [[Module Resolution]] than Node.js
     - **Complexity reduction**: Previously required multiple Vite instances or complex plugin coordination
 
 ### Architecture

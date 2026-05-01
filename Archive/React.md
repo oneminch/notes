@@ -1156,35 +1156,7 @@ import "./App.css"; // or "./App.scss"
 
 ### CSS Modules
 
-- CSS Modules are a common way of scoping styles to a component.
-- A CSS Module is a CSS file which declares styles that are scoped by default.
-- Tools like `create-react-app` and `vite` support CSS Modules out of the box.
-    - They basically attach a unique identifier to each component and list the styles with the unique ID as a selector.
-
-```css
-/* Button.module.css */
-.btn {
-	background: "red";
-}
-
-.btn-clicked {
-	background: "crimson";
-}
-```
-
-```jsx
-import styles from "./Button.module.css";
-
-const Button = () => {
-    ...
-    return (
-        <button className={
-            `${styles.btn} ${isClicked && styles["btn-clicked"] }`}>
-            Submit
-        </button>
-    );
-}
-```
+![[CSS Modules]]
 
 ### Inline Styles
 
