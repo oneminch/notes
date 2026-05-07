@@ -288,8 +288,9 @@ export default defineNuxtModule({
 ```
 nuxt dev / nuxt build
 │
-├─ 1. loadNuxtConfig()         → read + normalize nuxt.config.ts
-├─ 2. initNuxt()               → create the `nuxt` object + hookable
+├─ 1. loadNuxtConfig()         → read + normalize nuxt.config.ts 
+|                                recursively process & merge layer configs
+├─ 2. initNuxt()               → create `nuxt` object + hookable instance
 ├─ 3. hook: modules:before
 ├─ 4. [install modules]        → each module's setup() runs sequentially
 ├─ 5. hook: modules:done
@@ -314,16 +315,50 @@ nuxt dev / nuxt build
 └─ 21. hook: app:mounted
 ```
 
-> [!quote]- Nuxt Lifecycle
+> [!note]- Additional Notes
+> - **Why modules must be sequential.** 
+>     - Modules are functions called sequentially when booting Nuxt. 
+>     - The framework waits for each module to finish before continuing. This way, modules can customize almost any aspect of the project. 
+>     - A module that calls `addPlugin()` after `modules:done` is too late — the plugin registration file was already written.
+> - **Why `modules:done` exists for cross-module communication.**
+>     - If a module expects other modules to subscribe to its custom hooks, it should call them in the `modules:done` hook. 
+>         - This ensures all other modules have had a chance to be set up and register their listeners during their own `setup()` function. 
+>         - This is the canonical pattern for inter-module coordination.
+> - **The `definePageMeta` extraction.**
+>     - `definePageMeta()` is a macro, not a real function call. 
+>     - During the pages scan, Nuxt uses an AST transform to statically extract the object passed to it — things like `layout`, `middleware`, `validate` — without executing the component. 
+>         - This is how Nuxt knows route-level metadata before anything renders.
+> - **The payload is the hydration contract.**
+>     - The JSON blob injected into the HTML is the exact mechanism preventing double data-fetching. 
+>     - When the client entry runs, it reads `window.__NUXT__` and pre-fills all `useAsyncData` caches before a single composable runs. 
+>         - Any data key that exists in the payload will never trigger a network request during hydration.
+> - Any redirection on the server results in a `Location:` header being sent to the browser. 
+>     - The browser then makes a fresh request to this new location, and all application state is reset when this happens, unless persisted in a cookie.
+>     - This is why server-side `navigateTo()` is fundamentally different from client-side — the entire Vue instance is discarded and rebuilt.
+> - Vue pauses dependency tracking during SSR for better performance. 
+>     - There is no reactivity on the server side because Vue SSR renders the app top-down as static HTML, making it impossible to go back and modify content that has already been rendered.
+
+> [!quote]- More on How Nuxt Works
+> [[How Nuxt Works]] 📄
+> 
+> ---
+> 
+> [Nuxt Lifecycle](nuxt.full.lifecycle.png) 🖼
+>
+> ---
+> 
 > ![Nuxt Lifecycle](nuxt.lifecycle.png)
 
-- [Nuxt Lifecycle (Documentation) 📄](https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle)
+---
+## Further
 
-### Miscellany
+## Reads 📄
 
-- **Performance**
-    - [Nuxt Performance (Documentation) 📄](https://nuxt.com/docs/4.x/guide/best-practices/performance)
+- [[How Nuxt Works]]
 
+- [Nuxt Lifecycle (Documentation)](https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle)
+
+- [Nuxt Performance (Documentation)](https://nuxt.com/docs/4.x/guide/best-practices/performance)
 
 
 
