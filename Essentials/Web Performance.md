@@ -27,7 +27,7 @@ aliases:
         - Tips for improving perceived performance:
             - Minimizing initial load
             - Reducing content reflows
-            - Using progressive enhancement
+            - Using [[progressive enhancement]]
             - Avoiding font file delays
         - Some metrics can be helpful indicators of perceived performance:
             - First paint

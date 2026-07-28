@@ -2347,11 +2347,6 @@ const TodoList = React.lazy(() => import("./TodoList"));
 - Fetching data in child components and passing it to parent components can lead to unnecessary complexity.
     - Consider lifting state up or using a centralized data fetching approach to streamline data management.
 
-### Security
-
-> [!quote] React Security Best Practices
-> ![10 React Security Best Practices](React%20Security%20Best%20Practices%20Cheatsheet.pdf)
-
 ## Legacy
 
 - In former versions of React, it was necessary to import the library in each JSX file.

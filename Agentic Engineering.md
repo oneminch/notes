@@ -61,3 +61,33 @@
 - **Make sure to**:
     - delegate but verify.
     - review outcome critically.
+- Be aware of the **smart zone and dumb zone** in an agent's context window.
+
+### Example: `@mattpocock/skills` Workflow
+
+```mermaid
+flowchart TD
+    A("/setup-matt-pocock-skills") --> B("/grill-me")
+    A --> C("/grill-with-docs")
+    B --> D("/to-spec")
+    C --> D
+    D --> E("/to-tickets")
+
+    subgraph Loop["Implement / Review loop"]
+        direction LR
+        F("/implement @TICKETS.md") --> G("/code-review")
+        G -->|"/clear"| F
+    end
+
+    E -->|"/clear"| F
+```
+
+> [!example]- Steps
+> 1. `/setup-matt-pocock-skills`
+> 2. `/grill-me` / `/grill-with-docs`
+> 3. `/to-spec`
+> 4. `/to-tickets`
+> 5. `/clear`
+> 6. `/implement @TICKETS.md`
+> 7. `/code-review`
+> 8. `/clear` and repeat `/implement` 

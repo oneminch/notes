@@ -15,8 +15,10 @@ aliases:
 
 > [!example]- Learn + Content
 >
-> - [AI Engineer Roadmap](https://www.aihero.dev/ai-engineer-roadmap)
-> - [LLM Fundamentals](https://www.aihero.dev/llm-fundamentals)
+> - AI Hero
+>     - [AI Engineer Roadmap](https://www.aihero.dev/ai-engineer-roadmap)
+>     - [LLM Fundamentals](https://www.aihero.dev/llm-fundamentals)
+>     - [MCP](https://www.aihero.dev/model-context-protocol-tutorial)
 > - https://cursor.com/learn
 > - [Foundations: Overview](https://ai-sdk.dev/docs/foundations/overview)
 > - [AI Agents for Beginners](https://www.youtube.com/watch?v=OhI005_aJkA&list=PLlrxD0HtieHgKcRjd5-8DT9TbwdlDO-OC&index=12)
@@ -57,6 +59,11 @@ aliases:
 
 ---
 
+> [!example]- AI Engineer Roadmap
+> ![AI Engineer Roadmap](assets/ai-engineer-roadmap.pdf)
+
+---
+
 ## Further
 
 ### Learn 🧠
@@ -82,6 +89,8 @@ aliases:
 ### Resources 🧩
 
 - [AI Hero](https://www.aihero.dev/posts)
+
+- [AI Coding Dictionary](https://www.aihero.dev/ai-coding-dictionary)
 
 ### Videos 🎥
 

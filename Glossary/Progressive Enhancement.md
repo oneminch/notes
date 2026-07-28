@@ -1,0 +1,11 @@
+- A web development approach that builds a **solid baseline first**, then layers on richer styling and interactivity for browsers and devices that can support them. 
+- The idea is that everyone gets access to the content and basic functionality, while newer browsers get the enhanced version.
+- It's based on the idea that a page should still deliver its message and complete essential tasks in plain HTML; CSS can make it attractive, and JavaScript can make it interactive.
+- **In practice**
+    - Build meaningful [[HTML]] first.
+    - Add [[CSS]] to improve presentation.
+    - Add [[JavaScript]] to enhance interactivity, without making the page depend on it.
+- It helps sites stay [[Accessibility|accessible]], resilient, and usable on older browsers, slower devices, or in situations where CSS or JavaScript fails to load. 
+- It also commonly relies on feature detection and may use [[polyfills]] when needed.
+- **Example**
+    - A form should still let a user submit data with plain HTML. If JavaScript is available, you might add instant validation or smoother interactions, but the form should still work without it.
