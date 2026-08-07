@@ -80,12 +80,6 @@ aliases:
 
 - [AI Agents for Beginners](https://microsoft.github.io/ai-agents-for-beginners/)
 
-### Reads 📄
-
-- [The Rise of the AI Engineer (Latent.Space)](https://www.latent.space/p/ai-engineer)
-
-- [Setting up Postgres and pgvector with Docker for building RAG applications (UserJot)](https://userjot.com/blog/setting-up-postgres-pgvector-docker-rag/)
-
 ### Resources 🧩
 
 - [AI Hero](https://www.aihero.dev/posts)
